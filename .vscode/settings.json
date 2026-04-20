@@ -1,0 +1,8 @@
+{
+  "java.import.eclipse.enabled": true,
+  "java.configuration.updateBuildConfiguration": "automatic",
+  "java.project.referencedLibraries": [
+    "${workspaceFolder}/legacy-practice-step1/lib/**/*.jar",
+    "legacy-practice-step1/lib/**/*.jar"
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "java.import.eclipse.enabled": true,
+  "java.configuration.updateBuildConfiguration": "automatic",
+  "java.project.referencedLibraries": [
+    "lib/**/*.jar",
+    "${workspaceFolder}/lib/**/*.jar"
+  ]
+}
