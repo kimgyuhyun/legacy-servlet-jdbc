@@ -1,3 +1,0 @@
-INDEX VERSION 1.134
-C:\legacy-servlet-jdbc\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\2450461696.index
-\legacy-practice-step1\src\main\java

@@ -1,0 +1,27 @@
+# Eclipse workspace (local machine; never share)
+.metadata/
+
+# Eclipse WTP "Servers" project (local Tomcat / paths)
+Servers/
+
+# Build output
+**/build/
+**/bin/
+**/out/
+target/
+*.class
+
+# IntelliJ / IDEA
+.idea/
+*.iml
+
+# Logs, locks, temp
+*.log
+*.lock
+RemoteSystemsTempFiles/
+
+# OS
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+.DS_Store

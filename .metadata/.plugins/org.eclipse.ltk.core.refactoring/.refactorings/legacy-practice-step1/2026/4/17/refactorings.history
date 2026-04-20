@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Rename type &apos;step1.HelloServely&apos; to &apos;HelloServlet&apos;&#x0D;&#x0A;- Original project: &apos;legacy-practice-step1&apos;&#x0D;&#x0A;- Original element: &apos;step1.HelloServely&apos;&#x0D;&#x0A;- Renamed element: &apos;step1.HelloServlet&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;HelloServely&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src\/main\/java&lt;step1{HelloServely.java[HelloServely" matchStrategy="1" name="HelloServlet" qualified="false" references="true" similarDeclarations="false" stamp="1776585989875" textual="false" version="1.0"/>
-</session>
