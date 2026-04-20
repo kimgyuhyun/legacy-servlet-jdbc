@@ -25,3 +25,7 @@ Thumbs.db
 ehthumbs.db
 Desktop.ini
 .DS_Store
+
+# JVM crash logs
+hs_err_pid*
+replay_pid*
