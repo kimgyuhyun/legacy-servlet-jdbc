@@ -48,6 +48,7 @@
 					<td><%= user.getCreateAt() %></td>
 					<td><%= user.getUpdateAt() %></td>
 					<td>
+						<a href="${pageContext.request.contextPath}/user/edit?id=<%= user.getId() %>">수정</a>
 						<form method="post" action="${pageContext.request.contextPath}/user/delete" style="display:inline;">
 							<input type="hidden" name="id" value="<%= user.getId() %>"/>
 							<button type="submit" onclick ="return confirm('정말 삭제할까요?');">삭제</button>

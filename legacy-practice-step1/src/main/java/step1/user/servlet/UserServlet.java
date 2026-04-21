@@ -19,7 +19,7 @@ public class UserServlet extends HttpServlet{
 	
 	
 	@Override
-	protected void doGet(HttpServletRequest  request, HttpServletResponse response)
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException {
 		
 		request.setCharacterEncoding("UTF-8");
@@ -37,6 +37,21 @@ public class UserServlet extends HttpServlet{
 				List<UserDto> userList = userDao.findAll();
 				request.setAttribute("userList", userList);
 				request.getRequestDispatcher("/WEB-INF/user/user-list.jsp").forward(request, response);
+				return;
+			}
+			
+			if ("/edit".equals(path)) {
+				String idStr = request.getParameter("id");
+				Long id = Long.parseLong(idStr);
+				
+				UserDto user = userDao.findById(id);
+				if(user == null) {
+					response.sendError(HttpServletResponse.SC_NOT_FOUND);
+					return;
+				}
+				
+				request.setAttribute("user", user);
+				request.getRequestDispatcher("/WEB-INF/user/user-edit.jsp").forward(request, response);
 				return;
 			}
 			
@@ -81,6 +96,26 @@ public class UserServlet extends HttpServlet{
         		Long id = Long.parseLong(idStr);
         		
         		userDao.deleteById(id);
+        		
+        		response.sendRedirect(request.getContextPath() + "/user/list");
+        		return;
+        	}
+        	
+        	if ("/update".equals(path)) {
+        		String idStr = request.getParameter("id");
+        		String name = request.getParameter("name");
+        		String ageStr = request.getParameter("age");
+        		String birthDateStr = request.getParameter("birthDate");
+        		String address = request.getParameter("address");
+        		
+        		UserDto dto = new UserDto();
+        		dto.setId(Long.parseLong(idStr));
+        		dto.setName(name);
+        		dto.setAge(Integer.parseInt(ageStr));
+        		dto.setBirthDate(Date.valueOf(birthDateStr));
+        		dto.setAddress(address);
+        		
+        		userDao.updateById(dto);
         		
         		response.sendRedirect(request.getContextPath() + "/user/list");
         		return;
