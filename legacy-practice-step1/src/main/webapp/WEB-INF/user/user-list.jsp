@@ -24,6 +24,7 @@
 				<th>주소</th>
 				<th>생성일</th>
 				<th>수정일</th>
+				<th>관리</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -32,7 +33,7 @@
 				if (userList == null || userList.isEmpty()) {
 			%>
 				<tr>
-					<td colspan="7">조회된 사용자가 없습니다.</td>
+					<td colspan="8">조회된 사용자가 없습니다.</td>
 				</tr>
 			<%
 				} else {
@@ -46,6 +47,12 @@
 					<td><%= user.getAddress() %></td>
 					<td><%= user.getCreateAt() %></td>
 					<td><%= user.getUpdateAt() %></td>
+					<td>
+						<form method="post" action="${pageContext.request.contextPath}/user/delete" style="display:inline;">
+							<input type="hidden" name="id" value="<%= user.getId() %>"/>
+							<button type="submit" onclick ="return confirm('정말 삭제할까요?');">삭제</button>
+						</form>
+					</td>
 				</tr>
 			<%
 					}

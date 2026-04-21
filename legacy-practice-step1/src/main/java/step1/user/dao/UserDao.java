@@ -126,5 +126,36 @@ public class UserDao {
     		}
     	}
     }
+    
+    public int deleteById(Long id) throws Exception {
+    	String sql = "DELETE FROM `user` WHERE id = ?";
+    	
+    	Connection conn = null;
+    	PreparedStatement pstmt = null;
+    	
+    	try {
+    		conn = getConnection();
+    		pstmt = conn.prepareStatement(sql);
+    		pstmt.setLong(1, id);
+    		
+    		return pstmt.executeUpdate();
+    	} finally {
+    		if (pstmt != null) {
+    			try {
+    				pstmt.close();
+    			} catch (Exception e) {
+    				e.printStackTrace();
+    			}
+    		}
+    		
+    		if (conn != null) {
+    			try {
+    				conn.close();
+    			} catch (Exception e) {
+    				e.printStackTrace();
+    			}
+    		}
+    	}
+    }
 
 }

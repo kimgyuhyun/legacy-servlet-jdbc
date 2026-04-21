@@ -76,6 +76,16 @@ public class UserServlet extends HttpServlet{
                  return;
         	}
         	
+        	if("/delete".equals(path) ) {
+        		String idStr = request.getParameter("id");
+        		Long id = Long.parseLong(idStr);
+        		
+        		userDao.deleteById(id);
+        		
+        		response.sendRedirect(request.getContextPath() + "/user/list");
+        		return;
+        	}
+        	
         	response.sendError(HttpServletResponse.SC_NOT_FOUND);
         } catch (Exception e) {
         	throw new ServletException(e);
