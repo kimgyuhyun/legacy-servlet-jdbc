@@ -74,5 +74,57 @@ public class UserDao {
     		}
     	}
     }
+    
+    public List<UserDto> findAll() throws Exception {
+    	String sql = "SELECT id, name, age, birth_date, address, create_at, update_at FROM `user` ORDER BY id DESC";
+    	
+    	Connection conn = null;
+    	PreparedStatement pstmt = null;
+    	ResultSet rs = null;
+    	
+    	try {
+    		conn = getConnection();
+    		pstmt = conn.prepareStatement(sql);
+    		rs = pstmt.executeQuery();
+    		
+            List<UserDto> result = new ArrayList<>();
+            while (rs.next()) {
+            	UserDto dto = new UserDto();
+            	dto.setId(rs.getLong("id"));
+            	dto.setName(rs.getString("name"));
+            	dto.setAge(rs.getInt("age"));
+            	dto.setBirthDate(rs.getDate("birth_date"));
+            	dto.setAddress(rs.getString("address"));
+            	dto.setCreateAt(rs.getTimestamp("create_at"));
+            	dto.setUpdateAt(rs.getTimestamp("update_at"));
+            	result.add(dto);
+            }
+            return result;
+    	} finally {
+    		if (rs != null) {
+    			try {
+    				rs.close();
+    			} catch (Exception e) {
+    				e.printStackTrace();
+    			}
+    		}
+    		
+    		if (pstmt != null) {
+    			try {
+    				pstmt.close();
+    			} catch (Exception e) {
+    				e.printStackTrace();
+    			}
+    		}
+    		
+    		if (conn != null) {
+    			try {
+    				conn.close();
+    			} catch (Exception e) {
+    				e.printStackTrace();
+    			}
+    		}
+    	}
+    }
 
 }

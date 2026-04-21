@@ -1,16 +1,17 @@
 package step1.user.servlet;
 
-import step1.user.dao.UserDao;
-import step1.user.dto.UserDto;
+import java.io.IOException;
+import java.sql.Date;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.Date;
 
+import step1.user.dao.UserDao;
+import step1.user.dto.UserDto;
 
 
 @WebServlet("/user/*")
@@ -23,14 +24,26 @@ public class UserServlet extends HttpServlet{
 		
 		request.setCharacterEncoding("UTF-8");
 		
-		String path = request.getPathInfo();
-		if ("/form".equals(path)) {
-			request.getRequestDispatcher("/WEB-INF/user/user-form.jsp").forward(request, response);
-			return;
+		try {
+			UserDao userDao = new UserDao(getServletContext());
+			
+			String path = request.getPathInfo();
+			if ("/form".equals(path)) {
+				request.getRequestDispatcher("/WEB-INF/user/user-form.jsp").forward(request, response);
+				return;
+			}
+			
+			if ("/list".equals(path)) {
+				List<UserDto> userList = userDao.findAll();
+				request.setAttribute("userList", userList);
+				request.getRequestDispatcher("/WEB-INF/user/user-list.jsp").forward(request, response);
+				return;
+			}
+			
+			response.sendError(HttpServletResponse.SC_NOT_FOUND);			
+		} catch (Exception e) {
+			throw new ServletException(e);
 		}
-		
-		response.sendError(HttpServletResponse.SC_NOT_FOUND);
-
 		
 	}
 
