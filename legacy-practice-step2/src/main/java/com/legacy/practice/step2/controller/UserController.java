@@ -1,0 +1,50 @@
+package com.legacy.practice.step2.controller;
+
+import com.legacy.practice.step2.dao.UserDao;
+import com.legacy.practice.step2.dto.UserDto;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+
+@Controller
+@RequestMapping("/user")
+public class UserController {
+
+    private final UserDao userDao;
+
+    public UserController(UserDao userDao) {
+        this.userDao = userDao;
+    }
+
+    @GetMapping("/page")
+    public ModelAndView getPage() {
+        ModelAndView mv = new ModelAndView("user-form");
+        mv.addObject("formActionUrl", "/user/create/form");
+        mv.addObject("jsonActionUrl", "/user/create/json");
+        mv.addObject("syncActionUrl", "/user/create/sync");
+        return mv;
+    }
+
+    // 폼데이터로 받고 화면 이동으로 응답 / 전통적인 MVC 동기
+    @PostMapping("/create/sync")
+    public String createSync(@ModelAttribute UserDto dto) {
+        userDao.insert(dto);
+        return "redirect:/user/page";
+    }
+
+
+    // 폼데이터로 받고 @RequestBody 로 응답 / 비동기 폼 전송(Serialize) 
+    @PostMapping("/create/form")
+    @ResponseBody
+    public int createForm(@ModelAttribute UserDto dto) {
+        return userDao.insert(dto);
+    }
+
+    // AJAX/AXIOS/Fetch
+    // @RequestBody(JSON)으로 받고 @ResponseBody 로 응답// 비동기 JSON 전송
+    @PostMapping("/create/json")
+    @ResponseBody
+    public int createJson(@RequestBody UserDto dto) {
+        return userDao.insert(dto);
+    }
+}
