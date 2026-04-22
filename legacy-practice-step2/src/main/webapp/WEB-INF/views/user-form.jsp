@@ -5,6 +5,9 @@
     <meta charset="UTF-8">
     <title>User Create</title>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script>
+        window.CREATE_FORM_AJAX_URL = '${formActionUrl}';
+    </script>
     <style>
             body { font-family: Arial, sans-serif; }
             .row { margin-bottom: 8px; }
@@ -14,41 +17,41 @@
 </head>
 <body>
 <h1>User 등록</h1>
-<form id ="userForm">
-    <div class="row">
-        <label for="name">이름</label>
-        <input type="text" id="name" name="name" required>
-    </div>
-    <div class="row">
-        <label for="age">나이</label>
-        <input type="number" id="age" name="age" min="0" required>
-    </div>
-    <div class="row">
-            <label for="date">생년월일</label>
-            <input type="date" id="birthDate" name="birthDate" required>
-    </div>
-    <div class="row">
-            <label for="address">주소</label>
-            <input type="text" id="address" name="address" required>
-    </div>
+    <form id ="userForm">
+        <div class="row">
+            <label for="name">이름</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+        <div class="row">
+            <label for="age">나이</label>
+            <input type="number" id="age" name="age" min="0" required>
+        </div>
+        <div class="row">
+                <label for="date">생년월일</label>
+                <input type="date" id="birthDate" name="birthDate" required>
+        </div>
+        <div class="row">
+                <label for="address">주소</label>
+                <input type="text" id="address" name="address" required>
+        </div>
 
-    <div class="row">
-        <!--1) 동기 Form 제출 -->
-        <button type="submit"
-            formaction="${syncActionUrl}"
-            formmethod="post">
-          동기 Form 제출
-        </button>
+        <div class="row">
+            <!--1) 동기 Form 제출 -->
+            <button type="submit"
+                formaction="${syncActionUrl}"
+                formmethod="post">
+              동기 Form 제출
+            </button>
 
-        <!--2) 비동기 Form 제출 -->
-        <button type="button" onclick="submitFormAjax()">
-          비동기 Form 제출
-        </button>
+            <!--2) Form Ajax 제출 -->
+            <button type="button" onclick="submitFormAjax()">Form Ajax 제출</button>
 
-        <!--3) 비동기 JSON 제출 -->
-        <button type="button" onclick="submitJsonAjax()">
-          비동기 JSON 제출
-        </button
+            <!--3) JSON Ajax 제출 -->
+            <button type="button" onclick="submitJsonAjax()">JSON Ajax 제출</button>
+    </div>
+  </form>
+<div id="result"></div>
 
+<script src="${pageContext.request.contextPath}/js/api.js"></script>
 </body>
 </html>
