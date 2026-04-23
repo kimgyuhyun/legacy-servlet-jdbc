@@ -7,6 +7,7 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script>
         window.CREATE_FORM_AJAX_URL = '${formActionUrl}';
+        window.CREATE_JSON_AJAX_URL = '${jsonActionUrl}';
     </script>
     <style>
             body { font-family: Arial, sans-serif; }
