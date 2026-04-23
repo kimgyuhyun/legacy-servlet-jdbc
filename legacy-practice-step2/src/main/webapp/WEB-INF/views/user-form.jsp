@@ -53,6 +53,9 @@
 
             <!--4> JSON Axios 제출 -->
             <button type="button" onclick="submitJsonAxios()">JSON Axios 제출</button>
+
+            <!--5> JSON Fetch 제출 -->
+            <button type="button" onclick="submitJsonFetch()">JSON Fetch 제출</button>
     </div>
   </form>
 <div id="result"></div>

@@ -56,3 +56,32 @@ function submitJsonAxios() {
         $('#result').text('Axios 비동기 실패: ' + msg);
     });
 }
+
+function submitJsonFetch() {
+    var payload = {
+        name: $('#name').val(),
+        age: parseInt($('#age').val(), 10),
+        birthDate: $('#birthDate').val(),
+        address: $('#address').val()
+    };
+
+    fetch(window.CREATE_Async_URL, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json; charset=UTF-8'
+        },
+        body: JSON.stringify(payload)
+    })
+    .then(function (res) {
+        if (!res.ok) {
+            throw new Error('HTTP ' + res.status);
+        }
+        return res.text() // 컨트롤러가 int를 반환해서 res.text 사용
+    })
+    .then(function (data) {
+        $('#result').text('Fetch 비동기 성공: ' + data);
+    })
+    .catch(function (err) {
+        $('#result').text('Fetch 비동기 실패: ' + err.message)
+    });
+}
