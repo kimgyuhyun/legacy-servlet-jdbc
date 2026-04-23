@@ -5,9 +5,10 @@
     <meta charset="UTF-8">
     <title>User Create</title>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
         window.CREATE_FORM_AJAX_URL = '${formActionUrl}';
-        window.CREATE_JSON_AJAX_URL = '${jsonActionUrl}';
+        window.CREATE_Async_URL = '${jsonActionUrl}';
     </script>
     <style>
             body { font-family: Arial, sans-serif; }
@@ -49,6 +50,9 @@
 
             <!--3) JSON Ajax 제출 -->
             <button type="button" onclick="submitJsonAjax()">JSON Ajax 제출</button>
+
+            <!--4> JSON Axios 제출 -->
+            <button type="button" onclick="submitJsonAxios()">JSON Axios 제출</button>
     </div>
   </form>
 <div id="result"></div>

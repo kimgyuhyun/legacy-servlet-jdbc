@@ -20,7 +20,7 @@ function submitJsonAjax() {
         address: $('#address').val()
     };
     $.ajax({
-        url: window.CREATE_JSON_AJAX_URL,
+        url: window.CREATE_Async_URL,
         type: 'POST',
         contentType: 'application/json; charset=UTF-8',
         data: JSON.stringify(payload),
@@ -30,5 +30,29 @@ function submitJsonAjax() {
         error: function (xhr) {
             $('#result').text('JSON 비동기 실패: ' + (xhr.responseText || xhr.status));
         }
+    });
+}
+
+function submitJsonAxios() {
+    var payload = {
+        name: $('#name').val(),
+        age: parseInt ($('#age').val(), 10),
+        birthDate: $('#birthDate').val(),
+        address: $('#address').val()
+    };
+
+    axios.post(window.CREATE_Async_URL, payload, {
+        headers: {
+            'Content-Type': 'application/json; charset=UTF-8'
+        }
+    })
+    .then(function (response) {
+        $('#result').text('Axios 비동기 성공: ' + response.data);
+    })
+    .catch(function (error) {
+        var msg = (error.response && error.response.data)
+            ? error.response.data
+            : error.message;
+        $('#result').text('Axios 비동기 실패: ' + msg);
     });
 }
