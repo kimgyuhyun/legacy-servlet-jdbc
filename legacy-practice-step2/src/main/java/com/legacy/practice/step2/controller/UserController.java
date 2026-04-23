@@ -55,4 +55,11 @@ public class UserController {
         mv.addObject("userList", userDao.findAll());
         return mv;
     }
+
+    @GetMapping("/syncDetail/{id}")
+    public ModelAndView getSyncDetail(@PathVariable Long id) {
+        ModelAndView mv = new ModelAndView("user-detail");
+        mv.addObject("user", userDao.findById(id));
+        return mv;
+    }
 }

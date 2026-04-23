@@ -39,7 +39,7 @@
         <td><%= user.getId() %></td>
         <td><%= user.getName() %></td>
         <td>
-            <a href="${pageContext.request.contextPath}/user/detail/<%= user.getId() %>">상세보기</a>
+            <a href="${pageContext.request.contextPath}/user/syncDetail/<%= user.getId() %>">동기 상세보기</a>
         </td>
     </tr>
     <%

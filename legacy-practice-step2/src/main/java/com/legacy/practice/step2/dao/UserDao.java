@@ -41,6 +41,22 @@ public class UserDao {
             return dto;
         });
     }
+
+
+    public UserDto findById(Long id) {
+        String sql = "SELECT id, name, age, birth_date, address, create_at, update_at FRom `user` WHERE id = ?";
+        return jdbcTemplate.queryForObject(sql, (rs, rowNum) -> {
+            UserDto dto = new UserDto();
+            dto.setId(rs.getLong("id"));
+            dto.setName(rs.getString("name"));
+            dto.setAge(rs.getInt("age"));
+            dto.setBirthDate(rs.getDate("birth_date"));
+            dto.setAddress(rs.getString("address"));
+            dto.setCreateAt(rs.getTimestamp("create_at"));
+            dto.setUpdateAt(rs.getTimestamp("update_at"));
+            return dto;
+        }, id);
+    }
 //
 //    public int deleteById(Long id) throws Exception {
 //        String sql = "DELETE FROM `user` WHERE id = ?";
@@ -73,58 +89,7 @@ public class UserDao {
 //        }
 //    }
 //
-//    public UserDto findById(Long id) throws Exception {
-//        String sql = "SELECT id, name, age, birth_date, address, create_at, update_at FROm `user` WHERE id = ?";
-//
-//        Connection conn = null;
-//        PreparedStatement pstmt = null;
-//        ResultSet rs = null;
-//
-//        try {
-//            conn = getConnection();
-//            pstmt = conn.prepareStatement(sql);
-//            pstmt.setLong(1, id);
-//            rs = pstmt.executeQuery();
-//
-//            if (rs.next()) {
-//                UserDto dto = new UserDto();
-//                dto.setId(rs.getLong("id"));
-//                dto.setName(rs.getString("name"));
-//                dto.setAge(rs.getInt("age"));
-//                dto.setBirthDate(rs.getDate("birth_date"));
-//                dto.setAddress(rs.getString("address"));
-//                dto.setCreateAt(rs.getTimestamp("create_at"));
-//                dto.setUpdateAt(rs.getTimestamp("update_at"));
-//                return dto;
-//            }
-//
-//            return null;
-//        } finally {
-//            if (rs != null) {
-//                try {
-//                    rs.close();
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//
-//            if (pstmt != null) {
-//                try {
-//                    pstmt.close();
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//
-//            if (conn != null) {
-//                try {
-//                    conn.close();
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        }
-//    }
+
 //
 //    public int updateById(UserDto dto) throws Exception {
 //        String sql = "UPDATE `user` SET name = ?, age = ?, birth_date = ?, address = ? WHERE id = ?";
