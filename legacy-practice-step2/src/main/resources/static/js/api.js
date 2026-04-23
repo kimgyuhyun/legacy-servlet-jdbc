@@ -1,3 +1,4 @@
+// CREATE 부분
 function submitFormAjax() {
     $.ajax({
         url: window.CREATE_FORM_AJAX_URL,
@@ -85,3 +86,6 @@ function submitJsonFetch() {
         $('#result').text('Fetch 비동기 실패: ' + err.message)
     });
 }
+
+
+

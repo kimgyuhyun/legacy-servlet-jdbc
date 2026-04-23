@@ -47,4 +47,12 @@ public class UserController {
     public int createJson(@RequestBody UserDto dto) {
         return userDao.insert(dto);
     }
+
+    // user 세팅용 전체 조회
+    @GetMapping("/list")
+    public ModelAndView list() {
+        ModelAndView mv = new ModelAndView("user-list");
+        mv.addObject("userList", userDao.findAll());
+        return mv;
+    }
 }
