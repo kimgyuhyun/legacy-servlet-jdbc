@@ -173,5 +173,21 @@ function loadListByAjax() {
 }
 
 
+function loadListByAxios() {
+    axios.get(window.USER_AXIOS_LIST_URL)
+        .then(function (response) {
+            var list = response.data;
+            renderUserList(list);
+            $('#result').text('Axios 목록 조회 성공: ' + list.length + '건');
+        })
+        .catch(function (error) {
+            var msg = (error.response && error.response.data)
+                ? error.response.data
+                : error.message;
+            $('#result').text('Axios 목록 조회 실패: ' + msg);
+        });
+}
 
+function LoadListByFetch() {
 
+}
