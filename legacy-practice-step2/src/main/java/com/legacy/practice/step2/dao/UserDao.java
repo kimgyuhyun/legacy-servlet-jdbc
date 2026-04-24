@@ -32,12 +32,15 @@ public class UserDao {
     }
 
     public List<UserDto> findAll() {
-        String sql = "SELECT id, name FROM `user` ORDER BY id ASC";
+        String sql = "SELECT id, name, age, birth_date, address FROM `user` ORDER BY id ASC";
 
         return jdbcTemplate.query(sql, (rs, rowNum) -> {
             UserDto dto = new UserDto();
             dto.setId(rs.getLong("id"));
             dto.setName(rs.getString("name"));
+            dto.setAge(rs.getInt("age"));
+            dto.setBirthDate(rs.getDate("birth_date"));
+            dto.setAddress(rs.getString("address"));
             return dto;
         });
     }

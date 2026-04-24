@@ -120,7 +120,7 @@ function loadDetailByFetch(id) {
     })
     .then(function (response) {
         if (!response.ok) {
-            throw new Error('HTTP' + response.status);
+            throw new Error('HTTP ' + response.status);
         }
         return response.json();
     })
@@ -129,6 +129,46 @@ function loadDetailByFetch(id) {
     })
     .catch(function (error) {
         $('#result').text('Fetch 단일 조회 실패: ' + error.message);
+    });
+}
+
+function renderUserList(list) {
+    var html = '';
+
+    if (!list || list.length == 0) {
+        html = '<tr><td colspan="8">조회된 사용자가 없습니다.</td></tr>';
+        $('#userTableBody').html(html);
+        return;
+    }
+
+    list.forEach(function (user) {
+        html += '<tr>'
+            + '<td>' + user.id + '</td>'
+            + '<td>' + user.name + '</td>'
+            + '<td>' + user.age + '</td>'
+            + '<td>' + user.birthDate + '</td>'
+            + '<td>' + user.address + '</td>'
+            + '<td><button type="button" onclick="loadDetailByAjax(' + user.id + ')">Ajax 상세보기</button></td>'
+            + '<td><button type="button" onclick="loadDetailByAxios(' + user.id + ')">Axios 상세보기</button></td>'
+            + '<td><button type="button" onclick="loadDetailByFetch(' + user.id + ')">Fetch 상세보기</button></td>'
+            + '</tr>'
+    });
+
+    $('#userTableBody').html(html);
+}
+
+function loadListByAjax() {
+    $.ajax({
+        url: window.USER_AJAX_LIST_URL,
+        type: 'GET',
+        dataType: 'json',
+        success: function(list) {
+            renderUserList(list);
+            $('#result').text('Ajax 목록 조회 성공: ' + list.length + '건');
+        },
+        error: function (xhr) {
+            $('#result').text('Ajax 목록 조회 실패: ' + (xhr.responseText || xhr.status));
+        }
     });
 }
 

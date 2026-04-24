@@ -6,6 +6,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/user")
 public class UserController {
@@ -60,6 +62,20 @@ public class UserController {
         return mv;
     }
 
+    @GetMapping("/asyncList")
+    public ModelAndView asyncList() {
+        ModelAndView mv = new ModelAndView("user-async-list");
+        mv.addObject("ajaxDetailUrl", "/user/ajaxDetail");
+        mv.addObject("axiosDetailUrl", "/user/axiosDetail");
+        mv.addObject("fetchDetailUrl", "/user/fetchDetail");
+
+        mv.addObject("ajaxListUrl", "/user/ajaxList");
+        mv.addObject("axiosListUrl", "/user/axiosList");
+        mv.addObject("fetchListUrl", "/user/fetchList");
+
+        return mv;
+    }
+
     // 동기 조회
     @GetMapping("/syncDetail/{id}")
     public ModelAndView getSyncDetail(@PathVariable Long id) {
@@ -87,6 +103,27 @@ public class UserController {
     @ResponseBody
     public UserDto getFetchDetail(@PathVariable Long id) {
         return userDao.findById(id);
+    }
+
+    // 비동기 Ajax 목록 조회
+    @GetMapping("/ajaxList")
+    @ResponseBody
+    public List<UserDto> getAjaxList() {
+        return userDao.findAll();
+    }
+
+    // 비동기 Axios 목록 조회
+    @GetMapping("/axiosList")
+    @ResponseBody
+    public List<UserDto> getAxiosList() {
+        return userDao.findAll();
+    }
+
+    // 비동기 Fetch 목록 조회
+    @GetMapping("/fetchList")
+    @ResponseBody
+    public List<UserDto> getFetchList() {
+        return userDao.findAll();
     }
 
 }
