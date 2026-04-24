@@ -54,6 +54,7 @@ public class UserController {
         ModelAndView mv = new ModelAndView("user-list");
         mv.addObject("userList", userDao.findAll());
         mv.addObject("ajaxDetailUrl", "/user/ajaxDetail");
+        mv.addObject("axiosDetailUrl", "/user/axiosDetail");
         return mv;
     }
 
@@ -69,6 +70,13 @@ public class UserController {
     @GetMapping("/ajaxDetail/{id}")
     @ResponseBody
     public UserDto getAjaxDetail(@PathVariable Long id) {
+        return userDao.findById(id);
+    }
+
+    // 비동기 Axios 조회
+    @GetMapping("/axiosDetail/{id}")
+    @ResponseBody
+    public UserDto getAxiosDetail(@PathVariable Long id) {
         return userDao.findById(id);
     }
 

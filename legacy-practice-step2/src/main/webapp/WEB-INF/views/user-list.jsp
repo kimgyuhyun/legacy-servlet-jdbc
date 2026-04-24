@@ -11,6 +11,7 @@
     <script>
         window.USER_LIST_API_URL = '/user/list';
         window.USER_AJAX_DETAIL = '${ajaxDetailUrl}';
+        window.USER_AXIOS_DETAIL = '${axiosDetailUrl}';
     </script>
 </head>
 <body>
@@ -23,6 +24,7 @@
         <th>이름</th>
         <th>상세보기</th>
         <th>Ajax 상세보기</th>
+        <th>Axios 상세보기</th>
     </tr>
     </thead>
     <tbody>
@@ -31,7 +33,7 @@
         if (userList == null || userList.isEmpty()) {
     %>
     <tr>
-        <td colspan="4">조회된 사용자가 없습니다.</td>
+        <td colspan="5">조회된 사용자가 없습니다.</td>
     </tr>
     <%
         } else {
@@ -45,6 +47,9 @@
         </td>
         <td>
             <button type="button" onclick="loadDetailByAjax(<%= user.getId() %>)">Ajax 상세보기</button>
+        </td>
+        <td>
+            <button type="button" onclick="loadDetailByAxios(<%= user.getId() %>)">Axios 상세보기</button>
         </td>
     </tr>
     <%

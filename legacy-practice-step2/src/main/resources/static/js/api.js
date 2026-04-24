@@ -101,5 +101,18 @@ function loadDetailByAjax(id) {
     });
 }
 
+function loadDetailByAxios(id) {
+    axios.get(window.USER_AXIOS_DETAIL + '/' + id)
+        .then(function (response) {
+            $('#result').text(JSON.stringify(response.data, null, 2));
+        })
+        .catch(function (error) {
+            var msg = (error.response && error.response.data)
+            ? error.response.data
+            : error.message;
+            $('#result').text('Axios 단일 조회 실패: ' + msg);
+        });
+}
+
 
 
