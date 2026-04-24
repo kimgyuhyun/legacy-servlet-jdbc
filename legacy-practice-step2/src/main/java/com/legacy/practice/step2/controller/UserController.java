@@ -53,13 +53,23 @@ public class UserController {
     public ModelAndView list() {
         ModelAndView mv = new ModelAndView("user-list");
         mv.addObject("userList", userDao.findAll());
+        mv.addObject("ajaxDetailUrl", "/user/ajaxDetail");
         return mv;
     }
 
+    // 동기 조회
     @GetMapping("/syncDetail/{id}")
     public ModelAndView getSyncDetail(@PathVariable Long id) {
         ModelAndView mv = new ModelAndView("user-detail");
         mv.addObject("user", userDao.findById(id));
         return mv;
     }
+
+    // 비동기 Ajax 조회
+    @GetMapping("/ajaxDetail/{id}")
+    @ResponseBody
+    public UserDto getAjaxDetail(@PathVariable Long id) {
+        return userDao.findById(id);
+    }
+
 }

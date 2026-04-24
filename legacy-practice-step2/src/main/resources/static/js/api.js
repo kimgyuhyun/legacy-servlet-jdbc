@@ -87,5 +87,19 @@ function submitJsonFetch() {
     });
 }
 
+function loadDetailByAjax(id) {
+    $.ajax({
+        url: window.USER_AJAX_DETAIL + '/' + id,
+        type: 'GET',
+        dataType: 'json',
+        success: function (data) {
+            $('#result').text(JSON.stringify(data, null, 2));
+        },
+        error: function (xhr) {
+            $('#result').text('단일 조회 실패: ' + (xhr.responseText || xhr.status))
+        }
+    });
+}
+
 
 

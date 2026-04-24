@@ -10,6 +10,7 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
         window.USER_LIST_API_URL = '/user/list';
+        window.USER_AJAX_DETAIL = '${ajaxDetailUrl}';
     </script>
 </head>
 <body>
@@ -21,6 +22,7 @@
         <th>ID</th>
         <th>이름</th>
         <th>상세보기</th>
+        <th>Ajax 상세보기</th>
     </tr>
     </thead>
     <tbody>
@@ -29,7 +31,7 @@
         if (userList == null || userList.isEmpty()) {
     %>
     <tr>
-        <td colspan="3">조회된 사용자가 없습니다.</td>
+        <td colspan="4">조회된 사용자가 없습니다.</td>
     </tr>
     <%
         } else {
@@ -40,6 +42,9 @@
         <td><%= user.getName() %></td>
         <td>
             <a href="${pageContext.request.contextPath}/user/syncDetail/<%= user.getId() %>">동기 상세보기</a>
+        </td>
+        <td>
+            <button type="button" onclick="loadDetailByAjax(<%= user.getId() %>)">Ajax 상세보기</button>
         </td>
     </tr>
     <%
