@@ -87,6 +87,8 @@ function submitJsonFetch() {
     });
 }
 
+// Read 부분
+
 function loadDetailByAjax(id) {
     $.ajax({
         url: window.USER_AJAX_DETAIL + '/' + id,
@@ -188,6 +190,21 @@ function loadListByAxios() {
         });
 }
 
-function LoadListByFetch() {
-
+function loadListByFetch() {
+    fetch(window.USER_FETCH_LIST_URL, {
+        method: 'GET'
+    })
+    .then(function (response) {
+        if (!response.ok) {
+            throw new Error('HTTP ' + response.status);
+        }
+        return response.json();
+    })
+    .then(function (list) {
+        renderUserList(list);
+        $('#result').text('Fetch 목록 조회 성공: ' + list.length + '건');
+    })
+    .catch(function (error) {
+        $('#result').text('Fetch 목록 조회 실패: ' + error.message);
+    });
 }
