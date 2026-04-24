@@ -55,6 +55,8 @@ public class UserController {
         mv.addObject("userList", userDao.findAll());
         mv.addObject("ajaxDetailUrl", "/user/ajaxDetail");
         mv.addObject("axiosDetailUrl", "/user/axiosDetail");
+        mv.addObject("fetchDetailUrl", "/user/fetchDetail");
+
         return mv;
     }
 
@@ -77,6 +79,13 @@ public class UserController {
     @GetMapping("/axiosDetail/{id}")
     @ResponseBody
     public UserDto getAxiosDetail(@PathVariable Long id) {
+        return userDao.findById(id);
+    }
+
+    // 비동기 Fetch 조회
+    @GetMapping("/fetchDetail/{id}")
+    @ResponseBody
+    public UserDto getFetchDetail(@PathVariable Long id) {
         return userDao.findById(id);
     }
 

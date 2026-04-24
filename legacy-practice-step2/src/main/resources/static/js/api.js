@@ -114,5 +114,24 @@ function loadDetailByAxios(id) {
         });
 }
 
+function loadDetailByFetch(id) {
+    fetch(window.USER_FETCH_DETAIL + '/' + id, {
+        method: 'GET'
+    })
+    .then(function (response) {
+        if (!response.ok) {
+            throw new Error('HTTP' + response.status);
+        }
+        return response.json();
+    })
+    .then(function (data) {
+        $('#result').text(JSON.stringify(data, null, 2));
+    })
+    .catch(function (error) {
+        $('#result').text('Fetch 단일 조회 실패: ' + error.message);
+    });
+}
+
+
 
 

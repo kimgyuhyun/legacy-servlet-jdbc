@@ -12,6 +12,7 @@
         window.USER_LIST_API_URL = '/user/list';
         window.USER_AJAX_DETAIL = '${ajaxDetailUrl}';
         window.USER_AXIOS_DETAIL = '${axiosDetailUrl}';
+        window.USER_FETCH_DETAIL = '${fetchDetailUrl}';
     </script>
 </head>
 <body>
@@ -25,6 +26,7 @@
         <th>상세보기</th>
         <th>Ajax 상세보기</th>
         <th>Axios 상세보기</th>
+        <th>Fetch 상세보기</th>
     </tr>
     </thead>
     <tbody>
@@ -50,6 +52,9 @@
         </td>
         <td>
             <button type="button" onclick="loadDetailByAxios(<%= user.getId() %>)">Axios 상세보기</button>
+        </td>
+        <td>
+            <button type="button" onclick="loadDetailByFetch(<%= user.getId() %>)">Fetch 상세보기</button>
         </td>
     </tr>
     <%
