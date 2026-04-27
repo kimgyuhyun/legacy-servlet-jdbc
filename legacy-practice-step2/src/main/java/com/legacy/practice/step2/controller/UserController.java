@@ -133,6 +133,7 @@ public class UserController {
         ModelAndView mv = new ModelAndView("user-update");
         mv.addObject("user", userDao.findById(id));
         mv.addObject("ajaxUpdateUrl", "/user/update/ajax/form");
+        mv.addObject("jsonUpdateUrl", "/user/update/json");
         return mv;
     }
 
@@ -147,6 +148,13 @@ public class UserController {
     @PostMapping("/update/ajax/form")
     @ResponseBody
     public int updateByAjaxForm(@ModelAttribute UserDto dto) {
+        return userDao.updateById(dto);
+    }
+
+    // Ajax json 업데이트
+    @PostMapping("/update/json")
+    @ResponseBody
+    public int updateByJson(@RequestBody UserDto dto) {
         return userDao.updateById(dto);
     }
 }

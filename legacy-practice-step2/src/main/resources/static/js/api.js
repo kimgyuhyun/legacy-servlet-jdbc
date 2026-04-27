@@ -225,3 +225,26 @@ function updateByAjaxForm() {
         }
     });
 }
+
+function updateByAjaxJson() {
+    var payload = {
+        id: parseInt($('#id').val(), 10),
+        name: $('#name').val(),
+        age: parseInt($('#age').val(), 10),
+        birthDate: $('#birthDate').val(),
+        address: $('#address').val()
+    }
+
+    $.ajax({
+        url: window.USER_UPDATE_JSON_URL,
+        type: 'POST',
+        contentType: 'application/json; charset=UTF-8',
+        data: JSON.stringify(payload),
+        success: function(res) {
+            $('#result').text('Ajax JSON 수정 성공: ' + res);
+        },
+        error: function (xhr) {
+            $('#result').text('Ajax JSON 수정 실패: ' + (xhr.responseText || xhr.status))
+        }
+    });
+}

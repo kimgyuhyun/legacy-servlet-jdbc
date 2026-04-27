@@ -10,6 +10,7 @@
 
     <script>
         window.USER_UPDATE_AJAX_FORM_URL = '${ajaxUpdateUrl}';
+        window.USER_UPDATE_JSON_URL = '${jsonUpdateUrl}';
     </script>
 </head>
 <body>
@@ -51,6 +52,7 @@
         <button type="submit">수정</button>
         <a href="${pageContext.request.contextPath}/user/list">목록으로</a>
         <button type="button" onclick="updateByAjaxForm()">Ajax form 수정</button>
+        <button type="button" onclick="updateByAjaxJson()">Ajax json 수정</button>
     </div>
 
 </form>
