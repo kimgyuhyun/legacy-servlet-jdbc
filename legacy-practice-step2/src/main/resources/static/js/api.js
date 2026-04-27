@@ -233,7 +233,7 @@ function updateByAjaxJson() {
         age: parseInt($('#age').val(), 10),
         birthDate: $('#birthDate').val(),
         address: $('#address').val()
-    }
+    };
 
     $.ajax({
         url: window.USER_UPDATE_JSON_URL,
@@ -246,5 +246,30 @@ function updateByAjaxJson() {
         error: function (xhr) {
             $('#result').text('Ajax JSON 수정 실패: ' + (xhr.responseText || xhr.status))
         }
+    });
+}
+
+function updateByAxiosJson() {
+    var payload = {
+        id: parseInt($('#id').val(), 10),
+        name: $('#name').val(),
+        age: parseInt($('#age').val(), 10),
+        birthDate: $('#birthDate').val(),
+        address: $('#address').val()
+    };
+
+    axios.post(window.USER_UPDATE_JSON_URL, payload, {
+        headers: {
+            'Content-Type': 'application/json; charset=UTF-8'
+        }
+    })
+    .then(function (response) {
+        $('#result').text('Axios JSON 수정 성공: ' + response.data);
+    })
+    .catch(function (error) {
+        var msg = (error.response && error.response.data)
+        ? error.response.data
+        : error.message;
+        $('#result').text('Axios JSON 수정 실패: ' + msg);
     });
 }
