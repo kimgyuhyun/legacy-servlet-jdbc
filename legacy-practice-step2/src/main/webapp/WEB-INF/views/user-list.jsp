@@ -27,6 +27,7 @@
         <th>Ajax 상세보기</th>
         <th>Axios 상세보기</th>
         <th>Fetch 상세보기</th>
+        <th>수정</th>
     </tr>
     </thead>
     <tbody>
@@ -55,6 +56,9 @@
         </td>
         <td>
             <button type="button" onclick="loadDetailByFetch(<%= user.getId() %>)">Fetch 상세보기</button>
+        </td>
+        <td>
+           <a href="${pageContext.request.contextPath}/user/updatePage/<%= user.getId() %>">수정</a>
         </td>
     </tr>
     <%

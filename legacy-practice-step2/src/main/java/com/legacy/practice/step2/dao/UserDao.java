@@ -4,9 +4,6 @@ import com.legacy.practice.step2.dto.UserDto;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -47,7 +44,7 @@ public class UserDao {
 
 
     public UserDto findById(Long id) {
-        String sql = "SELECT id, name, age, birth_date, address, create_at, update_at FRom `user` WHERE id = ?";
+        String sql = "SELECT id, name, age, birth_date, address, create_at, update_at FROM `user` WHERE id = ?";
         return jdbcTemplate.queryForObject(sql, (rs, rowNum) -> {
             UserDto dto = new UserDto();
             dto.setId(rs.getLong("id"));
@@ -60,7 +57,21 @@ public class UserDao {
             return dto;
         }, id);
     }
-//
+
+
+        public int updateById(UserDto dto) {
+        String sql = "UPDATE `user` SET name = ?, age = ?, birth_date = ?, address = ? WHERE id = ?";
+
+        return jdbcTemplate.update(
+                sql,
+                dto.getName(),
+                dto.getAge(),
+                dto.getBirthDate(),
+                dto.getAddress(),
+                dto.getId()
+        );
+    }
+
 //    public int deleteById(Long id) throws Exception {
 //        String sql = "DELETE FROM `user` WHERE id = ?";
 //
@@ -91,42 +102,9 @@ public class UserDao {
 //            }
 //        }
 //    }
-//
 
-//
-//    public int updateById(UserDto dto) throws Exception {
-//        String sql = "UPDATE `user` SET name = ?, age = ?, birth_date = ?, address = ? WHERE id = ?";
-//
-//        Connection conn = null;
-//        PreparedStatement pstmt = null;
-//
-//        try {
-//            conn = getConnection();
-//            pstmt = conn.prepareStatement(sql);
-//            pstmt.setString(1, dto.getName());
-//            pstmt.setInt(2, dto.getAge());
-//            pstmt.setDate(3, dto.getBirthDate());
-//            pstmt.setString(4, dto.getAddress());
-//            pstmt.setLong(5, dto.getId());
-//
-//            return pstmt.executeUpdate();
-//        } finally {
-//            if (pstmt != null) {
-//                try {
-//                    pstmt.close();
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//
-//            if (conn != null) {
-//                try {
-//                    conn.close();
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        }
-//    }
+
+
+
 
 }

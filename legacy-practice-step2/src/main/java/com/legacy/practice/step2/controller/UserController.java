@@ -126,4 +126,19 @@ public class UserController {
         return userDao.findAll();
     }
 
+
+    // 수정 페이지
+    @GetMapping("/updatePage/{id}")
+    public ModelAndView getUpdatePage(@PathVariable Long id) {
+        ModelAndView mv = new ModelAndView("user-update");
+        mv.addObject("user", userDao.findById(id));
+        return mv;
+    }
+
+    // 순수 폼 업데이트
+    @PostMapping("/update/sync")
+    public String updateSync(@ModelAttribute UserDto dto) {
+        userDao.updateById(dto);
+        return "redirect:/user/list";
+    }
 }
