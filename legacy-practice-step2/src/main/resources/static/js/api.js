@@ -208,3 +208,20 @@ function loadListByFetch() {
         $('#result').text('Fetch 목록 조회 실패: ' + error.message);
     });
 }
+
+
+// update 부분
+
+function updateByAjaxForm() {
+    $.ajax({
+        url: window.USER_UPDATE_AJAX_FORM_URL,
+        type: 'POST',
+        data: $('#updateForm').serialize(),
+        success: function (res) {
+            $('#result').text('Ajax serialize 수정 성공: ' + res);
+        },
+        error: function(xhr) {
+            $('#result').text('Ajax serialize 수정 실패: ' + (xhr.responseText || xhr.status));
+        }
+    });
+}

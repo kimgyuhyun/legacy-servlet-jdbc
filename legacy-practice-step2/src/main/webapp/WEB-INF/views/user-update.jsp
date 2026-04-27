@@ -5,6 +5,12 @@
 <head>
     <meta charset="UTF-8">
     <title>User 수정</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <script>
+        window.USER_UPDATE_AJAX_FORM_URL = '${ajaxUpdateUrl}';
+    </script>
 </head>
 <body>
 
@@ -14,7 +20,7 @@
 
 <h1> 수정 페이지</h1>
 
-<form method="post" action="${pageContext.request.contextPath}/user/update/sync">
+<form id="updateForm" method="post" action="${pageContext.request.contextPath}/user/update/sync">
 
     <div>
         <label for="id">ID</label>
@@ -44,8 +50,13 @@
     <div style="margin-top: 12px;">
         <button type="submit">수정</button>
         <a href="${pageContext.request.contextPath}/user/list">목록으로</a>
+        <button type="button" onclick="updateByAjaxForm()">Ajax form 수정</button>
     </div>
 
 </form>
+
+<div id="result"></div>
+
+<script src="${pageContext.request.contextPath}/js/api.js"></script>
 </body>
 </html>

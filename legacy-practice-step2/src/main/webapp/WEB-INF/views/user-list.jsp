@@ -36,7 +36,7 @@
         if (userList == null || userList.isEmpty()) {
     %>
     <tr>
-        <td colspan="5">조회된 사용자가 없습니다.</td>
+        <td colspan="7">조회된 사용자가 없습니다.</td>
     </tr>
     <%
         } else {

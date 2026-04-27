@@ -132,6 +132,7 @@ public class UserController {
     public ModelAndView getUpdatePage(@PathVariable Long id) {
         ModelAndView mv = new ModelAndView("user-update");
         mv.addObject("user", userDao.findById(id));
+        mv.addObject("ajaxUpdateUrl", "/user/update/ajax/form");
         return mv;
     }
 
@@ -140,5 +141,12 @@ public class UserController {
     public String updateSync(@ModelAttribute UserDto dto) {
         userDao.updateById(dto);
         return "redirect:/user/list";
+    }
+    
+    // Ajax form 업데이트
+    @PostMapping("/update/ajax/form")
+    @ResponseBody
+    public int updateByAjaxForm(@ModelAttribute UserDto dto) {
+        return userDao.updateById(dto);
     }
 }
