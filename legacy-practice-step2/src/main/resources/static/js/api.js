@@ -273,3 +273,34 @@ function updateByAxiosJson() {
         $('#result').text('Axios JSON 수정 실패: ' + msg);
     });
 }
+
+
+function updateByFetchJson() {
+var payload = {
+        id: parseInt($('#id').val(), 10),
+        name: $('#name').val(),
+        age: parseInt($('#age').val(), 10),
+        birthDate: $('#birthDate').val(),
+        address: $('#address').val()
+    };
+
+    fetch(window.USER_UPDATE_JSON_URL, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json; charset=UTF-8'
+        },
+        body: JSON.stringify(payload)
+    })
+    .then(function (response) {
+        if (!response.ok) {
+            throw new Error('HTTP ' + response.status);
+        }
+        return response.text(); // 컨트롤러가 int 반환이면 text가 안전
+    })
+    .then(function (response) {
+        $('#result').text('Fetch JSON 수정 성공: ' + response);
+    })
+    .catch(function (error) {
+        $('#result').text('Fetch JSON 수정 실패: ' + error.message)
+    });
+}
