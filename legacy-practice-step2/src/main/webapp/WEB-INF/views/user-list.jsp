@@ -35,7 +35,8 @@
         <th>순수 폼 삭제</th>
         <th>AjaxForm 삭제</th>
         <th>AjaxJson 삭제</th>
-        <th>AxiosJson 삭제</th>
+        <th>AxiosPath 삭제</th>
+        <th>FetchPath 삭제</th>
     </tr>
     </thead>
     <tbody>
@@ -44,7 +45,7 @@
         if (userList == null || userList.isEmpty()) {
     %>
     <tr>
-        <td colspan="10">조회된 사용자가 없습니다.</td>
+        <td colspan="12">조회된 사용자가 없습니다.</td>
     </tr>
     <%
         } else {
@@ -81,7 +82,10 @@
             <button type="button" onclick="deleteAjaxJson(<%= user.getId() %>)">AjaxJson 삭제</button>
         </td>
         <td>
-            <button type="button" onclick="deleteAxiosPath(<%= user.getId() %>)">AxiosJson 삭제</button>
+            <button type="button" onclick="deleteAxiosPath(<%= user.getId() %>)">AxiosPath 삭제</button>
+        </td>
+        <td>
+            <button type="button" onclick="deleteFetchPath(<%= user.getId() %>)">FetchPath 삭제</button>
         </td>
     </tr>
     <%

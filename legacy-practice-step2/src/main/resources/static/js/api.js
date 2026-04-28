@@ -447,3 +447,20 @@ function deleteAxiosPath(id) {
         });
 }
 
+function deleteFetchPath(id) {
+    fetch(window.USER_PATH_DELETE + '/' + id, {
+        method: 'DELETE'
+    })
+    .then(function (res) {
+        if (!res.ok) {
+            throw new Error('HTTP' + res.status);
+        }
+        return res.text();
+    })
+    .then(function (res) {
+        $('#result').text('Fetch Delete 성공: ' + res);
+    })
+    .catch(function (err) {
+        $('#result').text('Fetch Delete 실패: ' + err.message);
+    });
+}
