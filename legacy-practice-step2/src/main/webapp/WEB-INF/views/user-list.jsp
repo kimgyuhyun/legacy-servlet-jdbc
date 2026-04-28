@@ -15,6 +15,7 @@
         window.USER_FETCH_DETAIL = '${fetchDetailUrl}';
 
         window.USER_AJAX_FORM_DELETE = '${ajaxFormDeleteUrl}';
+        window.USER_JSON_DELETE = '${jsonDeleteUrl}';
     </script>
 </head>
 <body>
@@ -32,6 +33,7 @@
         <th>수정</th>
         <th>순수 폼 삭제</th>
         <th>AjaxForm 삭제</th>
+        <th>AjaxJson 삭제</th>
     </tr>
     </thead>
     <tbody>
@@ -40,7 +42,7 @@
         if (userList == null || userList.isEmpty()) {
     %>
     <tr>
-        <td colspan="9">조회된 사용자가 없습니다.</td>
+        <td colspan="10">조회된 사용자가 없습니다.</td>
     </tr>
     <%
         } else {
@@ -72,6 +74,9 @@
         </td>
         <td>
             <button type="button" onclick="deleteAjaxForm(<%= user.getId() %>)">AjaxForm 삭제</button>
+        </td>
+        <td>
+            <button type="button" onclick="deleteAjaxJson(<%= user.getId() %>)">AjaxJson 삭제</button>
         </td>
     </tr>
     <%

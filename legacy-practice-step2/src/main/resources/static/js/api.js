@@ -413,3 +413,23 @@ function deleteAjaxForm(id) {
         }
     });
 }
+
+function deleteAjaxJson(id) {
+    var payload = {
+        id: id
+    };
+
+    $.ajax({
+        url: window.USER_JSON_DELETE,
+        type: 'POST',
+        contentType: 'application/json; charset=UTF-8',
+        data: JSON.stringify(payload),
+        // data: JSON.stringify({ id: id }) 단일 값이면 이렇게도 가능
+        success: function (res) {
+            $('#result').text('Ajax Json 삭제 성공: ' + res);
+        },
+        error: function (xhr) {
+            $('#result').text('Ajax Json 삭제 실패: ' + (xhr.responseText || xhr.status));
+        }
+    })
+}
