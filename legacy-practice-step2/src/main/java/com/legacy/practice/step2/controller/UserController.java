@@ -1,5 +1,6 @@
 package com.legacy.practice.step2.controller;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.legacy.practice.step2.dao.UserDao;
 import com.legacy.practice.step2.dto.UserDto;
 import org.springframework.stereotype.Controller;
@@ -8,7 +9,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 @Controller
 @RequestMapping("/user")
@@ -139,6 +139,8 @@ public class UserController {
         mv.addObject("jsonUpdatePutUrl", "/user/updatePut/json");
         mv.addObject("jsonUpdatePatchUrl", "/user/updatePatch/json");
         mv.addObject("jsonMapUpdatePatchUrl", "/user/updatePatch/jsonMap");
+        mv.addObject("jsonNodeUpdatePatchUrl", "/user/updatePatch/jsonNode");
+
         return mv;
     }
 
@@ -194,4 +196,17 @@ public class UserController {
         return userDao.updateNameById(id, name);
     }
 
+    // Ajax json Patch 업데이트 JsonNode 로 바인딩
+    @PatchMapping("/updatePatch/jsonNode")
+    @ResponseBody
+    public int updatePatchByJsonNode(@RequestBody JsonNode body) {
+        if (!body.hasNonNull("id") || !body.hasNonNull("name")) {
+            return 0;
+        }
+
+        long id = body.get("id").asLong();
+        String name = body.get("name").asText();
+
+        return userDao.updateNameById(id, name);
+    }
 }
