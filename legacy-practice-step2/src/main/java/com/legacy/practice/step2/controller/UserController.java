@@ -61,6 +61,7 @@ public class UserController {
         mv.addObject("axiosDetailUrl", "/user/axiosDetail");
         mv.addObject("fetchDetailUrl", "/user/fetchDetail");
 
+        mv.addObject("ajaxFormDeleteUrl", "/user/delete/ajaxForm");
         return mv;
     }
 
@@ -213,5 +214,11 @@ public class UserController {
     public String deleteSync(@RequestParam("id") Long id) {
         userDao.deleteById(id);
         return "redirect:/user/list";
+    }
+
+    @PostMapping("/delete/ajaxForm")
+    @ResponseBody
+    public int deleteAjaxForm(@RequestParam("id") Long id) {
+        return userDao.deleteById(id);
     }
 }

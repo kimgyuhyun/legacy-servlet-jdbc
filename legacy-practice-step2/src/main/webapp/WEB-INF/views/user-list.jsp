@@ -13,6 +13,8 @@
         window.USER_AJAX_DETAIL = '${ajaxDetailUrl}';
         window.USER_AXIOS_DETAIL = '${axiosDetailUrl}';
         window.USER_FETCH_DETAIL = '${fetchDetailUrl}';
+
+        window.USER_AJAX_FORM_DELETE = '${ajaxFormDeleteUrl}';
     </script>
 </head>
 <body>
@@ -29,6 +31,7 @@
         <th>Fetch 상세보기</th>
         <th>수정</th>
         <th>순수 폼 삭제</th>
+        <th>AjaxForm 삭제</th>
     </tr>
     </thead>
     <tbody>
@@ -37,7 +40,7 @@
         if (userList == null || userList.isEmpty()) {
     %>
     <tr>
-        <td colspan="8">조회된 사용자가 없습니다.</td>
+        <td colspan="9">조회된 사용자가 없습니다.</td>
     </tr>
     <%
         } else {
@@ -66,6 +69,9 @@
                 <input type="hidden" name="id" value="<%= user.getId() %>">
                 <button type="submit">순수 폼 삭제</button>
             </form>
+        </td>
+        <td>
+            <button type="button" onclick="deleteAjaxForm(<%= user.getId() %>)">AjaxForm 삭제</button>
         </td>
     </tr>
     <%

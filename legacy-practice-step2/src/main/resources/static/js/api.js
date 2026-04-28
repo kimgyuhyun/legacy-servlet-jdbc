@@ -381,7 +381,7 @@ function updatePatchByAxiosJsonNode() {
         name: $('#name').val(),
     };
 
-    axios.patch(window.USER_UPDATE_PATCH_JSON_MAP_URL, payload, {
+    axios.patch(window.USER_UPDATE_PATCH_JSON_NODE_URL, payload, {
         headers: {
             'Content-Type': 'application/json; charset=UTF-8'
         }
@@ -394,5 +394,22 @@ function updatePatchByAxiosJsonNode() {
         ? error.response.data
         : error.message;
         $('#result').text('Axios JSONNode Patch 수정 실패: ' + msg);
+    });
+}
+
+// 삭제 부분
+
+function deleteAjaxForm(id) {
+    $.ajax({
+        url: window.USER_AJAX_FORM_DELETE,
+        type: 'POST',
+        data: { id: id},
+        success: function (res) {
+            $('#result').text('Ajax Form 삭제 성공: ' + res);
+//            location.reload();
+        },
+        error: function (xhr) {
+            $('#result').text('Ajax Form 삭제 실패: ' + (xhr.responseText || xhr.status));
+        }
     });
 }
