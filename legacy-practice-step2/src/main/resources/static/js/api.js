@@ -433,3 +433,17 @@ function deleteAjaxJson(id) {
         }
     })
 }
+
+function deleteAxiosPath(id) {
+    axios.delete(window.USER_PATH_DELETE + '/' + id)
+    .then(function (response) {
+            $('#result').text('Axios Path 삭제 성공: ' + response.data);
+        })
+        .catch(function (error) {
+            var msg = (error.response && error.response.data)
+            ? error.response.data
+            : error.message;
+            $('#result').text('Axios Path 삭제 실패: ' + msg);
+        });
+}
+

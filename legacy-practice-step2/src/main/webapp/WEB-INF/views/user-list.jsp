@@ -16,6 +16,7 @@
 
         window.USER_AJAX_FORM_DELETE = '${ajaxFormDeleteUrl}';
         window.USER_JSON_DELETE = '${jsonDeleteUrl}';
+        window.USER_PATH_DELETE = '${pathDeleteUrl}';
     </script>
 </head>
 <body>
@@ -34,6 +35,7 @@
         <th>순수 폼 삭제</th>
         <th>AjaxForm 삭제</th>
         <th>AjaxJson 삭제</th>
+        <th>AxiosJson 삭제</th>
     </tr>
     </thead>
     <tbody>
@@ -77,6 +79,9 @@
         </td>
         <td>
             <button type="button" onclick="deleteAjaxJson(<%= user.getId() %>)">AjaxJson 삭제</button>
+        </td>
+        <td>
+            <button type="button" onclick="deleteAxiosPath(<%= user.getId() %>)">AxiosJson 삭제</button>
         </td>
     </tr>
     <%

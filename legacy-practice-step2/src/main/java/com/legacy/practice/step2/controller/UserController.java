@@ -63,6 +63,7 @@ public class UserController {
 
         mv.addObject("ajaxFormDeleteUrl", "/user/delete/ajaxForm");
         mv.addObject("jsonDeleteUrl", "/user/delete/Json");
+        mv.addObject("pathDeleteUrl", "/user/delete");
         return mv;
     }
 
@@ -227,5 +228,11 @@ public class UserController {
     @ResponseBody
     public int deleteJson(@RequestBody UserDto dto) {
         return userDao.deleteById(dto.getId());
+    }
+
+    @DeleteMapping("/delete/{id}")
+    @ResponseBody
+    public int deleteByPath(@PathVariable Long id) {
+        return userDao.deleteById(id);
     }
 }
