@@ -59,7 +59,7 @@ public class UserDao {
     }
 
 
-        public int updateById(UserDto dto) {
+    public int updateById(UserDto dto) {
         String sql = "UPDATE `user` SET name = ?, age = ?, birth_date = ?, address = ? WHERE id = ?";
 
         return jdbcTemplate.update(
@@ -70,6 +70,11 @@ public class UserDao {
                 dto.getAddress(),
                 dto.getId()
         );
+    }
+
+    public int updateNameById(Long id, String name) {
+        String sql = "UPDATE `user` SET name = ? WHERE id = ?";
+        return jdbcTemplate.update(sql, name, id);
     }
 
 //    public int deleteById(Long id) throws Exception {

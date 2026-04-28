@@ -134,6 +134,9 @@ public class UserController {
         mv.addObject("user", userDao.findById(id));
         mv.addObject("ajaxUpdateUrl", "/user/update/ajax/form");
         mv.addObject("jsonUpdateUrl", "/user/update/json");
+        mv.addObject("jsonUpdatePutUrl", "/user/updatePut/json");
+        mv.addObject("jsonUpdatePatchUrl", "/user/updatePatch/json");
+
         return mv;
     }
 
@@ -157,4 +160,20 @@ public class UserController {
     public int updateByJson(@RequestBody UserDto dto) {
         return userDao.updateById(dto);
     }
+
+
+    // Ajax json put 업데이트
+    @PutMapping("/updatePut/json")
+    @ResponseBody
+    public int updatePutByJson(@RequestBody UserDto dto) {
+        return userDao.updateById(dto);
+    }
+
+    // Ajax json patch 업데이트
+    @PatchMapping("/updatePatch/json")
+    @ResponseBody
+    public int updatePatchByJson(@RequestBody UserDto dto) {
+        return userDao.updateNameById(dto.getId(), dto.getName());
+    }
+
 }
