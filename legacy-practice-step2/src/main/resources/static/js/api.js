@@ -337,7 +337,7 @@ function updatePatchByAxiosJson() {
         name: $('#name').val(),
     };
 
-    axios.put(window.USER_UPDATE_PATCH_JSON_URL, payload, {
+    axios.patch(window.USER_UPDATE_PATCH_JSON_URL, payload, {
         headers: {
             'Content-Type': 'application/json; charset=UTF-8'
         }
