@@ -14,7 +14,7 @@
         window.USER_UPDATE_PUT_JSON_URL = '${jsonUpdatePutUrl}';
         window.USER_UPDATE_PATCH_JSON_URL = '${jsonUpdatePatchUrl}';
         window.USER_UPDATE_PATCH_JSON_MAP_URL = '${jsonMapUpdatePatchUrl}'
-        window.USER_UPDATE_PATCH_JSON_MAP_URL = '${jsonNodeUpdatePatchUrl}'
+        window.USER_UPDATE_PATCH_JSON_NODE_URL = '${jsonNodeUpdatePatchUrl}'
     </script>
 </head>
 <body>

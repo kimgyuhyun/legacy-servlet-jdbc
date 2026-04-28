@@ -74,7 +74,6 @@ public class UserController {
         mv.addObject("ajaxListUrl", "/user/ajaxList");
         mv.addObject("axiosListUrl", "/user/axiosList");
         mv.addObject("fetchListUrl", "/user/fetchList");
-
         return mv;
     }
 
@@ -140,7 +139,6 @@ public class UserController {
         mv.addObject("jsonUpdatePatchUrl", "/user/updatePatch/json");
         mv.addObject("jsonMapUpdatePatchUrl", "/user/updatePatch/jsonMap");
         mv.addObject("jsonNodeUpdatePatchUrl", "/user/updatePatch/jsonNode");
-
         return mv;
     }
 
@@ -208,5 +206,12 @@ public class UserController {
         String name = body.get("name").asText();
 
         return userDao.updateNameById(id, name);
+    }
+
+    // 순수 폼 삭제
+    @PostMapping("/delete/sync")
+    public String deleteSync(@RequestParam("id") Long id) {
+        userDao.deleteById(id);
+        return "redirect:/user/list";
     }
 }

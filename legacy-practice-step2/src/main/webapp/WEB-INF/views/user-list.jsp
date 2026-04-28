@@ -28,6 +28,7 @@
         <th>Axios 상세보기</th>
         <th>Fetch 상세보기</th>
         <th>수정</th>
+        <th>순수 폼 삭제</th>
     </tr>
     </thead>
     <tbody>
@@ -36,7 +37,7 @@
         if (userList == null || userList.isEmpty()) {
     %>
     <tr>
-        <td colspan="7">조회된 사용자가 없습니다.</td>
+        <td colspan="8">조회된 사용자가 없습니다.</td>
     </tr>
     <%
         } else {
@@ -59,6 +60,12 @@
         </td>
         <td>
            <a href="${pageContext.request.contextPath}/user/updatePage/<%= user.getId() %>">수정</a>
+        </td>
+        <td>
+            <form method="post" action="${pageContext.request.contextPath}/user/delete/sync" style="display:inline;">
+                <input type="hidden" name="id" value="<%= user.getId() %>">
+                <button type="submit">순수 폼 삭제</button>
+            </form>
         </td>
     </tr>
     <%
