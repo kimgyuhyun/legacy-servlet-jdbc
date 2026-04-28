@@ -13,6 +13,7 @@
         window.USER_UPDATE_JSON_URL = '${jsonUpdateUrl}';
         window.USER_UPDATE_PUT_JSON_URL = '${jsonUpdatePutUrl}';
         window.USER_UPDATE_PATCH_JSON_URL = '${jsonUpdatePatchUrl}';
+        window.USER_UPDATE_PATCH_JSON_MAP_URL = '${jsonMapUpdatePatchUrl}'
     </script>
 </head>
 <body>
@@ -59,7 +60,7 @@
         <button type="button" onclick="updateByFetchJson()">Fetch json 수정</button>
         <button type="button" onclick="updatePutByAxiosJson()">Axios put 수정</button>
         <button type="button" onclick="updatePatchByAxiosJson()">Axios Patch 수정</button>
-
+        <button type="button" onclick="updatePatchByAxiosJsonMap()">Axios Patch Map 수정</button>
     </div>
 
 </form>

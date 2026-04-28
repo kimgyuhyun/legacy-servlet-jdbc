@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("/user")
@@ -136,7 +138,7 @@ public class UserController {
         mv.addObject("jsonUpdateUrl", "/user/update/json");
         mv.addObject("jsonUpdatePutUrl", "/user/updatePut/json");
         mv.addObject("jsonUpdatePatchUrl", "/user/updatePatch/json");
-
+        mv.addObject("jsonMapUpdatePatchUrl", "/user/updatePatch/jsonMap");
         return mv;
     }
 
@@ -174,6 +176,22 @@ public class UserController {
     @ResponseBody
     public int updatePatchByJson(@RequestBody UserDto dto) {
         return userDao.updateNameById(dto.getId(), dto.getName());
+    }
+
+
+    // Ajax json patch 업데이트 맵으로 바인딩
+    @PatchMapping("/updatePatch/jsonMap")
+    @ResponseBody
+    public int updatePatchByJsonMap(@RequestBody Map<String, Object> body) {
+        Object idObj = body.get("id");
+        Object nameObj = body.get("name");
+
+        if (!(idObj instanceof Number) || nameObj == null) {
+            return 0;
+        }
+        long id = ((Number) idObj).longValue();
+        String name = String.valueOf(nameObj);
+        return userDao.updateNameById(id, name);
     }
 
 }
