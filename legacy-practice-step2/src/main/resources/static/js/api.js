@@ -501,3 +501,22 @@ function AxiosSearchUserByNameAndAddress() {
         $('#result').text('검색 실패: ' + msg);
     });
 }
+
+function AxiosDynamicSearchUserByNameAndAddress() {
+    const name =  $('#name').val().trim();
+    const address = $('#address').val().trim();
+
+    axios.get(window.USER_NAME_ADDRESS_DYNAMIC_SEARCH_URL,
+       { params: { name, address } })
+    .then(function (response) {
+        var list = response.data;
+        renderSearchResultBody(list);
+        $('#result').text('검색 성공: ' + list.length + '건');
+    })
+    .catch(function (error) {
+        var msg = (error.response && error.response.data)
+            ? error.response.data
+            : error.message;
+        $('#result').text('검색 실패: ' + msg);
+    });
+}

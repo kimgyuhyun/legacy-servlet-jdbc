@@ -240,6 +240,8 @@ public class UserController {
     public ModelAndView getSearchPage() {
         ModelAndView mv = new ModelAndView("user-search");
         mv.addObject("searchNameAddressUrl","/user/search/nameAddress");
+        mv.addObject("searchDynamicNameAddressUrl","/user/searchDynamic/nameAddress");
+
 
         return  mv;
     }
@@ -250,5 +252,13 @@ public class UserController {
             @RequestParam String name,
             @RequestParam String address) {
         return userDao.findByNameAndAddress(name, address);
+    }
+
+    @GetMapping("/searchDynamic/nameAddress")
+    @ResponseBody
+    public List<UserDto> searchDynamicByNameAndAddress(
+            @RequestParam String name,
+            @RequestParam String address) {
+        return userDao.findDynamicByNameAndAddress(name, address);
     }
 }

@@ -8,6 +8,7 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
         window.USER_NAME_ADDRESS_SEARCH_URL = '${searchNameAddressUrl}';
+        window.USER_NAME_ADDRESS_DYNAMIC_SEARCH_URL = '${searchDynamicNameAddressUrl}';
     </script>
 </head>
 <body>
@@ -21,6 +22,8 @@
     <input type="text" id="address" placeholder="주소">
 
     <button type="button" onclick="AxiosSearchUserByNameAndAddress()">검색</button>
+    <button type="button" onclick="AxiosDynamicSearchUserByNameAndAddress()">동적 검색</button>
+
 </div>
 
 <table border="1" cellpadding="8" cellspacing="0" style="margin-top:12px">

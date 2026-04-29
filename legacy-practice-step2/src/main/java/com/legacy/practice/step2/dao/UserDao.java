@@ -4,7 +4,10 @@ import com.legacy.practice.step2.dto.UserDto;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import static java.util.Collections.emptyList;
 
 
 @Repository
@@ -98,9 +101,50 @@ public class UserDao {
            dto.setBirthDate(rs.getDate("birth_date"));
            dto.setAddress(rs.getString("address"));
            return dto;
-        }, "%" + name + "%",
-                "%" + address + "%"
+        }, "%" + name + "%", "%" + address + "%"
         );
+    }
+
+
+    public List<UserDto> findDynamicByNameAndAddress(String name, String address) {
+        StringBuilder sql = new StringBuilder();
+        sql.append("SELECT id, name, age, birth_date, address ")
+                .append("FROM `user` ")
+                .append("WHERE 1=1 ");
+
+        List<Object> params = new ArrayList<>();
+
+
+        if (name != null && !name.trim().isEmpty()) {
+            sql.append(" AND name LIKE ? ");
+            params.add("%" + name + "%");
+        }
+
+        if (address != null && !address.trim().isEmpty()) {
+            sql.append(" AND address LIKE ? ");
+            params.add("%" + address + "%");
+        }
+
+        if (params.isEmpty()) {
+            return emptyList();
+        }
+
+        sql.append(" ORDER BY id ASC");
+
+        return jdbcTemplate.query(
+                sql.toString(),
+                (rs, rowNum) -> {
+                    UserDto dto = new UserDto();
+                    dto.setId(rs.getLong("id"));
+                    dto.setName(rs.getString("name"));
+                    dto.setAge(rs.getInt("age"));
+                    dto.setBirthDate(rs.getDate("birth_date"));
+                    dto.setAddress(rs.getString("address"));
+                    return dto;
+                },
+                params.toArray()
+        );
+
     }
 
 
