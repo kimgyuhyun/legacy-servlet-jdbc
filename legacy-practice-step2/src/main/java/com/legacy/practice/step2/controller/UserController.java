@@ -2,6 +2,7 @@ package com.legacy.practice.step2.controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.legacy.practice.step2.dao.UserDao;
+import com.legacy.practice.step2.dto.UserDetailDto;
 import com.legacy.practice.step2.dto.UserDto;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -64,6 +65,9 @@ public class UserController {
         mv.addObject("ajaxFormDeleteUrl", "/user/delete/ajaxForm");
         mv.addObject("jsonDeleteUrl", "/user/delete/Json");
         mv.addObject("pathDeleteUrl", "/user/delete");
+
+        mv.addObject("userJoinDetailAxios", "/user/joinDetail/axios");
+        
         return mv;
     }
 
@@ -269,5 +273,9 @@ public class UserController {
         return mv;
     }
 
-
+    @GetMapping("/joinDetail/axios/{id}")
+    @ResponseBody
+    public UserDetailDto getJoinDetailAxios(@PathVariable Long id) {
+        return userDao.findDetailByUserId(id);
+    }
 }

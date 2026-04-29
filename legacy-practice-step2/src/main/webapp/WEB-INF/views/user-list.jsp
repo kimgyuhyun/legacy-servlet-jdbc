@@ -17,6 +17,8 @@
         window.USER_AJAX_FORM_DELETE = '${ajaxFormDeleteUrl}';
         window.USER_JSON_DELETE = '${jsonDeleteUrl}';
         window.USER_PATH_DELETE = '${pathDeleteUrl}';
+
+        window.USER_JOIN_DETAIL_AXIOS = '${userJoinDetailAxios}';
     </script>
 </head>
 <body>
@@ -38,7 +40,7 @@
         <th>AxiosPath 삭제</th>
         <th>FetchPath 삭제</th>
         <th>조인 조회</th>
-
+        <th>Axios 조인 조회</th>
     </tr>
     </thead>
     <tbody>
@@ -92,6 +94,9 @@
         <td>
            <a href="${pageContext.request.contextPath}/user/joinDetail/<%= user.getId() %>">조인 조회</a>
         </td>
+        <td>
+            <button type="button" onclick="loadJoinDetailByAxios(<%= user.getId() %>)">Axios 조인 조회</button>
+        </td>
     </tr>
     <%
             }
@@ -101,6 +106,8 @@
 </table>
 
 <div id="result"></div>
+
+<div id="joinDetailResult"></div>
 
 <script src="${pageContext.request.contextPath}/js/api.js"></script>
 </body>

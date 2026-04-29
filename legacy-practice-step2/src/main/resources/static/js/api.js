@@ -520,3 +520,48 @@ function AxiosDynamicSearchUserByNameAndAddress() {
         $('#result').text('검색 실패: ' + msg);
     });
 }
+
+function loadJoinDetailByAxios(id) {
+    axios.get(window.USER_JOIN_DETAIL_AXIOS + '/' + id)
+        .then(function (response) {
+            var detail = response.data;
+
+            if (!detail) {
+                $('#result').text('조인 상세 정보가 없습니다.');
+                return;
+            }
+
+            var html = ''
+                + '<table border="1" cellpadding="8" cellspacing="0">'
+                + '  <thead>'
+                + '    <tr>'
+                + '      <th>ID</th>'
+                + '      <th>userId</th>'
+                + '      <th>전화번호</th>'
+                + '      <th>직업</th>'
+                + '      <th>생성일</th>'
+                + '      <th>수정일</th>'
+                + '    </tr>'
+                + '  </thead>'
+                + '  <tbody>'
+                + '    <tr>'
+                + '      <td>' + (detail.id != null ? detail.id : '') + '</td>'
+                + '      <td>' + (detail.userId != null ? detail.userId : '') + '</td>'
+                + '      <td>' + (detail.phone != null ? detail.phone : '미입력') + '</td>'
+                + '      <td>' + (detail.job != null ? detail.job : '미입력') + '</td>'
+                + '      <td>' + (detail.createAt != null ? detail.createAt : '') + '</td>'
+                + '      <td>' + (detail.updateAt != null ? detail.updateAt : '') + '</td>'
+                + '    </tr>'
+                + '  </tbody>'
+                + '</table>';
+
+            $('#joinDetailResult').html(html);
+            $('#result').text('조인 상세 조회 성공');
+        })
+        .catch(function (error) {
+            var msg = (error.response && error.response.data)
+                ? error.response.data
+                : error.message;
+            $('#result').text('조인 상세 조회 실패: ' + msg);
+        });
+}
