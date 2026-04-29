@@ -235,4 +235,20 @@ public class UserController {
     public int deleteByPath(@PathVariable Long id) {
         return userDao.deleteById(id);
     }
+
+    @GetMapping("/search")
+    public ModelAndView getSearchPage() {
+        ModelAndView mv = new ModelAndView("user-search");
+        mv.addObject("searchNameAddressUrl","/user/search/nameAddress");
+
+        return  mv;
+    }
+
+    @GetMapping("/search/nameAddress")
+    @ResponseBody
+    public List<UserDto> searchByNameAndAddress(
+            @RequestParam String name,
+            @RequestParam String address) {
+        return userDao.findByNameAndAddress(name, address);
+    }
 }

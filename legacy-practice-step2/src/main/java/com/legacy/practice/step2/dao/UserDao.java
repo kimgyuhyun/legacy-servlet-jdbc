@@ -4,7 +4,6 @@ import com.legacy.practice.step2.dto.UserDto;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.sql.PreparedStatement;
 import java.util.List;
 
 
@@ -85,8 +84,24 @@ public class UserDao {
 
     }
 
+    public List<UserDto> findByNameAndAddress(String name, String address) {
+        String sql = "SELECT id, name, age, birth_date, address " +
+                     "FROM `user` " +
+                     "WHERE name LIKE ? AND address LIKE ? " +
+                     "ORDER BY id ASC";
 
-
+        return jdbcTemplate.query(sql, (rs, rowNum) -> {
+           UserDto dto = new UserDto();
+           dto.setId(rs.getLong("id"));
+           dto.setName(rs.getString("name"));
+           dto.setAge(rs.getInt("age"));
+           dto.setBirthDate(rs.getDate("birth_date"));
+           dto.setAddress(rs.getString("address"));
+           return dto;
+        }, "%" + name + "%",
+                "%" + address + "%"
+        );
+    }
 
 
 }

@@ -20,7 +20,7 @@
     <label for="address">주소</label>
     <input type="text" id="address" placeholder="주소">
 
-
+    <button type="button" onclick="AxiosSearchUserByNameAndAddress()">검색</button>
 </div>
 
 <table border="1" cellpadding="8" cellspacing="0" style="margin-top:12px">

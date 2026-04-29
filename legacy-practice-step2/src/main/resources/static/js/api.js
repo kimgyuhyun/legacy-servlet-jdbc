@@ -464,3 +464,41 @@ function deleteFetchPath(id) {
         $('#result').text('Fetch Delete 실패: ' + err.message);
     });
 }
+
+function renderSearchResultBody(list) {
+    var html = '';
+    if (!list || list.length == 0) {
+        $('#searchResultBody').html('<tr><td colspan="5">검색 결과가 없습니다.</td></tr>');
+        return;
+    }
+    list.forEach(function (user) {
+        html += '<tr>'
+            + '<td>' + user.id + '</td>'
+            + '<td>' + (user.name != null ? user.name : '') + '</td>'
+            + '<td>' + (user.age != null ? user.age : '') + '</td>'
+            + '<td>' + (user.birthDate != null ? user.birthDate : '') + '</td>'
+            + '<td>' + (user.address != null ? user.address : '') + '</td>'
+            + '</tr>';
+    })
+    $('#searchResultBody').html(html);
+}
+
+function AxiosSearchUserByNameAndAddress() {
+    axios.get(window.USER_NAME_ADDRESS_SEARCH_URL, {
+        params: {
+            name: $('#name').val(),
+            address: $('#address').val()
+        }
+    })
+    .then(function (response) {
+        var list = response.data;
+        renderSearchResultBody(list);
+        $('#result').text('검색 성공: ' + list.length + '건');
+    })
+    .catch(function (error) {
+        var msg = (error.response && error.response.data)
+            ? error.response.data
+            : error.message;
+        $('#result').text('검색 실패: ' + msg);
+    });
+}
