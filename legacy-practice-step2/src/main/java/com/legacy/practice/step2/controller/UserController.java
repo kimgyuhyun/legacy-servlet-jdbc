@@ -261,4 +261,13 @@ public class UserController {
             @RequestParam String address) {
         return userDao.findDynamicByNameAndAddress(name, address);
     }
+
+    @GetMapping("/joinDetail/{id}")
+    public ModelAndView getJoinDetailPage(@PathVariable Long id) {
+        ModelAndView mv = new ModelAndView("user-join-detail");
+        mv.addObject("userDetail", userDao.findDetailByUserId(id));
+        return mv;
+    }
+
+
 }
