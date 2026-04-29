@@ -484,12 +484,11 @@ function renderSearchResultBody(list) {
 }
 
 function AxiosSearchUserByNameAndAddress() {
-    axios.get(window.USER_NAME_ADDRESS_SEARCH_URL, {
-        params: {
-            name: $('#name').val(),
-            address: $('#address').val()
-        }
-    })
+    const name =  $('#name').val().trim();
+    const address = $('#address').val().trim();
+
+    axios.get(window.USER_NAME_ADDRESS_SEARCH_URL,
+       { params: { name, address } })
     .then(function (response) {
         var list = response.data;
         renderSearchResultBody(list);
