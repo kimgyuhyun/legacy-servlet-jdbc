@@ -51,21 +51,7 @@ public class UserDao {
     }
 
     public List<UserDto> findByNameAndAddress(String name, String address) {
-        String sql = "SELECT id, name, age, birth_date, address " +
-                     "FROM `user` " +
-                     "WHERE name LIKE ? AND address LIKE ? " +
-                     "ORDER BY id ASC";
-
-        return jdbcTemplate.query(sql, (rs, rowNum) -> {
-           UserDto dto = new UserDto();
-           dto.setId(rs.getLong("id"));
-           dto.setName(rs.getString("name"));
-           dto.setAge(rs.getInt("age"));
-           dto.setBirthDate(rs.getDate("birth_date"));
-           dto.setAddress(rs.getString("address"));
-           return dto;
-        }, "%" + name + "%", "%" + address + "%"
-        );
+        return userMapper.findByNameAndAddress(name, address);
     }
 
 
