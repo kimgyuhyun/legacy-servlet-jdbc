@@ -9,6 +9,7 @@
         FROM `user`
         ORDER BY id ASC
     </select>
+
     <select id="findById"
             parameterType="long"
             resultType="com.legacy.practice.step2.dto.UserDto">
@@ -16,10 +17,12 @@
         FROM `user`
         WHERE id = #{id}
     </select>
+
     <insert id="insert" parameterType="com.legacy.practice.step2.dto.UserDto">
         INSERT INTO `user` (name, age, birth_date, address)
         VALUES (#{name}, #{age}, #{birthDate}, #{address})
     </insert>
+
     <update id="updateById" parameterType="com.legacy.practice.step2.dto.UserDto">
         UPDATE `user`
         SET name = #{name},
@@ -28,11 +31,13 @@
             address = #{address}
         WHERE id = #{id}
     </update>
+
     <update id="updateNameById">
         UPDATE `user`
         SET name = #{name}
         WHERE id = #{id}
     </update>
+
     <select id="findByNameAndAddress" resultType="com.legacy.practice.step2.dto.UserDto">
         SELECT id, name, age, birth_date, address
         FROM `user`
@@ -40,6 +45,7 @@
             AND address LIKE CONCAT('%', #{address}, '%')
         ORDER BY id ASC
     </select>
+
     <select id="findDynamicByNameAndAddress" resultType="com.legacy.practice.step2.dto.UserDto">
         SELECT id, name, age, birth_date, address
         FROM `user`
@@ -60,25 +66,55 @@
         </where>
         ORDER BY id ASC
     </select>
-    <!--<select id="findDynamicByNameAndAddress" resultType="com.legacy.practice.step2.dto.UserDto">-->
-    <!--SELECT id, name, age, birth_date, address 평소엔 if, 복잡한 분기엔 choose -->
-    <!--FROM `user`-->
-    <!--<where>-->
-    <!--    <if test="name != null and name != ''">-->
-    <!--        AND name LIKE CONCAT('%', #{name}, '%')-->
-    <!--    </if>-->
-    <!--    <if test="address != null and address != ''">-->
-    <!--        AND address LIKE CONCAT('%', #{address}, '%')-->
-    <!--    </if>-->
-    <!--    <if test="(name == null or name == '') and (address == null or address == '')">-->
-    <!--        AND 1 = 0-->
-    <!--    </if>-->
-    <!--</where>-->
-    <!--ORDER BY id ASC-->
-    <!--</select>-->
+
+<!--    <select id="findDynamicByNameAndAddress" resultType="com.legacy.practice.step2.dto.UserDto">-->
+<!--    SELECT id, name, age, birth_date, address 평소엔 if, 복잡한 분기엔 choose-->
+<!--    FROM `user`-->
+<!--    <where>-->
+<!--        <if test="name != null and name != ''">-->
+<!--            AND name LIKE CONCAT('%', #{name}, '%')-->
+<!--        </if>-->
+<!--        <if test="address != null and address != ''">-->
+<!--            AND address LIKE CONCAT('%', #{address}, '%')-->
+<!--        </if>-->
+<!--        <if test="(name == null or name == '') and (address == null or address == '')">-->
+<!--            AND 1 = 0-->
+<!--        </if>-->
+<!--    </where>-->
+<!--    ORDER BY id ASC-->
+<!--    </select>-->
+
+<!--    <select id="findDetailByUserId"-->
+<!--            parameterType="long"-->
+<!--            resultType="com.legacy.practice.step2.dto.UserDetailDto">-->
+<!--        SELECT-->
+<!--            d.id AS id,-->
+<!--            u.id AS userId,-->
+<!--            d.phone AS phone,-->
+<!--            d.job AS job,-->
+<!--            d.create_at AS createAt,-->
+<!--            d.update_at AS updateAt-->
+<!--        FROM user u-->
+<!--        LEFT JOIN user_detail d ON u.id = d.user_id-->
+<!--        WHERE u.id = #{userId}-->
+<!--    </select>-->
+
+    <delete id="deleteById" parameterType="long">
+        DELETE FROM `user`
+        WHERE id = #{id}
+    </delete>
+
+    <resultMap id="userDetailMap" type="com.legacy.practice.step2.dto.UserDetailDto">
+        <id property="id" column="id"/>
+        <result property="userId" column="userId"/>
+        <result property="phone" column="phone"/>
+        <result property="job" column="job"/>
+        <result property="createAt" column="createAt"/>
+        <result property="updateAt" column="updateAt"/>
+    </resultMap>
     <select id="findDetailByUserId"
             parameterType="long"
-            resultType="com.legacy.practice.step2.dto.UserDetailDto">
+            resultMap="userDetailMap">
         SELECT
             d.id AS id,
             u.id AS userId,
@@ -90,9 +126,6 @@
         LEFT JOIN user_detail d ON u.id = d.user_id
         WHERE u.id = #{userId}
     </select>
-    <delete id="deleteById" parameterType="long">
-        DELETE FROM `user`
-        WHERE id = #{id}
-    </delete>
+
 </mapper>
 
