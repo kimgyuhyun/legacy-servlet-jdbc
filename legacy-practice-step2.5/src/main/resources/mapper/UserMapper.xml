@@ -90,5 +90,9 @@
         LEFT JOIN user_detail d ON u.id = d.user_id
         WHERE u.id = #{userId}
     </select>
+    <delete id="deleteById" parameterType="long">
+        DELETE FROM `user`
+        WHERE id = #{id}
+    </delete>
 </mapper>
 

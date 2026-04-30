@@ -18,4 +18,5 @@ public interface UserMapper {
             @Param("name")String name, @Param("address") String address);
 
     UserDetailDto findDetailByUserId(@Param("userId") Long id);
+    int deleteById(@Param("id") Long id);
 }

@@ -6,10 +6,7 @@ import com.legacy.practice.step2.mapper.UserMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import static java.util.Collections.emptyList;
 
 @Repository
 public class UserDao {
@@ -44,10 +41,7 @@ public class UserDao {
     }
 
     public int deleteById(Long id) {
-        String sql = "DELETE FROM `user` WHERE id = ?";
-
-        return jdbcTemplate.update(sql, id);
-
+        return userMapper.deleteById(id);
     }
 
     public List<UserDto> findByNameAndAddress(String name, String address) {
