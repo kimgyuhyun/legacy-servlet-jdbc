@@ -36,21 +36,11 @@ public class UserDao {
     }
 
     public int updateById(UserDto dto) {
-        String sql = "UPDATE `user` SET name = ?, age = ?, birth_date = ?, address = ? WHERE id = ?";
-
-        return jdbcTemplate.update(
-                sql,
-                dto.getName(),
-                dto.getAge(),
-                dto.getBirthDate(),
-                dto.getAddress(),
-                dto.getId()
-        );
+        return userMapper.updateById(dto);
     }
 
     public int updateNameById(Long id, String name) {
-        String sql = "UPDATE `user` SET name = ? WHERE id = ?";
-        return jdbcTemplate.update(sql, name, id);
+        return userMapper.updateNameById(id, name);
     }
 
     public int deleteById(Long id) {
