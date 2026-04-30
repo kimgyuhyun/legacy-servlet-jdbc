@@ -13,4 +13,6 @@ public interface UserMapper {
     int updateNameById(@Param("id") Long id, @Param("name") String name);
     List<UserDto> findByNameAndAddress(
             @Param("name")String name, @Param("address") String address);
+    List<UserDto> findDynamicByNameAndAddress(
+            @Param("name")String name, @Param("address") String address);
 }

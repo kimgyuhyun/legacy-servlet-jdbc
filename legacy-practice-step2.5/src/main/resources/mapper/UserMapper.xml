@@ -40,4 +40,40 @@
             AND address LIKE CONCAT('%', #{address}, '%')
         ORDER BY id ASC
     </select>
+    <select id="findDynamicByNameAndAddress" resultType="com.legacy.practice.step2.dto.UserDto">
+        SELECT id, name, age, birth_date, address
+        FROM `user`
+        <where>
+            <choose>
+                <when test="(name != null and name != '') or (address != null and address != '')">
+                    <if test="name != null and name != ''">
+                        AND name LIKE CONCAT('%', #{name}, '%')
+                    </if>
+                    <if test="address != null and address != ''">
+                        AND address LIKE CONCAT('%', #{address}, '%')
+                    </if>
+                </when>
+                <otherwise>
+                    AND 1 = 0
+                </otherwise>
+            </choose>
+        </where>
+        ORDER BY id ASC
+    </select>
 </mapper>
+<!--<select id="findDynamicByNameAndAddress" resultType="com.legacy.practice.step2.dto.UserDto">-->
+<!--SELECT id, name, age, birth_date, address 평소엔 if, 복잡한 분기엔 choose -->
+<!--FROM `user`-->
+<!--<where>-->
+<!--    <if test="name != null and name != ''">-->
+<!--        AND name LIKE CONCAT('%', #{name}, '%')-->
+<!--    </if>-->
+<!--    <if test="address != null and address != ''">-->
+<!--        AND address LIKE CONCAT('%', #{address}, '%')-->
+<!--    </if>-->
+<!--    <if test="(name == null or name == '') and (address == null or address == '')">-->
+<!--        AND 1 = 0-->
+<!--    </if>-->
+<!--</where>-->
+<!--ORDER BY id ASC-->
+<!--</select>-->
