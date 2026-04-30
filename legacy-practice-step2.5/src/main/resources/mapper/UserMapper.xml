@@ -60,20 +60,35 @@
         </where>
         ORDER BY id ASC
     </select>
+    <!--<select id="findDynamicByNameAndAddress" resultType="com.legacy.practice.step2.dto.UserDto">-->
+    <!--SELECT id, name, age, birth_date, address 평소엔 if, 복잡한 분기엔 choose -->
+    <!--FROM `user`-->
+    <!--<where>-->
+    <!--    <if test="name != null and name != ''">-->
+    <!--        AND name LIKE CONCAT('%', #{name}, '%')-->
+    <!--    </if>-->
+    <!--    <if test="address != null and address != ''">-->
+    <!--        AND address LIKE CONCAT('%', #{address}, '%')-->
+    <!--    </if>-->
+    <!--    <if test="(name == null or name == '') and (address == null or address == '')">-->
+    <!--        AND 1 = 0-->
+    <!--    </if>-->
+    <!--</where>-->
+    <!--ORDER BY id ASC-->
+    <!--</select>-->
+    <select id="findDetailByUserId"
+            parameterType="long"
+            resultType="com.legacy.practice.step2.dto.UserDetailDto">
+        SELECT
+            d.id AS id,
+            u.id AS userId,
+            d.phone AS phone,
+            d.job AS job,
+            d.create_at AS createAt,
+            d.update_at AS updateAt
+        FROM user u
+        LEFT JOIN user_detail d ON u.id = d.user_id
+        WHERE u.id = #{userId}
+    </select>
 </mapper>
-<!--<select id="findDynamicByNameAndAddress" resultType="com.legacy.practice.step2.dto.UserDto">-->
-<!--SELECT id, name, age, birth_date, address 평소엔 if, 복잡한 분기엔 choose -->
-<!--FROM `user`-->
-<!--<where>-->
-<!--    <if test="name != null and name != ''">-->
-<!--        AND name LIKE CONCAT('%', #{name}, '%')-->
-<!--    </if>-->
-<!--    <if test="address != null and address != ''">-->
-<!--        AND address LIKE CONCAT('%', #{address}, '%')-->
-<!--    </if>-->
-<!--    <if test="(name == null or name == '') and (address == null or address == '')">-->
-<!--        AND 1 = 0-->
-<!--    </if>-->
-<!--</where>-->
-<!--ORDER BY id ASC-->
-<!--</select>-->
+

@@ -61,33 +61,7 @@ public class UserDao {
 
 
     public UserDetailDto findDetailByUserId(Long userId) {
-        String sql = "SELECT " +
-                "d.id AS id, " +
-                "u.id AS userId, " +
-                "d.phone AS phone, " +
-                "d.job AS job, " +
-                "d.create_at AS createAt, " +
-                "d.update_at AS updateAt " +
-                "FROM user u " +
-                "LEFT JOIN user_detail d ON u.id = d.user_id " +
-                "WHERE u.id = ?";
-
-        List<UserDetailDto> list = jdbcTemplate.query(sql, (rs, rowNum) -> {
-            UserDetailDto dto = new UserDetailDto();
-            dto.setId(rs.getObject("id", Long.class));
-            dto.setUserId(rs.getLong("userId"));
-            dto.setPhone(rs.getString("phone"));
-            dto.setJob(rs.getString("job"));
-            dto.setCreateAt(rs.getTimestamp("createAt"));
-            dto.setUpdateAt(rs.getTimestamp("updateAt"));
-            return dto;
-        }, userId);
-
-        if (list.isEmpty()) {
-            return null;
-        }
-
-        return list.get(0);
+        return userMapper.findDetailByUserId(userId);
     }
 
 }
