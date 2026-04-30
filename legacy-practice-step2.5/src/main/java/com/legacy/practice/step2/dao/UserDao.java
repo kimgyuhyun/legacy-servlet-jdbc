@@ -35,7 +35,6 @@ public class UserDao {
         return userMapper.findById(id);
     }
 
-
     public int updateById(UserDto dto) {
         String sql = "UPDATE `user` SET name = ?, age = ?, birth_date = ?, address = ? WHERE id = ?";
 
