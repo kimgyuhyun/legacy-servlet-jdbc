@@ -9,4 +9,11 @@
         FROM `user`
         ORDER BY id ASC
     </select>
+    <select id="findById"
+            parameterType="long"
+            resultType="com.legacy.practice.step2.dto.UserDto">
+        SELECT id, name, age, birth_date, address, create_at, update_at
+        FROM `user`
+        WHERE id = #{id}
+    </select>
 </mapper>

@@ -40,18 +40,7 @@ public class UserDao {
 
 
     public UserDto findById(Long id) {
-        String sql = "SELECT id, name, age, birth_date, address, create_at, update_at FROM `user` WHERE id = ?";
-        return jdbcTemplate.queryForObject(sql, (rs, rowNum) -> {
-            UserDto dto = new UserDto();
-            dto.setId(rs.getLong("id"));
-            dto.setName(rs.getString("name"));
-            dto.setAge(rs.getInt("age"));
-            dto.setBirthDate(rs.getDate("birth_date"));
-            dto.setAddress(rs.getString("address"));
-            dto.setCreateAt(rs.getTimestamp("create_at"));
-            dto.setUpdateAt(rs.getTimestamp("update_at"));
-            return dto;
-        }, id);
+        return userMapper.findById(id);
     }
 
 
