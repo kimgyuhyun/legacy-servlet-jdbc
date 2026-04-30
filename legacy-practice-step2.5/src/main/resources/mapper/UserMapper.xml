@@ -16,4 +16,8 @@
         FROM `user`
         WHERE id = #{id}
     </select>
+    <insert id="insert" parameterType="com.legacy.practice.step2.dto.UserDto">
+            INSERT INTO `user` (name, age, birth_date, address)
+            VALUES (#{name}, #{age}, #{birthDate}, #{address})
+    </insert>
 </mapper>

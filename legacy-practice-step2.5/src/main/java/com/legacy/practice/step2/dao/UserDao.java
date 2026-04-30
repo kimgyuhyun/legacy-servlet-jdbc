@@ -23,15 +23,7 @@ public class UserDao {
     }
 
     public int insert(UserDto dto) {
-        String sql = "INSERT INTO `user` (name, age, birth_date, address) VALUES (?, ?, ?, ?)";
-
-        return jdbcTemplate.update(
-                sql,
-                dto.getName(),
-                dto.getAge(),
-                dto.getBirthDate(),
-                dto.getAddress()
-        );
+        return userMapper.insert(dto);
     }
 
     public List<UserDto> findAll() {
