@@ -2,22 +2,24 @@ package com.legacy.practice.step2.dao;
 
 import com.legacy.practice.step2.dto.UserDetailDto;
 import com.legacy.practice.step2.dto.UserDto;
+import com.legacy.practice.step2.mapper.UserMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import static java.util.Collections.emptyList;
 
 @Repository
 public class UserDao {
 
-    private JdbcTemplate jdbcTemplate;
+    private final JdbcTemplate jdbcTemplate;
+    private final UserMapper userMapper;
 
-    public UserDao(JdbcTemplate jdbcTemplate) {
+    public UserDao(JdbcTemplate jdbcTemplate, UserMapper userMapper) {
         this.jdbcTemplate = jdbcTemplate;
+        this.userMapper = userMapper;
     }
 
     public int insert(UserDto dto) {
@@ -33,17 +35,7 @@ public class UserDao {
     }
 
     public List<UserDto> findAll() {
-        String sql = "SELECT id, name, age, birth_date, address FROM `user` ORDER BY id ASC";
-
-        return jdbcTemplate.query(sql, (rs, rowNum) -> {
-            UserDto dto = new UserDto();
-            dto.setId(rs.getLong("id"));
-            dto.setName(rs.getString("name"));
-            dto.setAge(rs.getInt("age"));
-            dto.setBirthDate(rs.getDate("birth_date"));
-            dto.setAddress(rs.getString("address"));
-            return dto;
-        });
+        return userMapper.findAll();
     }
 
 

@@ -12,6 +12,6 @@ spring:
 
 mybatis:
   mapper-locations: classpath:mapper/**/*.xml
-  type-aliases-package: com.legacy.practice.step2.domain
+  type-aliases-package: com.legacy.practice.step2.dto
   configuration:
     map-underscore-to-camel-case: true
