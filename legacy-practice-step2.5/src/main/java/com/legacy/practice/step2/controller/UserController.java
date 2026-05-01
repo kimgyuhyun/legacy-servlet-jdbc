@@ -146,6 +146,7 @@ public class UserController {
         mv.addObject("jsonUpdatePatchUrl", "/user/updatePatch/json");
         mv.addObject("jsonMapUpdatePatchUrl", "/user/updatePatch/jsonMap");
         mv.addObject("jsonNodeUpdatePatchUrl", "/user/updatePatch/jsonNode");
+        mv.addObject("jsonUpdateDynamicUrl", "/user/updateDynamic/json");
         return mv;
     }
 
@@ -215,6 +216,13 @@ public class UserController {
         return userDao.updateNameById(id, name);
     }
 
+    // 동적 업데이트
+    @PatchMapping("/updateDynamic/json")
+    @ResponseBody
+    public int updateDynamicByJson(@RequestBody UserDto dto) {
+        return userDao.updateDynamicNameAddressById(dto);
+    }
+
     // 순수 폼 삭제
     @PostMapping("/delete/sync")
     public String deleteSync(@RequestParam("id") Long id) {
@@ -278,4 +286,5 @@ public class UserController {
     public UserDetailDto getJoinDetailAxios(@PathVariable Long id) {
         return userDao.findDetailByUserId(id);
     }
+
 }

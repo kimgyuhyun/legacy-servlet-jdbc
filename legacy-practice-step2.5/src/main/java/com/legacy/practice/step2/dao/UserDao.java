@@ -40,6 +40,10 @@ public class UserDao {
         return userMapper.updateNameById(id, name);
     }
 
+    public int updateDynamicNameAddressById(UserDto dto) {
+        return userMapper.updateDynamicNameAddressById(dto);
+    }
+
     public int deleteById(Long id) {
         return userMapper.deleteById(id);
     }

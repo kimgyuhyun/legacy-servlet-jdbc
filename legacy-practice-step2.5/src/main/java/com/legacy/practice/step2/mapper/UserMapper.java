@@ -19,4 +19,5 @@ public interface UserMapper {
 
     UserDetailDto findDetailByUserId(@Param("userId") Long id);
     int deleteById(@Param("id") Long id);
+    int updateDynamicNameAddressById(UserDto dto);
 }

@@ -146,5 +146,18 @@
         WHERE u.id = #{userId}
     </select>
 
+    <update id="updateDynamicNameAddressById" parameterType="com.legacy.practice.step2.dto.UserDto">
+        UPDATE `user`
+        <set>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="address != null and address != ''">
+                address = #{address},
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
 </mapper>
 

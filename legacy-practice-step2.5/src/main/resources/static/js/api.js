@@ -353,6 +353,29 @@ function updatePatchByAxiosJson() {
     });
 }
 
+function updateDynamicAxiosJson() {
+    var payload = {
+        id: parseInt($('#id').val(), 10),
+        name: $('#name').val(),
+        address: $('#address').val()
+    };
+
+    axios.patch(window.USER_UPDATE_DYNAMIC_JSON_URL, payload, {
+        headers: {
+            'Content-Type': 'application/json; charset=UTF-8'
+        }
+    })
+    .then(function (response) {
+        $('#result').text('Axios JSON Dynamic 수정 성공: ' + response.data);
+    })
+    .catch(function (error) {
+        var msg = (error.response && error.response.data)
+        ? error.response.data
+        : error.message;
+        $('#result').text('Axios JSON Dynamic 수정 실패: ' + msg);
+    });
+}
+
 function updatePatchByAxiosJsonMap() {
     var payload = {
         id: parseInt($('#id').val(), 10),
