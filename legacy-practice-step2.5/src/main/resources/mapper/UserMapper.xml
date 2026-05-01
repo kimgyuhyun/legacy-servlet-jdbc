@@ -4,16 +4,38 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.legacy.practice.step2.mapper.UserMapper">
+    <sql id="userCols">
+        id AS id,
+        name AS name,
+        age AS age,
+        birth_date AS birthDate,
+        address AS address
+    </sql>
+    <sql id="userAuditCols">
+        create_at AS createAt,
+        update_at AS updateAt
+    </sql>
+    <sql id="userDetailCols">
+        d.id AS id,
+        u.id AS userId,
+        d.phone AS phone,
+        d.job AS job,
+        d.create_at AS createAt,
+        d.update_at AS updateAt
+    </sql>
     <select id="findAll" resultType="com.legacy.practice.step2.dto.UserDto">
-        SELECT id, name, age, birth_date, address
+        SELECT
+            <include refid="userCols"/>
         FROM `user`
         ORDER BY id ASC
     </select>
 
     <select id="findById"
-            parameterType="long"
+            parameterType="java.lang.Long"
             resultType="com.legacy.practice.step2.dto.UserDto">
-        SELECT id, name, age, birth_date, address, create_at, update_at
+        SELECT
+            <include refid="userCols"/>,
+            <include refid="userAuditCols"/>
         FROM `user`
         WHERE id = #{id}
     </select>
@@ -39,7 +61,8 @@
     </update>
 
     <select id="findByNameAndAddress" resultType="com.legacy.practice.step2.dto.UserDto">
-        SELECT id, name, age, birth_date, address
+        SELECT
+            <include refid="userCols"/>
         FROM `user`
         WHERE name LIKE CONCAT('%', #{name}, '%')
             AND address LIKE CONCAT('%', #{address}, '%')
@@ -47,7 +70,8 @@
     </select>
 
     <select id="findDynamicByNameAndAddress" resultType="com.legacy.practice.step2.dto.UserDto">
-        SELECT id, name, age, birth_date, address
+        SELECT
+            <include refid="userCols"/>
         FROM `user`
         <where>
             <choose>
@@ -85,7 +109,7 @@
 <!--    </select>-->
 
 <!--    <select id="findDetailByUserId"-->
-<!--            parameterType="long"-->
+<!--            parameterType="java.lang.Long"-->
 <!--            resultType="com.legacy.practice.step2.dto.UserDetailDto">-->
 <!--        SELECT-->
 <!--            d.id AS id,-->
@@ -99,7 +123,7 @@
 <!--        WHERE u.id = #{userId}-->
 <!--    </select>-->
 
-    <delete id="deleteById" parameterType="long">
+    <delete id="deleteById" parameterType="java.lang.Long">
         DELETE FROM `user`
         WHERE id = #{id}
     </delete>
@@ -113,15 +137,10 @@
         <result property="updateAt" column="updateAt"/>
     </resultMap>
     <select id="findDetailByUserId"
-            parameterType="long"
+            parameterType="java.lang.Long"
             resultMap="userDetailMap">
         SELECT
-            d.id AS id,
-            u.id AS userId,
-            d.phone AS phone,
-            d.job AS job,
-            d.create_at AS createAt,
-            d.update_at AS updateAt
+            <include refid="userDetailCols"/>
         FROM user u
         LEFT JOIN user_detail d ON u.id = d.user_id
         WHERE u.id = #{userId}
