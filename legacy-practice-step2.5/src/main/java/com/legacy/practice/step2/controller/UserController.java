@@ -253,7 +253,7 @@ public class UserController {
         ModelAndView mv = new ModelAndView("user-search");
         mv.addObject("searchNameAddressUrl","/user/search/nameAddress");
         mv.addObject("searchDynamicNameAddressUrl","/user/searchDynamic/nameAddress");
-
+        mv.addObject("searchIdListUrl", "/user/search/idList");
 
         return  mv;
     }
@@ -285,6 +285,12 @@ public class UserController {
     @ResponseBody
     public UserDetailDto getJoinDetailAxios(@PathVariable Long id) {
         return userDao.findDetailByUserId(id);
+    }
+
+    @PostMapping("/search/idList")
+    @ResponseBody
+    public List<UserDto> searchByIdList(@RequestBody List<Long> idList) {
+        return userDao.findUserByIdList(idList);
     }
 
 }

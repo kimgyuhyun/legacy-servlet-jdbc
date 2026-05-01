@@ -8,6 +8,9 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+import static java.util.Collections.emptyList;
+import static java.util.Collections.nCopies;
+
 @Repository
 public class UserDao {
 
@@ -60,6 +63,13 @@ public class UserDao {
 
     public UserDetailDto findDetailByUserId(Long userId) {
         return userMapper.findDetailByUserId(userId);
+    }
+
+    public List<UserDto> findUserByIdList(List<Long> idList) {
+        if (idList == null || idList.isEmpty()) {
+            return emptyList();
+        }
+        return userMapper.findUserByIdList(idList);
     }
 
 }
