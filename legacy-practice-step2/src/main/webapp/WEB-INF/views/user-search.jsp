@@ -9,6 +9,7 @@
     <script>
         window.USER_NAME_ADDRESS_SEARCH_URL = '${searchNameAddressUrl}';
         window.USER_NAME_ADDRESS_DYNAMIC_SEARCH_URL = '${searchDynamicNameAddressUrl}';
+        window.USER_ID_LIST_SEARCH_URL = '${searchIdListUrl}';
     </script>
 </head>
 <body>
@@ -23,6 +24,13 @@
 
     <button type="button" onclick="AxiosSearchUserByNameAndAddress()">검색</button>
     <button type="button" onclick="AxiosDynamicSearchUserByNameAndAddress()">동적 검색</button>
+
+    <hr style="margin:16px 0">
+
+    <label for="idList">ID 목록</label>
+    <input type="text" id="idList" placeholder="예: 1, 2, 3" style="width:220px">
+
+    <button type="button" onclick="SearchUserByIdList()">ID 여러 개로 조회</button>
 
 </div>
 

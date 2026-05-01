@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Objects;
 
 import static java.util.Collections.emptyList;
+import static java.util.Collections.nCopies;
 
 @Repository
 public class UserDao {
@@ -179,4 +180,25 @@ public class UserDao {
         return list.get(0);
     }
 
+    public List<UserDto> findUserByIdList(List<Long> idList) {
+        if (idList == null || idList.isEmpty()) {
+            return emptyList();
+        }
+
+        String inPlaceholders = String.join(",", nCopies(idList.size(), "?"));
+        String sql = "SELECT id, name, age, birth_date, address " +
+                     "FROM `user` " +
+                     "WHERE id IN (" + inPlaceholders + ") " +
+                     "ORDER BY id ASC";
+
+        return jdbcTemplate.query(sql, (rs, rowNum) -> {
+            UserDto dto = new UserDto();
+            dto.setId(rs.getLong("id"));
+            dto.setName(rs.getString("name"));
+            dto.setAge(rs.getInt("age"));
+            dto.setBirthDate(rs.getDate("birth_date"));
+            dto.setAddress(rs.getString("address"));
+            return dto;
+        }, idList.toArray());
+    }
 }
