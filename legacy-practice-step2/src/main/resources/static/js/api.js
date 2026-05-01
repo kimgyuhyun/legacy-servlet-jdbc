@@ -137,7 +137,7 @@ function loadDetailByFetch(id) {
 function renderUserList(list) {
     var html = '';
 
-    if (!list || list.length == 0) {
+    if (!list || list.length === 0) {
         html = '<tr><td colspan="8">조회된 사용자가 없습니다.</td></tr>';
         $('#userTableBody').html(html);
         return;
@@ -467,7 +467,7 @@ function deleteFetchPath(id) {
 
 function renderSearchResultBody(list) {
     var html = '';
-    if (!list || list.length == 0) {
+    if (!list || list.length === 0) {
         $('#searchResultBody').html('<tr><td colspan="5">검색 결과가 없습니다.</td></tr>');
         return;
     }
