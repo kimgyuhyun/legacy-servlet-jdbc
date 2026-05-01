@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 import static java.util.Collections.emptyList;
-import static java.util.Collections.nCopies;
 
 @Repository
 public class UserDao {
@@ -70,6 +69,13 @@ public class UserDao {
             return emptyList();
         }
         return userMapper.findUserByIdList(idList);
+    }
+
+    public int deleteByIdList(List<Long> idList) {
+        if (idList == null || idList.isEmpty()) {
+            return 0;
+        }
+        return userMapper.deleteByIdList(idList);
     }
 
 }

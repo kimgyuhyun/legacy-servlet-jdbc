@@ -170,5 +170,13 @@
         ORDER BY id ASC
     </select>
 
+    <delete id="deleteByIdList">
+        DELETE FROM `user`
+        WHERE id IN
+        <foreach collection="idList" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
 </mapper>
 

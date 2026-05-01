@@ -592,7 +592,7 @@ function loadJoinDetailByAxios(id) {
 function SearchUserByIdList() {
     var raw = $('#idList').val().trim();
     if (!raw) {
-        $('#result').text('ID를 입력해 주세요.')
+        $('#result').text('ID를 입력해 주세요.');
         return;
     }
     var idList = raw.split(/[,\s]+/)
@@ -623,4 +623,39 @@ function SearchUserByIdList() {
             : error.message;
         $('#result').text('ID 목록 조회 실패: ' + msg);
     });
+}
+
+function userIdListDelete() {
+    var raw = $('#idList').val().trim();
+    if (!raw) {
+        $('#result').text('ID를 입력해 주세요.');
+        return;
+    }
+    var idList = raw.split(/[,\s]+/)
+        .map(function (s) { return s.trim(); })
+        .filter(function (s) { return s.length > 0; })
+        .map(function (s) { return Number(s); })
+        .filter(function (n) { return Number.isFinite(n); });
+
+    if (idList.length === 0) {
+        $('#result').text('유효한 숫자 ID가 없습니다.');
+        return;
+    }
+
+
+    axios.delete(window.USER_ID_LIST_DELETE, {
+        data: idList,
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(function (response) {
+            $('#result').text('Axios userIdList 삭제 성공: ' + response.data);
+        })
+        .catch(function (error) {
+            var msg = (error.response && error.response.data)
+            ? error.response.data
+            : error.message;
+            $('#result').text('Axios userIdList 삭제 실패: ' + msg);
+        });
 }

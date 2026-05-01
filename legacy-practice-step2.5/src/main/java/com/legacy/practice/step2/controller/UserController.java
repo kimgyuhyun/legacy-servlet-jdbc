@@ -67,7 +67,7 @@ public class UserController {
         mv.addObject("pathDeleteUrl", "/user/delete");
 
         mv.addObject("userJoinDetailAxios", "/user/joinDetail/axios");
-        
+
         return mv;
     }
 
@@ -291,6 +291,21 @@ public class UserController {
     @ResponseBody
     public List<UserDto> searchByIdList(@RequestBody List<Long> idList) {
         return userDao.findUserByIdList(idList);
+    }
+
+
+    @GetMapping("/delete")
+    public ModelAndView getDeletePage() {
+        ModelAndView mv = new ModelAndView("user-delete");
+        mv.addObject("idListDeleteUrl", "/user/delete/List");
+
+        return  mv;
+    }
+
+    @DeleteMapping("/delete/List")
+    @ResponseBody
+    public int deleteByIdList(@RequestBody List<Long> idList) {
+        return userDao.deleteByIdList(idList);
     }
 
 }
