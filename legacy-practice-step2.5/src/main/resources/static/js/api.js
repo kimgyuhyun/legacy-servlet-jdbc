@@ -659,3 +659,7 @@ function userIdListDelete() {
             $('#result').text('Axios userIdList 삭제 실패: ' + msg);
         });
 }
+
+
+
+

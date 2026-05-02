@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.legacy.practice.step2.dao.UserDao;
 import com.legacy.practice.step2.dto.UserDetailDto;
 import com.legacy.practice.step2.dto.UserDto;
+import com.legacy.practice.step2.dto.UserPageResponse;
+import org.slf4j.MDC;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -307,5 +309,71 @@ public class UserController {
     public int deleteByIdList(@RequestBody List<Long> idList) {
         return userDao.deleteByIdList(idList);
     }
+
+    private static final int DEFAULT_PAGE_SIZE = 10;
+    private static final int MAX_PAGE_SIZE = 100;
+
+    @GetMapping("/pageList")
+    public ModelAndView getPageList(
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        int safePage = Math.max(1, page);
+        int safeSize = size < 1 ? DEFAULT_PAGE_SIZE : Math.min(size, MAX_PAGE_SIZE);
+
+        long totalCount = userDao.countAll();
+        int totalPages = safeSize == 0
+                ? 0
+                : (int) ((totalCount + (long) safeSize - 1L) / (long) safeSize);
+
+        if (totalPages > 0 && safePage > totalPages) {
+            safePage = totalPages;
+        }
+
+        int offset = (safePage - 1) * safeSize;
+        List<UserDto> userList = userDao.findUserListByPaged(offset, safeSize);
+
+        ModelAndView mv = new ModelAndView("user-pageList");
+        mv.addObject("userList", userList);
+        mv.addObject("currentPage", safePage);
+        mv.addObject("pageSize", safeSize);
+        mv.addObject("totalCount", totalCount);
+        mv.addObject("totalPages", totalPages);
+        mv.addObject("pagedListUrl", "/user/pageList");
+
+        return mv;
+
+    }
+
+
+
+    private UserPageResponse loadUserPage(int page, int size) {
+        int safePage = Math.max(1, page);
+        int safeSize = size < 1 ? DEFAULT_PAGE_SIZE : Math.min(size, MAX_PAGE_SIZE);
+
+        long totalElements = userDao.countAll();
+        int offset = (safePage -1) * safeSize;
+        List<UserDto> content = userDao.findUserListByPaged(offset, safeSize);
+
+        int totalPages = safeSize == 0
+                ? 0
+                : (int) ((totalElements + (long) safeSize - 1L) / (long) safeSize);
+
+        UserPageResponse response = new UserPageResponse();
+        response.setContent(content);
+        response.setTotalElements(totalElements);
+        response.setPage(safePage);
+        response.setSize(safeSize);
+        response.setTotalPages(totalPages);
+        return response;
+    }
+
+    @GetMapping("/axiosList/paged")
+    @ResponseBody
+    public UserPageResponse getAxiosListPaged(
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        return loadUserPage(page, size);
+    }
+
 
 }

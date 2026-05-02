@@ -78,4 +78,11 @@ public class UserDao {
         return userMapper.deleteByIdList(idList);
     }
 
+    public long countAll() {
+        return userMapper.contAll();
+    }
+    public List<UserDto> findUserListByPaged(int offset, int limit) {
+        return userMapper.findAllPaged(offset, limit);
+    }
+
 }

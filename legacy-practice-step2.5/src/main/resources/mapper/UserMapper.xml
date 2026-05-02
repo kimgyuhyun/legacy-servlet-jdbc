@@ -178,5 +178,17 @@
         </foreach>
     </delete>
 
+    <select id="contAll" resultType="long">
+        SELECT COUNT(*)
+        FROM `user`
+    </select>
+
+    <select id="findAllPaged" resultType="com.legacy.practice.step2.dto.UserDto">
+        SELECT
+            <include refid="userCols"></include>
+        FROM `user`
+        ORDER BY id ASC
+        LIMIT #{limit} OFFSET #{offset}
+    </select>
 </mapper>
 

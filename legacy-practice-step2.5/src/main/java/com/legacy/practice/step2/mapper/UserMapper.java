@@ -16,10 +16,12 @@ public interface UserMapper {
             @Param("name")String name, @Param("address") String address);
     List<UserDto> findDynamicByNameAndAddress(
             @Param("name")String name, @Param("address") String address);
-
     UserDetailDto findDetailByUserId(@Param("userId") Long id);
     int deleteById(@Param("id") Long id);
     int updateDynamicNameAddressById(UserDto dto);
     List<UserDto> findUserByIdList(@Param("idList") List<Long> idList);
     int deleteByIdList(@Param("idList") List<Long> idList);
+
+    long contAll();
+    List<UserDto> findAllPaged(@Param("offset") int offset, @Param("limit") int limit);
 }
