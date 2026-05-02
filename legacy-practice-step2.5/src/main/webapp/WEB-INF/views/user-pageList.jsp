@@ -70,9 +70,6 @@
         <c:when test="${not empty totalPages and currentPage < totalPages}">
             <a href="${nextUrl}">다음</a>
         </c:when>
-        <c:when test="${empty totalPages}">
-            <a href="${nextUrl}">다음</a>
-        </c:when>
         <c:otherwise>다음</c:otherwise>
     </c:choose>
 </div>

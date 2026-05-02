@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.lang.annotation.Retention;
 import java.util.List;
 import java.util.Map;
 
@@ -345,18 +346,30 @@ public class UserController {
     }
 
 
+    @GetMapping("/asyncPageList")
+    public ModelAndView getAsyncPageList() {
+        ModelAndView mv = new ModelAndView("user-async-pageList");
+        mv.addObject("axiosListPagedUrl", "/user/axiosList/paged");
+
+        return mv;
+    }
 
     private UserPageResponse loadUserPage(int page, int size) {
         int safePage = Math.max(1, page);
         int safeSize = size < 1 ? DEFAULT_PAGE_SIZE : Math.min(size, MAX_PAGE_SIZE);
 
         long totalElements = userDao.countAll();
-        int offset = (safePage -1) * safeSize;
-        List<UserDto> content = userDao.findUserListByPaged(offset, safeSize);
 
         int totalPages = safeSize == 0
                 ? 0
                 : (int) ((totalElements + (long) safeSize - 1L) / (long) safeSize);
+
+        if (totalPages > 0 && safePage > totalPages) {
+            safePage = totalPages;
+        }
+
+        int offset = (safePage -1) * safeSize;
+        List<UserDto> content = userDao.findUserListByPaged(offset, safeSize);
 
         UserPageResponse response = new UserPageResponse();
         response.setContent(content);

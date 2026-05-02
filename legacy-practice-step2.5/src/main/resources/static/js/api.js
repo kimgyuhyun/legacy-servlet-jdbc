@@ -663,3 +663,106 @@ function userIdListDelete() {
 
 
 
+// ========== /user/pageList 페이징 (USER_LOAD_PAGE_LIST_URL, #userPagedTbody, #userPagedClientMsg, #userPageInput, #userSizeInput) ==========
+var userPagedState = {
+    page: 1,
+    size: 10,
+    totalElements: 0,
+    totalPages: 0
+};
+
+function renderUserPagedTbody(list) {
+    var tb = document.getElementById('userPagedTbody');
+    if (!tb) {
+        return;
+    }
+    if (!list || list.length === 0) {
+        tb.innerHTML = '<tr><td colspan="5">조회된 사용자가 없습니다.</td></tr>';
+        return;
+    }
+    var html = '';
+    list.forEach(function (u) {
+        html += '<tr>'
+            + '<td>' + (u.id != null ? u.id : '') + '</td>'
+            + '<td>' + (u.name != null ? u.name : '') + '</td>'
+            + '<td>' + (u.age != null ? u.age : '') + '</td>'
+            + '<td>' + (u.birthDate != null ? u.birthDate : '') + '</td>'
+            + '<td>' + (u.address != null ? u.address : '') + '</td>'
+            + '</tr>';
+    });
+    tb.innerHTML = html;
+}
+
+function userPagedSetClientMsg(text) {
+    var el = document.getElementById('userPagedClientMsg');
+    if (el) {
+        el.textContent = text;
+    }
+}
+
+function loadListByAxiosPaged(page, size) {
+    var p = page != null && page > 0 ? page : 1;
+    var s = size != null && size > 0 ? size : 10;
+
+    var baseUrl = window.USER_LOAD_ASYNC_PAGE_LIST_URL || '/user/axiosList/paged';
+
+    axios.get(baseUrl, {
+        params: { page: p, size: s }
+    })
+        .then(function (response) {
+            var body = response.data;
+            var list = body.content;
+
+            userPagedState.page = body.page;
+            userPagedState.size = body.size;
+            userPagedState.totalElements = body.totalElements;
+            userPagedState.totalPages = body.totalPages;
+
+            renderUserPagedTbody(list);
+
+            var pi = document.getElementById('userPageInput');
+            var si = document.getElementById('userSizeInput');
+            if (pi) {
+                pi.value = body.page;
+            }
+            if (si) {
+                si.value = body.size;
+            }
+
+            userPagedSetClientMsg(
+                'Axios 페이징 조회 성공 — page: ' + body.page
+                + ', size: ' + body.size
+                + ', totalElements: ' + body.totalElements
+                + ', totalPages: ' + body.totalPages
+                + ', 이번 페이지 건수: ' + (list ? list.length : 0)
+            );
+        })
+        .catch(function (error) {
+            var msg = (error.response && error.response.data)
+                ? error.response.data
+                : error.message;
+            userPagedSetClientMsg('Axios 페이징 조회 실패: ' + msg);
+        });
+}
+
+function userPagedBtnLoad() {
+    var pi = document.getElementById('userPageInput');
+    var si = document.getElementById('userSizeInput');
+    var p = pi ? parseInt(pi.value, 10) : 1;
+    var s = si ? parseInt(si.value, 10) : 10;
+    loadListByAxiosPaged(p > 0 ? p : 1, s > 0 ? s : 10);
+}
+
+function userPagedBtnPrev() {
+    if (userPagedState.page <= 1) {
+        return;
+    }
+    loadListByAxiosPaged(userPagedState.page - 1, userPagedState.size);
+}
+
+function userPagedBtnNext() {
+    if (userPagedState.totalPages > 0 && userPagedState.page >= userPagedState.totalPages) {
+        return;
+    }
+    loadListByAxiosPaged(userPagedState.page + 1, userPagedState.size);
+}
