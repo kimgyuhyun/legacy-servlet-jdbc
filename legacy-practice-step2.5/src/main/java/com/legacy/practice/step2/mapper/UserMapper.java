@@ -10,6 +10,7 @@ public interface UserMapper {
     List<UserDto> findAll();
     UserDto findById(@Param("id") Long id);
     int insert(UserDto dto);
+    int insertUserDetail(UserDetailDto dto);
     int updateById(UserDto dto);
     int updateNameById(@Param("id") Long id, @Param("name") String name);
     List<UserDto> findByNameAndAddress(

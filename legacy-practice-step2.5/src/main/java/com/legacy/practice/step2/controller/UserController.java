@@ -2,14 +2,18 @@ package com.legacy.practice.step2.controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.legacy.practice.step2.dao.UserDao;
+import com.legacy.practice.step2.dto.UserCreateWithDetailRequest;
 import com.legacy.practice.step2.dto.UserDetailDto;
 import com.legacy.practice.step2.dto.UserDto;
 import com.legacy.practice.step2.dto.UserPageResponse;
+import com.legacy.practice.step2.service.UserService;
 import org.slf4j.MDC;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.IOException;
 import java.lang.annotation.Retention;
 import java.util.List;
 import java.util.Map;
@@ -19,9 +23,11 @@ import java.util.Map;
 public class UserController {
 
     private final UserDao userDao;
+    private final UserService userService;
 
-    public UserController(UserDao userDao) {
+    public UserController(UserDao userDao, UserService userService) {
         this.userDao = userDao;
+        this.userService = userService;
     }
 
     @GetMapping("/page")
@@ -386,6 +392,22 @@ public class UserController {
             @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "10") int size) {
         return loadUserPage(page, size);
+    }
+
+    @GetMapping("/withPage")
+    public ModelAndView getCreateWithDetailPage() {
+        ModelAndView mv = new ModelAndView("user-create-with-detail");
+        mv.addObject("syncWithActionUrl", "/user/create/syncWith");
+
+        return mv;
+    }
+
+    // user / detail 합쳐서 인서트
+    @PostMapping("/create/syncWith")
+    public String createUserWithDetail(@ModelAttribute UserCreateWithDetailRequest req) throws IOException {
+        userService.createUserWithDetail(req);
+
+        return "redirect:/user/list";
     }
 
 

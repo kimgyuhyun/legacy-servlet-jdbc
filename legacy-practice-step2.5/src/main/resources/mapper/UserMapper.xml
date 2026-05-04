@@ -40,9 +40,15 @@
         WHERE id = #{id}
     </select>
 
-    <insert id="insert" parameterType="com.legacy.practice.step2.dto.UserDto">
+    <insert id="insert" parameterType="com.legacy.practice.step2.dto.UserDto"
+            useGeneratedKeys="true" keyProperty="id" keyColumn="id">
         INSERT INTO `user` (name, age, birth_date, address)
         VALUES (#{name}, #{age}, #{birthDate}, #{address})
+    </insert>
+
+    <insert id="insertUserDetail" parameterType="com.legacy.practice.step2.dto.UserDetailDto">
+        INSERT INTO `user_detail` (user_id, phone, job)
+        VALUES (#{userId}, #{phone}, #{job})
     </insert>
 
     <update id="updateById" parameterType="com.legacy.practice.step2.dto.UserDto">

@@ -13,16 +13,18 @@ import static java.util.Collections.emptyList;
 @Repository
 public class UserDao {
 
-    private final JdbcTemplate jdbcTemplate;
     private final UserMapper userMapper;
 
     public UserDao(JdbcTemplate jdbcTemplate, UserMapper userMapper) {
-        this.jdbcTemplate = jdbcTemplate;
         this.userMapper = userMapper;
     }
 
     public int insert(UserDto dto) {
         return userMapper.insert(dto);
+    }
+
+    public int insertUserDetail(UserDetailDto dto) {
+        return userMapper.insertUserDetail(dto);
     }
 
     public List<UserDto> findAll() {
