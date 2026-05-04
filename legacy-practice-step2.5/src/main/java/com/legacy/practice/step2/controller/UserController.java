@@ -7,9 +7,13 @@ import com.legacy.practice.step2.dto.UserDetailDto;
 import com.legacy.practice.step2.dto.UserDto;
 import com.legacy.practice.step2.dto.UserPageResponse;
 import com.legacy.practice.step2.service.UserService;
+import jakarta.validation.Valid;
+import org.eclipse.tags.shaded.org.apache.xpath.operations.Mod;
 import org.slf4j.MDC;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -404,9 +408,17 @@ public class UserController {
 
     // user / detail 합쳐서 인서트
     @PostMapping("/create/syncWith")
-    public String createUserWithDetail(@ModelAttribute UserCreateWithDetailRequest req) throws IOException {
-        userService.createUserWithDetail(req);
+    public String createUserWithDetail(
+            @Valid @ModelAttribute UserCreateWithDetailRequest req,
+            BindingResult bindingResult,
+            Model model) throws IOException {
 
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("syncWithActionUrl", "/user/create/syncWith");
+            return "user-create-with-detail";
+        }
+
+        userService.createUserWithDetail(req);
         return "redirect:/user/list";
     }
 

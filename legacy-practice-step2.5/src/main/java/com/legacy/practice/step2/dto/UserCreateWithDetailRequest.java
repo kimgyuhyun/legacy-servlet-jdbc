@@ -1,14 +1,29 @@
 package com.legacy.practice.step2.dto;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 import java.sql.Date;
 
 public class UserCreateWithDetailRequest {
 
+    @NotBlank
     private String name;
+
+    @NotNull
     private Integer age;
+
+    @NotNull
     private Date birthDate;
+
+    @NotBlank
     private String address;
+
+    @NotBlank
     private String phone;
+
+    @NotBlank
     private String job;
 
     public UserCreateWithDetailRequest() {
