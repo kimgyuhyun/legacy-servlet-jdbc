@@ -693,12 +693,42 @@ function renderUserPagedTbody(list) {
     tb.innerHTML = html;
 }
 
+function jQUeyyRenderUserPagedTbody(list) {
+    var $tb = $('#userPagedTbody');
+    if (!$tb.length) {
+        return;
+    }
+    if (!list || list.length === 0) {
+        $tb.html('<tr><td colspan="5">조회된 사용자가 없습니다.</td></tr>');
+        return;
+    }
+    var html = '';
+    list.forEach(function (u) {
+        html += '<tr>'
+            + '<td>' + (u.id != null ? u.id : '') + '</td>'
+            + '<td>' + (u.name != null ? u.name : '') + '</td>'
+            + '<td>' + (u.age != null ? u.age : '') + '</td>'
+            + '<td>' + (u.birthDate != null ? u.birthDate : '') + '</td>'
+            + '<td>' + (u.address != null ? u.address : '') + '</td>'
+            + '</tr>';
+    });
+    $tb.html(html);
+}
+
 function userPagedSetClientMsg(text) {
     var el = document.getElementById('userPagedClientMsg');
     if (el) {
         el.textContent = text;
     }
 }
+
+function jQueyuserPagedSetClientMsg(text) {
+    var $el = $('#userPagedClientMsg');
+    if ($el.length ) {
+        $el.text(text);
+    }
+}
+
 
 function loadListByAxiosPaged(page, size) {
     var p = page != null && page > 0 ? page : 1;
@@ -722,11 +752,58 @@ function loadListByAxiosPaged(page, size) {
 
             var pi = document.getElementById('userPageInput');
             var si = document.getElementById('userSizeInput');
+
             if (pi) {
                 pi.value = body.page;
             }
             if (si) {
                 si.value = body.size;
+            }
+
+            jQueyuserPagedSetClientMsg(
+                'Axios 페이징 조회 성공 — page: ' + body.page
+                + ', size: ' + body.size
+                + ', totalElements: ' + body.totalElements
+                + ', totalPages: ' + body.totalPages
+                + ', 이번 페이지 건수: ' + (list ? list.length : 0)
+            );
+        })
+        .catch(function (error) {
+            var msg = (error.response && error.response.data)
+                ? error.response.data
+                : error.message;
+            jQueyuserPagedSetClientMsg('Axios 페이징 조회 실패: ' + msg);
+        });
+}
+
+function jQueryLoadListByAxiosPaged(page, size) {
+    var p = page != null && page > 0 ? page : 1;
+    var s = size != null && size > 0 ? size : 10;
+
+    var baseUrl = window.USER_LOAD_ASYNC_PAGE_LIST_URL || '/user/axiosList/paged';
+
+    axios.get(baseUrl, {
+        params: { page: p, size: s }
+    })
+        .then(function (response) {
+            var body = response.data;
+            var list = body.content;
+
+            userPagedState.page = body.page;
+            userPagedState.size = body.size;
+            userPagedState.totalElements = body.totalElements;
+            userPagedState.totalPages = body.totalPages;
+
+            renderUserPagedTbody(list);
+
+            var $pi = $('#userPageInput');
+            var $si = $('#userSizeInput');
+
+            if ($pi.length) {
+                $pi.val(body.page);
+            }
+            if ($si.length) {
+                $si.val(body.size);
             }
 
             userPagedSetClientMsg(
@@ -748,9 +825,19 @@ function loadListByAxiosPaged(page, size) {
 function userPagedBtnLoad() {
     var pi = document.getElementById('userPageInput');
     var si = document.getElementById('userSizeInput');
+    
     var p = pi ? parseInt(pi.value, 10) : 1;
     var s = si ? parseInt(si.value, 10) : 10;
     loadListByAxiosPaged(p > 0 ? p : 1, s > 0 ? s : 10);
+}
+
+function jQueryUserPagedBtnLoad() {
+    var $pi = $('#userPageInput');
+    var $si = $('#userSizeInput');
+
+    var p = $pi.length ? parseInt($pi.val(), 10) : 1;
+    var s = $si.length ? parseInt($si.val(), 10) : 10;
+    jQueryLoadListByAxiosPaged(p > 0 ? p : 1, s > 0 ? s : 10);
 }
 
 function userPagedBtnPrev() {
@@ -760,9 +847,23 @@ function userPagedBtnPrev() {
     loadListByAxiosPaged(userPagedState.page - 1, userPagedState.size);
 }
 
+function jQeuryUserPagedBtnPrev() {
+    if (userPagedState.page <= 1) {
+        return;
+    }
+    jQueryLoadListByAxiosPaged(userPagedState.page - 1, userPagedState.size);
+}
+
 function userPagedBtnNext() {
     if (userPagedState.totalPages > 0 && userPagedState.page >= userPagedState.totalPages) {
         return;
     }
     loadListByAxiosPaged(userPagedState.page + 1, userPagedState.size);
+}
+
+function jQeuryUserPagedBtnNext() {
+    if (userPagedState.totalPages > 0 && userPagedState.page >= userPagedState.totalPages) {
+        return;
+    }
+    jQueryLoadListByAxiosPaged(userPagedState.page + 1, userPagedState.size);
 }
