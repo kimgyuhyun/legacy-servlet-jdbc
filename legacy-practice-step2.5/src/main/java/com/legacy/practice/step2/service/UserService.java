@@ -16,9 +16,14 @@ public class UserService {
 
     @Transactional(rollbackFor = Exception.class)
     public void createUserWithDetail(UserCreateWithDetailRequest req) {
+//        boolean rollbackTest= true;
+
         UserDto user = req.toUserDto();
         userDao.insert(user);
-        userDao.insertUserDetail(req.toUserDetailDto(user.getId()));
-    }
+//        if (rollbackTest) {
+//            throw new RuntimeException("rollback test");
+//        }
+        
+        userDao.insertUserDetail(req.toUserDetailDto(user.getId()));}
 
 }
