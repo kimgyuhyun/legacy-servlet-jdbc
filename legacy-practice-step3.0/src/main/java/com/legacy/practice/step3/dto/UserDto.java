@@ -1,6 +1,8 @@
 package com.legacy.practice.step3.dto;
 import java.sql.Timestamp;
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 
 public class UserDto {
@@ -8,15 +10,15 @@ public class UserDto {
     private Long id;
     private String name;
     private Integer age;
-    private Date birthDate;
+    private LocalDate birthDate;
     private String address;
-    private Timestamp createAt;
-    private Timestamp updateAt;
+    private LocalDateTime createAt;
+    private LocalDateTime updateAt;
 
     public UserDto() {}
 
-    public UserDto(Long id, String name, Integer age, Date birthDate, String address,
-                   Timestamp createAt, Timestamp updateAt) {
+    public UserDto(Long id, String name, Integer age, LocalDate birthDate, String address,
+                   LocalDateTime createAt, LocalDateTime updateAt) {
         this.id = id;
         this.name = name;
         this.age = age;
@@ -25,6 +27,7 @@ public class UserDto {
         this.createAt = createAt;
         this.updateAt = updateAt;
     }
+
 
     public Long getId() {
         return id;
@@ -50,14 +53,6 @@ public class UserDto {
         this.age = age;
     }
 
-    public Date getBirthDate() {
-        return birthDate;
-    }
-
-    public void setBirthDate(Date birthDate) {
-        this.birthDate = birthDate;
-    }
-
     public String getAddress() {
         return address;
     }
@@ -66,21 +61,27 @@ public class UserDto {
         this.address = address;
     }
 
-    public Timestamp getCreateAt() {
+    public LocalDate getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public LocalDateTime getCreateAt() {
         return createAt;
     }
 
-    public void setCreateAt(Timestamp createAt) {
+    public void setCreateAt(LocalDateTime createAt) {
         this.createAt = createAt;
     }
 
-    public Timestamp getUpdateAt() {
+    public LocalDateTime getUpdateAt() {
         return updateAt;
     }
 
-    public void setUpdateAt(Timestamp updateAt) {
+    public void setUpdateAt(LocalDateTime updateAt) {
         this.updateAt = updateAt;
     }
-
-
 }
