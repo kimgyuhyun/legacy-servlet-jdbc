@@ -9,6 +9,11 @@
         .row { margin-bottom: 8px; }
         button { margin-top: 8px; }
     </style>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        window.CREATE_USER_DETAIL_ASYNC_URL = '${asyncWithActionUrl}';
+    </script>
 </head>
 <body>
 
@@ -46,7 +51,12 @@
             formmethod="post">
             동기 Form 제출
         </button>
+        <button type="button" onclick="createUserDetailAsync()">유저 + 디테일 생성</button>
      </div>
 </form>
+
+<div id="result"></div>
+
+<script src="${pageContext.request.contextPath}/js/api.js"></script>
 </body>
 </html>

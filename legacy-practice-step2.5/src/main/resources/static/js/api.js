@@ -847,7 +847,7 @@ function userPagedBtnPrev() {
     loadListByAxiosPaged(userPagedState.page - 1, userPagedState.size);
 }
 
-function jQeuryUserPagedBtnPrev() {
+function jQueryUserPagedBtnPrev() {
     if (userPagedState.page <= 1) {
         return;
     }
@@ -861,9 +861,50 @@ function userPagedBtnNext() {
     loadListByAxiosPaged(userPagedState.page + 1, userPagedState.size);
 }
 
-function jQeuryUserPagedBtnNext() {
+function jQueryUserPagedBtnNext() {
     if (userPagedState.totalPages > 0 && userPagedState.page >= userPagedState.totalPages) {
         return;
     }
     jQueryLoadListByAxiosPaged(userPagedState.page + 1, userPagedState.size);
+}
+
+function createUserDetailAsync() {
+    var payload = {
+        name:  $('#name').val(),
+        age: parseInt($('#age').val(), 10),
+        birthDate: $('#birthDate').val(),
+        address: $('#address').val(),
+        phone: $('#phone').val(),
+        job: $('#job').val()
+    };
+
+    axios.post(window.CREATE_USER_DETAIL_ASYNC_URL, payload, {
+            headers: {
+                'Content-Type': 'application/json; charset=UTF-8'
+            }
+        })
+        .then(function (response) {
+            var data = response.data || {};
+            if (data.ok) {
+                $('#result').text("user + detail 생성 성공");
+                return;
+            }
+        })
+        .catch(function (error) {
+            const res = error.response;
+
+            if (res && res.status === 400 && res.data && res.data.fieldErrors) {
+                const fieldErrors = res.data.fieldErrors;
+                const msg = Object.keys(fieldErrors)
+                    .map(function (field) {
+                        return field + ': ' + fieldErrors[field];
+                    })
+                    .join(', ');
+
+                $('#result').text('검증 실패 - ' + msg);
+                return
+            }
+            $('#result').text('user + detail 생성 실패')
+        })
+
 }

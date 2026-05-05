@@ -6,7 +6,7 @@
     <title>User 비동기 페이지네이션</title>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
-    window.USER_LOAD_ASYNC_PAGE_LIST_URL = '${axiosListPagedUrl}';
+        window.USER_LOAD_ASYNC_PAGE_LIST_URL = '${axiosListPagedUrl}';
     </script>
 </head>
 <body>

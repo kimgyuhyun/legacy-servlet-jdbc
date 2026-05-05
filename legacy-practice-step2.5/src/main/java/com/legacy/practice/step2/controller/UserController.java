@@ -7,20 +7,19 @@ import com.legacy.practice.step2.dto.UserDetailDto;
 import com.legacy.practice.step2.dto.UserDto;
 import com.legacy.practice.step2.dto.UserPageResponse;
 import com.legacy.practice.step2.service.UserService;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
-import org.eclipse.tags.shaded.org.apache.xpath.operations.Mod;
-import org.slf4j.MDC;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
-import java.lang.annotation.Retention;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+
 
 @Controller
 @RequestMapping("/user")
@@ -402,6 +401,7 @@ public class UserController {
     public ModelAndView getCreateWithDetailPage() {
         ModelAndView mv = new ModelAndView("user-create-with-detail");
         mv.addObject("syncWithActionUrl", "/user/create/syncWith");
+        mv.addObject("asyncWithActionUrl", "/user/create/asyncWith");
 
         return mv;
     }
@@ -420,6 +420,32 @@ public class UserController {
 
         userService.createUserWithDetail(req);
         return "redirect:/user/list";
+    }
+
+    @PostMapping("/create/asyncWith")
+    @ResponseBody
+    public Map<String, Object> createUserWithDetailAxios(
+            @Valid @RequestBody UserCreateWithDetailRequest req,
+            BindingResult bindingResult, HttpServletResponse response) {
+
+        Map<String, Object> body = new LinkedHashMap<>();
+
+        if (bindingResult.hasErrors()) {
+            Map<String, String> fieldErrors = new LinkedHashMap<>();
+            bindingResult.getFieldErrors()
+                    .forEach(e -> fieldErrors.put(e.getField(), e.getDefaultMessage()));
+
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST); // 400
+            body.put("ok", false);
+            body.put("fieldErrors", fieldErrors);
+
+            return body;
+        }
+
+        userService.createUserWithDetail(req);
+        body.put("ok", true);
+
+        return body;
     }
 
 

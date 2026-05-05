@@ -23,7 +23,7 @@ public class UserService {
 //        if (rollbackTest) {
 //            throw new RuntimeException("rollback test");
 //        }
-        
+
         userDao.insertUserDetail(req.toUserDetailDto(user.getId()));}
 
 }
