@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.legacy.practice.step2.mapper.UserMapper">
+    <sql id="userCols">
+        id AS id,
+        name AS name,
+        age AS age,
+        birth_date AS birthDate,
+        address AS address
+    </sql>
+    <sql id="userAuditCols">
+        create_at AS createAt,
+        update_at AS updateAt
+    </sql>
+    <sql id="userDetailCols">
+        d.id AS id,
+        u.id AS userId,
+        d.phone AS phone,
+        d.job AS job,
+        d.create_at AS createAt,
+        d.update_at AS updateAt
+    </sql>
+    <select id="findAll" resultType="com.legacy.practice.step3.dto.UserDto">
+        SELECT
+            <include refid="userCols"/>
+        FROM `user`
+        ORDER BY id ASC
+    </select>
+
+    <select id="findById"
+            parameterType="java.lang.Long"
+            resultType="com.legacy.practice.step3.dto.UserDto">
+        SELECT
+            <include refid="userCols"/>,
+            <include refid="userAuditCols"/>
+        FROM `user`
+        WHERE id = #{id}
+    </select>
+
+    <insert id="insert" parameterType="com.legacy.practice.step3.dto.UserDto"
+            useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        INSERT INTO `user` (name, age, birth_date, address)
+        VALUES (#{name}, #{age}, #{birthDate}, #{address})
+    </insert>
+
+    <insert id="insertUserDetail" parameterType="com.legacy.practice.step3.dto.UserDetailDto">
+        INSERT INTO `user_detail` (user_id, phone, job)
+        VALUES (#{userId}, #{phone}, #{job})
+    </insert>
+
+    <update id="updateById" parameterType="com.legacy.practice.step3.dto.UserDto">
+        UPDATE `user`
+        SET name = #{name},
+            age = #{age},
+            birth_date = #{birthDate},
+            address = #{address}
+        WHERE id = #{id}
+    </update>
+
+    <update id="updateNameById">
+        UPDATE `user`
+        SET name = #{name}
+        WHERE id = #{id}
+    </update>
+
+    <select id="findByNameAndAddress" resultType="com.legacy.practice.step3.dto.UserDto">
+        SELECT
+            <include refid="userCols"/>
+        FROM `user`
+        WHERE name LIKE CONCAT('%', #{name}, '%')
+            AND address LIKE CONCAT('%', #{address}, '%')
+        ORDER BY id ASC
+    </select>
+
+    <select id="findDynamicByNameAndAddress" resultType="com.legacy.practice.step3.dto.UserDto">
+        SELECT
+            <include refid="userCols"/>
+        FROM `user`
+        <where>
+            <choose>
+                <when test="(name != null and name != '') or (address != null and address != '')">
+                    <if test="name != null and name != ''">
+                        AND name LIKE CONCAT('%', #{name}, '%')
+                    </if>
+                    <if test="address != null and address != ''">
+                        AND address LIKE CONCAT('%', #{address}, '%')
+                    </if>
+                </when>
+                <otherwise>
+                    AND 1 = 0
+                </otherwise>
+            </choose>
+        </where>
+        ORDER BY id ASC
+    </select>
+
+<!--    <select id="findDynamicByNameAndAddress" resultType="com.legacy.practice.step3.dto.UserDto">-->
+<!--    SELECT id, name, age, birth_date, address 평소엔 if, 복잡한 분기엔 choose-->
+<!--    FROM `user`-->
+<!--    <where>-->
+<!--        <if test="name != null and name != ''">-->
+<!--            AND name LIKE CONCAT('%', #{name}, '%')-->
+<!--        </if>-->
+<!--        <if test="address != null and address != ''">-->
+<!--            AND address LIKE CONCAT('%', #{address}, '%')-->
+<!--        </if>-->
+<!--        <if test="(name == null or name == '') and (address == null or address == '')">-->
+<!--            AND 1 = 0-->
+<!--        </if>-->
+<!--    </where>-->
+<!--    ORDER BY id ASC-->
+<!--    </select>-->
+
+<!--    <select id="findDetailByUserId"-->
+<!--            parameterType="java.lang.Long"-->
+<!--            resultType="com.legacy.practice.step3.dto.UserDetailDto">-->
+<!--        SELECT-->
+<!--            d.id AS id,-->
+<!--            u.id AS userId,-->
+<!--            d.phone AS phone,-->
+<!--            d.job AS job,-->
+<!--            d.create_at AS createAt,-->
+<!--            d.update_at AS updateAt-->
+<!--        FROM user u-->
+<!--        LEFT JOIN user_detail d ON u.id = d.user_id-->
+<!--        WHERE u.id = #{userId}-->
+<!--    </select>-->
+
+    <delete id="deleteById" parameterType="java.lang.Long">
+        DELETE FROM `user`
+        WHERE id = #{id}
+    </delete>
+
+    <resultMap id="userDetailMap" type="com.legacy.practice.step3.dto.UserDetailDto">
+        <id property="id" column="id"/>
+        <result property="userId" column="userId"/>
+        <result property="phone" column="phone"/>
+        <result property="job" column="job"/>
+        <result property="createAt" column="createAt"/>
+        <result property="updateAt" column="updateAt"/>
+    </resultMap>
+    <select id="findDetailByUserId"
+            parameterType="java.lang.Long"
+            resultMap="userDetailMap">
+        SELECT
+            <include refid="userDetailCols"/>
+        FROM user u
+        LEFT JOIN user_detail d ON u.id = d.user_id
+        WHERE u.id = #{userId}
+    </select>
+
+    <update id="updateDynamicNameAddressById" parameterType="com.legacy.practice.step3.dto.UserDto">
+        UPDATE `user`
+        <set>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="address != null and address != ''">
+                address = #{address},
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <select id="findUserByIdList" resultType="com.legacy.practice.step3.dto.UserDto">
+        SELECT
+            <include refid="userCols"/>
+        FROM `user`
+        WHERE id IN
+        <foreach collection="idList" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+        ORDER BY id ASC
+    </select>
+
+    <delete id="deleteByIdList">
+        DELETE FROM `user`
+        WHERE id IN
+        <foreach collection="idList" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="contAll" resultType="long">
+        SELECT COUNT(*)
+        FROM `user`
+    </select>
+
+    <select id="findAllPaged" resultType="com.legacy.practice.step3.dto.UserDto">
+        SELECT
+            <include refid="userCols"></include>
+        FROM `user`
+        ORDER BY id ASC
+        LIMIT #{limit} OFFSET #{offset}
+    </select>
+</mapper>
+
