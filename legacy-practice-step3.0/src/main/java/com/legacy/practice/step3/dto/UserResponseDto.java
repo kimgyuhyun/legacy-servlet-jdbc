@@ -10,8 +10,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
-@Setter
-@NoArgsConstructor
 @AllArgsConstructor
 public class UserResponseDto {
     private Long id;
@@ -22,19 +20,19 @@ public class UserResponseDto {
     private LocalDateTime createAt;
     private LocalDateTime updateAt;
 
-    public static UserResponseDto from(User user) {
-        UserResponseDto dto = new UserResponseDto();
-
-        dto.setId(user.getId());
-        dto.setName(user.getName());
-        dto.setAge(user.getAge());
-        dto.setBirthDate(user.getBirthDate());
-        dto.setAddress(user.getAddress());
-        dto.setCreateAt(user.getCreateAt());
-        dto.setUpdateAt(user.getUpdateAt());
-
-        return dto;
-    }
+//    public static UserResponseDto from(User user) {
+//        UserResponseDto dto = new UserResponseDto();
+//
+//        dto.setId(user.getId());
+//        dto.setName(user.getName());
+//        dto.setAge(user.getAge());
+//        dto.setBirthDate(user.getBirthDate());
+//        dto.setAddress(user.getAddress());
+//        dto.setCreateAt(user.getCreateAt());
+//        dto.setUpdateAt(user.getUpdateAt());
+//
+//        return dto;
+//    }
 
     public static UserResponseDto formAllArgs(User user) {
         return new UserResponseDto(
