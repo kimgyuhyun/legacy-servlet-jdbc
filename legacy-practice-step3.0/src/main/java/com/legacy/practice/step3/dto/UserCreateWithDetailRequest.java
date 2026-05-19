@@ -4,6 +4,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 public class UserCreateWithDetailRequest {
 
@@ -14,7 +15,7 @@ public class UserCreateWithDetailRequest {
     private Integer age;
 
     @NotNull
-    private Date birthDate;
+    private LocalDate birthDate;
 
     @NotBlank
     private String address;
@@ -45,11 +46,11 @@ public class UserCreateWithDetailRequest {
         this.age = age;
     }
 
-    public Date getBirthDate() {
+    public LocalDate getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(Date birthDate) {
+    public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
     }
 
