@@ -6,3 +6,8 @@ const client = axios.create({
 });
 
 export const getUserById = (id) => client.get(`/user/api/${id}`);
+
+// export const getUserById = async (id) => {
+//    const res = await client.get(`/user/api/${id}`);  // await는 여기
+//    return res;
+//  };
