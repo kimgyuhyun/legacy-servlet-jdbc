@@ -11,3 +11,5 @@ export const getUserById = (id) => client.get(`/user/api/${id}`);
 //    const res = await client.get(`/user/api/${id}`);  // await는 여기
 //    return res;
 //  };
+
+export const getUserList = () => client.get('/user/api/list');
