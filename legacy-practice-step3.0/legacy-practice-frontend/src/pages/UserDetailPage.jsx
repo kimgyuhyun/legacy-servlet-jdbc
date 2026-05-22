@@ -1,13 +1,15 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { getUserById } from '../api/userApi';
 
 function UserDetailPage() {
-    const [id, setId] = useState('1');
+    const { id: routeId } = useParams();
+    const [id, setId] = useState(routeId ?? '1');
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
 
-    const handleSearch = async () => {
+    const handleSearch = async (targetId) => {
         const numId = Number(id);
         if (!numId || numId < 1) {
                 setError('id는 1 이상 숫자로 입력하세요.');
@@ -31,7 +33,13 @@ function UserDetailPage() {
         } finally {
             setLoading(false);
         }
-    }
+    };
+
+    useEffect(() => {
+        if (!routeId) return;
+        setId(routeId);
+        handleSearch(routeId);
+    }, [routeId]);
 
     return (
         <div style={{ padding: 24, maxWidth: 400 }}>

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from 'react-router-dom';
 import { getUserList } from '../api/userApi';
 
 function UserListPage() {
@@ -62,7 +63,9 @@ function UserListPage() {
                     )}
                     {userList.map((user) => (
                         <tr key={user.id}>
-                            <td>{user.id}</td>
+                            <td>
+                                <Link to={`/detail/${user.id}`}>{user.id}</Link>
+                            </td>
                             <td>{user.name}</td>
                             <td>{user.age}</td>
                             <td>{user.birthDate}</td>
