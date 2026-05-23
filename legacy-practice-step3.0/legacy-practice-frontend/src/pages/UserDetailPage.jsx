@@ -10,7 +10,7 @@ function UserDetailPage() {
     const [error, setError] = useState('');
 
     const handleSearch = async (targetId) => {
-        const numId = Number(id);
+        const numId = Number(targetId ?? id);
         if (!numId || numId < 1) {
                 setError('id는 1 이상 숫자로 입력하세요.');
                 setUser(null);
@@ -53,7 +53,7 @@ function UserDetailPage() {
                 onChange={(e) => setId(e.target.value)}
                 placeholder="user id"
             />
-            <button type="button" onClick={handleSearch} disabled={loading}>
+            <button type="button" onClick={() => handleSearch()} disabled={loading}>
                 {loading ? '조회 중...' : '조회'}
            </button>
             </div>

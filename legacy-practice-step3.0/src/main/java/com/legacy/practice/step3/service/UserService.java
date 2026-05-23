@@ -4,6 +4,7 @@ import com.legacy.practice.step3.dao.UserDao;
 import com.legacy.practice.step3.dto.UserCreateWithDetailRequest;
 import com.legacy.practice.step3.dto.UserDto;
 import com.legacy.practice.step3.entity.User;
+import com.legacy.practice.step3.exception.UserDetailNotFoundException;
 import com.legacy.practice.step3.exception.UserNotFoundException;
 import com.legacy.practice.step3.repository.UserDetailRepository;
 import com.legacy.practice.step3.repository.UserRepository;
@@ -12,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -21,14 +21,37 @@ public class UserService {
     private final UserRepository userRepository;
     private final UserDetailRepository userDetailRepository;
 
-    public User getUserById(Long id) {
+    public User loadUserById(Long id) {
         return userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException(id));
     }
 
-    public List<User> getAllUserList() {
+    public List<User> loadAllUserList() {
         return userRepository.findAll();
     }
+
+    public User loadUserWithDetailById(long id) {
+        User user = userRepository.findUserWithDetailById(id)
+                .orElseThrow(() -> new UserNotFoundException(id));
+
+        if (user.getDetail() == null) {
+            throw new UserDetailNotFoundException(id);
+        }
+
+        return user;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 
     @Transactional(rollbackFor = Exception.class)
     public void createUserWithDetail(UserCreateWithDetailRequest req) {

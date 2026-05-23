@@ -2,9 +2,15 @@ package com.legacy.practice.step3.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import java.sql.Date;
 import java.time.LocalDate;
+
+@Getter
+@Setter
+@NoArgsConstructor
 
 public class UserCreateWithDetailRequest {
 
@@ -26,57 +32,6 @@ public class UserCreateWithDetailRequest {
     @NotBlank
     private String job;
 
-    public UserCreateWithDetailRequest() {
-
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Integer getAge() {
-        return age;
-    }
-
-    public void setAge(Integer age) {
-        this.age = age;
-    }
-
-    public LocalDate getBirthDate() {
-        return birthDate;
-    }
-
-    public void setBirthDate(LocalDate birthDate) {
-        this.birthDate = birthDate;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getJob() {
-        return job;
-    }
-
-    public void setJob(String job) {
-        this.job = job;
-    }
 
     public UserDto toUserDto() {
         UserDto dto = new UserDto();
