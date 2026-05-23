@@ -11,9 +11,15 @@ import java.util.Map;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(UserNotFoundException.class)
-    public ResponseEntity<Map<String, String >> handleUserNotFound(UserNotFoundException e) {
+    public ResponseEntity<Map<String, String>> handleUserNotFound(UserNotFoundException e) {
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
+                .body(Map.of("message", e.getMessage()));
+    }
+
+    @ExceptionHandler(UserDetailNotFoundException.class)
+    public ResponseEntity<Map<String, String>> handleUserDetailNotFound(UserDetailNotFoundException e) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(Map.of("message", e.getMessage()));
     }
 }
