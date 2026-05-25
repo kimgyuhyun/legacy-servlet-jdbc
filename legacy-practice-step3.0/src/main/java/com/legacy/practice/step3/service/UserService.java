@@ -41,6 +41,19 @@ public class UserService {
         return user;
     }
 
+    public List<User> loadAllUserWithDetailList() {
+        List<User> userList = userRepository.findAllUserWithDetailList();
+
+        for (User user : userList) {
+
+            if (user.getDetail() == null) {
+                throw new UserDetailNotFoundException(user.getId());
+            }
+        }
+
+        return userList;
+    }
+
 
 
 

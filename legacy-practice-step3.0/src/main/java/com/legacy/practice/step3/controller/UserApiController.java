@@ -29,6 +29,18 @@ public class UserApiController {
         return dtoList;
     }
 
+    @GetMapping("/detail/list")
+    public List<UserWithDetailResponse> getUserWithDetailList() {
+        List<User> list = userService.loadAllUserWithDetailList();
+        List<UserWithDetailResponse> dtoList = new ArrayList<>();
+
+        for (User user : list) {
+            dtoList.add(UserWithDetailResponse.toUserWithDetail(user));
+        }
+
+        return dtoList;
+    }
+
     @GetMapping("/{id}")
     public UserResponseDto getUserById(@PathVariable Long id) {
         return UserResponseDto.formAllArgs(userService.loadUserById(id));
@@ -39,5 +51,6 @@ public class UserApiController {
         return UserWithDetailResponse.toUserWithDetail(
                 userService.loadUserWithDetailById(id));
     }
+
 
 }

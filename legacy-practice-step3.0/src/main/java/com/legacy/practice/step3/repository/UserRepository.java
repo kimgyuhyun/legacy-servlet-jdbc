@@ -10,6 +10,7 @@ import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findById(long id);
+
     List<User> findAll();
 
     @Query("SELECT u " +
@@ -17,4 +18,15 @@ public interface UserRepository extends JpaRepository<User, Long> {
             "LEFT JOIN FETCH u.detail " +
             "WHERE u.id = :id")
     Optional<User> findUserWithDetailById(@Param("id") Long id);
+
+
+    @Query("SELECT DISTINCT u " +
+            "FROM User u " +
+            "LEFT JOIN FETCH u.detail ")
+    List<User> findAllUserWithDetailList();
+
+//    @Query("SELECT DISTINCT u " +
+//            "FROM User u " +
+//            "INNER JOIN FETCH u.detail ")
+//    List<User> findAllUserWithDetailList();
 }
