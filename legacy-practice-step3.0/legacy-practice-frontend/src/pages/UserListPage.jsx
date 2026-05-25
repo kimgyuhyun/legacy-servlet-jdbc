@@ -49,6 +49,7 @@ function UserListPage() {
                 <thead>
                     <tr>
                         <th>id</th>
+                        <th>조인 id</th>
                         <th>name</th>
                         <th>age</th>
                         <th>birthDate</th>
@@ -58,13 +59,16 @@ function UserListPage() {
                 <tbody>
                     {userList.length === 0 && !loading && !error && (
                         <tr>
-                            <td colSpan="5">조회된 사용자가 없습니다.</td>
+                            <td colSpan="6">조회된 사용자가 없습니다.</td>
                         </tr>
                     )}
                     {userList.map((user) => (
                         <tr key={user.id}>
                             <td>
                                 <Link to={`/detail/${user.id}`}>{user.id}</Link>
+                            </td>
+                            <td>
+                                <Link to={`/join/user/detail/${user.id}`}>{user.id}</Link>
                             </td>
                             <td>{user.name}</td>
                             <td>{user.age}</td>
