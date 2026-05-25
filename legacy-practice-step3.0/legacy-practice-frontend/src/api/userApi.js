@@ -16,3 +16,4 @@ export const getUserList = () => client.get('/user/api/list');
 
 export const getUserWithDetailById = (id) => client.get(`/user/api/detail/${id}`);
 
+export const getUserWithDetailList = () => client.get('/user/api/detail/list');
