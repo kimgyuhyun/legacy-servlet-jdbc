@@ -26,7 +26,7 @@ public class UserApiController {
         List<UserResponse> dtoList = new ArrayList<>();
 
         for (User user : list) {
-            dtoList.add(UserResponse.formAllArgs(user));
+            dtoList.add(UserResponse.fromAllArgs(user));
         }
         return dtoList;
     }
@@ -45,7 +45,7 @@ public class UserApiController {
 
     @GetMapping("/{id}")
     public UserResponse getUserById(@PathVariable Long id) {
-        return UserResponse.formAllArgs(userService.loadUserById(id));
+        return UserResponse.fromAllArgs(userService.loadUserById(id));
     }
 
     @GetMapping("/detail/{id}")
@@ -58,6 +58,6 @@ public class UserApiController {
     @PostMapping("/create")
     public ResponseEntity<UserResponse> createUser(@Valid @RequestBody UserRequest req) {
         User user = userService.insertUser(req.toEntity());
-        return ResponseEntity.ok(UserResponse.formAllArgs(user));
+        return ResponseEntity.status(201).body(UserResponse.fromAllArgs(user));
     }
 }
