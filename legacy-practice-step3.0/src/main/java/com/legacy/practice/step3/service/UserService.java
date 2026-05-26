@@ -8,6 +8,8 @@ import com.legacy.practice.step3.exception.UserDetailNotFoundException;
 import com.legacy.practice.step3.exception.UserNotFoundException;
 import com.legacy.practice.step3.repository.UserDetailRepository;
 import com.legacy.practice.step3.repository.UserRepository;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +22,9 @@ public class UserService {
     private final UserDao userDao;
     private final UserRepository userRepository;
     private final UserDetailRepository userDetailRepository;
+
+    @PersistenceContext
+    private EntityManager entityManager;
 
     public User loadUserById(Long id) {
         return userRepository.findById(id)
@@ -45,6 +50,12 @@ public class UserService {
         return userRepository.findAllUserWithDetailList();
     }
 
+    @Transactional
+    public User insertUser(User user) {
+        User saved = userRepository.save(user);
+        entityManager.refresh(saved);
+        return saved;
+    }
 
 
 

@@ -29,4 +29,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 //            "FROM User u " +
 //            "INNER JOIN FETCH u.detail ")
 //    List<User> findAllUserWithDetailList();
+
+    User save(User user);
 }

@@ -1,11 +1,13 @@
 package com.legacy.practice.step3.controller;
 
-import com.legacy.practice.step3.dto.UserResponseDto;
+import com.legacy.practice.step3.dto.UserRequest;
+import com.legacy.practice.step3.dto.UserResponse;
 import com.legacy.practice.step3.dto.UserWithDetailResponse;
 import com.legacy.practice.step3.entity.User;
-import com.legacy.practice.step3.entity.UserDetail;
 import com.legacy.practice.step3.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -19,12 +21,12 @@ public class UserApiController {
     private final UserService userService;
 
     @GetMapping("/list")
-    public List<UserResponseDto> getUserList() {
+    public List<UserResponse> getUserList() {
         List<User> list = userService.loadAllUserList();
-        List<UserResponseDto> dtoList = new ArrayList<>();
+        List<UserResponse> dtoList = new ArrayList<>();
 
         for (User user : list) {
-            dtoList.add(UserResponseDto.formAllArgs(user));
+            dtoList.add(UserResponse.formAllArgs(user));
         }
         return dtoList;
     }
@@ -42,8 +44,8 @@ public class UserApiController {
     }
 
     @GetMapping("/{id}")
-    public UserResponseDto getUserById(@PathVariable Long id) {
-        return UserResponseDto.formAllArgs(userService.loadUserById(id));
+    public UserResponse getUserById(@PathVariable Long id) {
+        return UserResponse.formAllArgs(userService.loadUserById(id));
     }
 
     @GetMapping("/detail/{id}")
@@ -53,4 +55,9 @@ public class UserApiController {
     }
 
 
+    @PostMapping("/create")
+    public ResponseEntity<UserResponse> createUser(@Valid @RequestBody UserRequest req) {
+        User user = userService.insertUser(req.toEntity());
+        return ResponseEntity.ok(UserResponse.formAllArgs(user));
+    }
 }

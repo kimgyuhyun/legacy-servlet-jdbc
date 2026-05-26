@@ -3,15 +3,13 @@ package com.legacy.practice.step3.dto;
 import com.legacy.practice.step3.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
 @AllArgsConstructor
-public class UserResponseDto {
+public class UserResponse {
     private Long id;
     private String name;
     private Integer age;
@@ -20,8 +18,8 @@ public class UserResponseDto {
     private LocalDateTime createAt;
     private LocalDateTime updateAt;
 
-//    public static UserResponseDto from(User user) {
-//        UserResponseDto dto = new UserResponseDto();
+//    public static UserResponse from(User user) {
+//        UserResponse dto = new UserResponse();
 //
 //        dto.setId(user.getId());
 //        dto.setName(user.getName());
@@ -34,8 +32,8 @@ public class UserResponseDto {
 //        return dto;
 //    }
 
-    public static UserResponseDto formAllArgs(User user) {
-        return new UserResponseDto(
+    public static UserResponse formAllArgs(User user) {
+        return new UserResponse(
                 user.getId(),
                 user.getName(),
                 user.getAge(),

@@ -40,14 +40,6 @@ public class User {
     @OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private UserDetail detail;
 
-    public User(Long id, String name, Integer age, LocalDate birthDate, String address) {
-        this.id = id;
-        this.name = name;
-        this.age = age;
-        this.birthDate = birthDate;
-        this.address = address;
-    }
-
     public void updateProfile(String name, Integer age, LocalDate birthDate, String address) {
         this.name = name;
         this.age = age;
