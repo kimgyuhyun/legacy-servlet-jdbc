@@ -33,10 +33,14 @@ public class UserWithDetailResponse {
         res.setAge(user.getAge());
         res.setBirthDate(user.getBirthDate());
         res.setAddress(user.getAddress());
-        res.setPhone(user.getDetail().getPhone());
-        res.setJob(user.getDetail().getJob());
         res.setCreateAt(user.getCreateAt());
         res.setUpdateAt(user.getUpdateAt());
+
+        UserDetail detail = user.getDetail();
+        if (detail != null) {
+            res.setPhone(detail.getPhone());
+            res.setJob(detail.getJob());
+        }
 
         return res;
     }
