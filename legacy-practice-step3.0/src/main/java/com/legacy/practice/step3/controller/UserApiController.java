@@ -1,5 +1,6 @@
 package com.legacy.practice.step3.controller;
 
+import com.legacy.practice.step3.dto.UserCreateWithDetailRequest;
 import com.legacy.practice.step3.dto.UserRequest;
 import com.legacy.practice.step3.dto.UserResponse;
 import com.legacy.practice.step3.dto.UserWithDetailResponse;
@@ -59,5 +60,12 @@ public class UserApiController {
     public ResponseEntity<UserResponse> createUser(@Valid @RequestBody UserRequest req) {
         User user = userService.insertUser(req.toEntity());
         return ResponseEntity.status(201).body(UserResponse.fromAllArgs(user));
+    }
+
+    @PostMapping("/join/create/user/Detail")
+    public ResponseEntity<UserWithDetailResponse> createUserWithDetail(
+            @Valid @RequestBody UserCreateWithDetailRequest req) {
+        User user = userService.insertUserWithDetail(req);
+        return ResponseEntity.status(201).body(UserWithDetailResponse.toUserWithDetail(user));
     }
 }

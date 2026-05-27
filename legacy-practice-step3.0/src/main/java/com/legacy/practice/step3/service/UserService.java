@@ -4,6 +4,7 @@ import com.legacy.practice.step3.dao.UserDao;
 import com.legacy.practice.step3.dto.UserCreateWithDetailRequest;
 import com.legacy.practice.step3.dto.UserDto;
 import com.legacy.practice.step3.entity.User;
+import com.legacy.practice.step3.entity.UserDetail;
 import com.legacy.practice.step3.exception.UserDetailNotFoundException;
 import com.legacy.practice.step3.exception.UserNotFoundException;
 import com.legacy.practice.step3.repository.UserDetailRepository;
@@ -57,27 +58,39 @@ public class UserService {
         return saved;
     }
 
-
-
-
-
-
-
-
-
-
-
-
-    @Transactional(rollbackFor = Exception.class)
-    public void createUserWithDetail(UserCreateWithDetailRequest req) {
-//        boolean rollbackTest= true;
-
-        UserDto user = req.toUserDto();
-        userDao.insert(user);
-//        if (rollbackTest) {
-//            throw new RuntimeException("rollback test");
-//        }
-
-        userDao.insertUserDetail(req.toUserDetailDto(user.getId()));}
+    @Transactional
+    public User insertUserWithDetail(UserCreateWithDetailRequest req) {
+        User user = req.toEntity();
+        UserDetail detail = req.toDetailEntity(user);
+        user.setDetail(detail);
+        User saved = userRepository.save(user);
+        entityManager.refresh(saved);
+        return saved;
+    }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+//    @Transactional(rollbackFor = Exception.class)
+//    public void createUserWithDetail(UserCreateWithDetailRequest req) {
+////        boolean rollbackTest= true;
+//
+//        UserDto user = req.toUserDto();
+//        userDao.insert(user);
+////        if (rollbackTest) {
+////            throw new RuntimeException("rollback test");
+////        }
+//
+//        userDao.insertUserDetail(req.toUserDetailDto(user.getId()));}
+//
+

@@ -31,4 +31,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
 //    List<User> findAllUserWithDetailList();
 
     User save(User user);
+
 }
