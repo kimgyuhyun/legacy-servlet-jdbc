@@ -4,12 +4,14 @@ import jakarta.persistence.*;
 import jakarta.servlet.annotation.ServletSecurity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "user_detail")
 @Getter
+@Setter
 @ServletSecurity
 @NoArgsConstructor
 public class UserDetail {
@@ -37,6 +39,12 @@ public class UserDetail {
     public UserDetail(String phone, String job) {
         this.phone = phone;
         this.job = job;
+    }
+
+    public UserDetail(String phone, String job, User user) {
+        this.phone = phone;
+        this.job = job;
+        this.user = user;
     }
 
     public void updateInfo(String phone, String job) {
