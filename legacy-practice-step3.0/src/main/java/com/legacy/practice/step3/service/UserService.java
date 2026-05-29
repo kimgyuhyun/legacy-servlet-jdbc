@@ -68,6 +68,23 @@ public class UserService {
         return saved;
     }
 
+
+
+
+
+
+    @Transactional(rollbackFor = Exception.class)
+    public void createUserWithDetail(UserCreateWithDetailRequest req) {
+//        boolean rollbackTest= true;
+
+        UserDto user = req.toUserDto();
+        userDao.insert(user);
+//        if (rollbackTest) {
+//            throw new RuntimeException("rollback test");
+//        }
+
+        userDao.insertUserDetail(req.toUserDetailDto(user.getId()));}
+
 }
 
 
@@ -81,16 +98,6 @@ public class UserService {
 
 
 
-//    @Transactional(rollbackFor = Exception.class)
-//    public void createUserWithDetail(UserCreateWithDetailRequest req) {
-////        boolean rollbackTest= true;
-//
-//        UserDto user = req.toUserDto();
-//        userDao.insert(user);
-////        if (rollbackTest) {
-////            throw new RuntimeException("rollback test");
-////        }
-//
-//        userDao.insertUserDetail(req.toUserDetailDto(user.getId()));}
-//
+
+
 

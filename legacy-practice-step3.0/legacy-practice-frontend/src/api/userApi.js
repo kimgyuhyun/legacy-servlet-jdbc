@@ -20,3 +20,5 @@ export const getUserWithDetailById = (id) => client.get(`/user/api/detail/${id}`
 export const getUserWithDetailList = () => client.get('/user/api/detail/list');
 
 export const createUser = (user) => client.post('/user/api/create', user);
+
+export const createUserWithDetail = (user) => client.post('/user/api/join/create/user/Detail', user);

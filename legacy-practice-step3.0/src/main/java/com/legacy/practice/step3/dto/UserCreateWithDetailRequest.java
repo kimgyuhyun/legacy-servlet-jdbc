@@ -50,22 +50,22 @@ public class UserCreateWithDetailRequest {
 
 
 //    MyBatis 방식용
-//    public UserDto toUserDto() {
-//        UserDto dto = new UserDto();
-//        dto.setName(name);
-//        dto.setAge(age);
-//        dto.setBirthDate(birthDate);
-//        dto.setAddress(address);
-//
-//        return dto;
-//    }
-//
-//    public UserDetailDto toUserDetailDto(Long userId) {
-//        UserDetailDto dto = new UserDetailDto();
-//        dto.setUserId(userId);
-//        dto.setPhone(phone);
-//        dto.setJob(job);
-//
-//        return dto;
-//    }
+    public UserDto toUserDto() {
+        UserDto dto = new UserDto();
+        dto.setName(name);
+        dto.setAge(age);
+        dto.setBirthDate(birthDate);
+        dto.setAddress(address);
+
+        return dto;
+    }
+
+    public UserDetailDto toUserDetailDto(Long userId) {
+        UserDetailDto dto = new UserDetailDto();
+        dto.setUserId(userId);
+        dto.setPhone(phone);
+        dto.setJob(job);
+
+        return dto;
+    }
 }
