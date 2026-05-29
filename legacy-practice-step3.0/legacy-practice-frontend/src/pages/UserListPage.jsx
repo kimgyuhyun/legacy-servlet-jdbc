@@ -50,6 +50,7 @@ function UserListPage() {
                     <tr>
                         <th>id</th>
                         <th>조인 id</th>
+                        <th>수정</th>
                         <th>name</th>
                         <th>age</th>
                         <th>birthDate</th>
@@ -69,6 +70,9 @@ function UserListPage() {
                             </td>
                             <td>
                                 <Link to={`/join/user/detail/${user.id}`}>{user.id}</Link>
+                            </td>
+                            <td>
+                                <Link to={`/update/user/${user.id}`}>수정</Link>
                             </td>
                             <td>{user.name}</td>
                             <td>{user.age}</td>
