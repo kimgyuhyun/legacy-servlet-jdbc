@@ -55,4 +55,11 @@ public class User {
         this.address = address;
     }
 
+    public void patchProfile(String name, Integer age, LocalDate birthDate, String address) {
+        if (name != null) this.name = name;
+        if (age != null) this.age = age;
+        if (birthDate != null) this.birthDate = birthDate;
+        if (address != null) this.address = address;
+    }
+
 }

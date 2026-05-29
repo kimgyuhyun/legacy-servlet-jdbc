@@ -74,4 +74,9 @@ public class UserApiController {
     }
 
     @PatchMapping("/update/patch/{id}")
+    public ResponseEntity<UserResponse> updatePatchUser(@PathVariable Long id,
+                                                        @RequestBody UserPatchRequest req) {
+        User user = userService.patchUpdateuser(id, req);
+        return ResponseEntity.status(200).body(UserResponse.fromAllArgs(user));
+    }
 }

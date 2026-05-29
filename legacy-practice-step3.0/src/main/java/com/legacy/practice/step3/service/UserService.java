@@ -3,6 +3,7 @@ package com.legacy.practice.step3.service;
 import com.legacy.practice.step3.dao.UserDao;
 import com.legacy.practice.step3.dto.UserCreateWithDetailRequest;
 import com.legacy.practice.step3.dto.UserDto;
+import com.legacy.practice.step3.dto.UserPatchRequest;
 import com.legacy.practice.step3.dto.UserUpdateRequest;
 import com.legacy.practice.step3.entity.User;
 import com.legacy.practice.step3.entity.UserDetail;
@@ -75,6 +76,17 @@ public class UserService {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException(id));
         user.updateProfile(req.getName(), req.getAge(), req.getBirthDate(), req.getAddress());
+        userRepository.save(user);
+        entityManager.refresh(user);
+
+        return user;
+    }
+
+    @Transactional
+    public User patchUpdateuser(Long id, UserPatchRequest req) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException(id));
+        user.patchProfile(req.getName(), req.getAge(), req.getBirthDate(), req.getAddress());
         userRepository.save(user);
         entityManager.refresh(user);
 
