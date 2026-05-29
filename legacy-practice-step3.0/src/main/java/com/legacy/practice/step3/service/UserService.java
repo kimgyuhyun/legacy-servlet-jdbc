@@ -3,6 +3,7 @@ package com.legacy.practice.step3.service;
 import com.legacy.practice.step3.dao.UserDao;
 import com.legacy.practice.step3.dto.UserCreateWithDetailRequest;
 import com.legacy.practice.step3.dto.UserDto;
+import com.legacy.practice.step3.dto.UserUpdateRequest;
 import com.legacy.practice.step3.entity.User;
 import com.legacy.practice.step3.entity.UserDetail;
 import com.legacy.practice.step3.exception.UserDetailNotFoundException;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -68,6 +70,17 @@ public class UserService {
         return saved;
     }
 
+    @Transactional
+    public User updateUser(Long id, UserUpdateRequest req) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException(id));
+        user.updateProfile(req.getName(), req.getAge(), req.getBirthDate(), req.getAddress());
+        userRepository.save(user);
+        entityManager.refresh(user);
+
+        return user;
+    }
+
 
 
 
@@ -83,7 +96,8 @@ public class UserService {
 //            throw new RuntimeException("rollback test");
 //        }
 
-        userDao.insertUserDetail(req.toUserDetailDto(user.getId()));}
+        userDao.insertUserDetail(req.toUserDetailDto(user.getId()));
+    }
 
 }
 

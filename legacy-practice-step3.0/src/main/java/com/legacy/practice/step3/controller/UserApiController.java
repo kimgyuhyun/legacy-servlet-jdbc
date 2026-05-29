@@ -1,9 +1,6 @@
 package com.legacy.practice.step3.controller;
 
-import com.legacy.practice.step3.dto.UserCreateWithDetailRequest;
-import com.legacy.practice.step3.dto.UserRequest;
-import com.legacy.practice.step3.dto.UserResponse;
-import com.legacy.practice.step3.dto.UserWithDetailResponse;
+import com.legacy.practice.step3.dto.*;
 import com.legacy.practice.step3.entity.User;
 import com.legacy.practice.step3.service.UserService;
 import jakarta.validation.Valid;
@@ -68,4 +65,13 @@ public class UserApiController {
         User user = userService.insertUserWithDetail(req);
         return ResponseEntity.status(201).body(UserWithDetailResponse.toUserWithDetail(user));
     }
+
+    @PutMapping("/update/put/{id}")
+    public ResponseEntity<UserResponse> updateUser(@PathVariable Long id,
+                                                   @Valid @RequestBody UserUpdateRequest req) {
+        User user = userService.updateUser(id, req);
+        return ResponseEntity.status(200).body(UserResponse.fromAllArgs(user));
+    }
+
+    @PatchMapping("/update/patch/{id}")
 }
