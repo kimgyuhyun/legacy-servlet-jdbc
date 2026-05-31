@@ -77,7 +77,6 @@ public class UserService {
                 .orElseThrow(() -> new UserNotFoundException(id));
         user.updateProfile(req.getName(), req.getAge(), req.getBirthDate(), req.getAddress());
         userRepository.save(user);
-        entityManager.refresh(user);
 
         return user;
     }
@@ -88,7 +87,6 @@ public class UserService {
                 .orElseThrow(() -> new UserNotFoundException(id));
         user.patchProfile(req.getName(), req.getAge(), req.getBirthDate(), req.getAddress());
         userRepository.save(user);
-        entityManager.refresh(user);
 
         return user;
     }
