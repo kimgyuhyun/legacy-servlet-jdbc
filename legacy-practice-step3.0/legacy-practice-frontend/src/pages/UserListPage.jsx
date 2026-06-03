@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
-import { getUserList } from '../api/userApi';
+import { deleteUser, getUserList } from '../api/userApi';
 
 function UserListPage() {
     const [userList, setUserList] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
 
-    const  handleLoadList = async () => {
+    const handleLoadList = async () => {
         setLoading(true);
         setError('');
 
@@ -25,6 +25,11 @@ function UserListPage() {
             setLoading(false);
         }
     };
+
+    const handleDelete = async (id) => {
+        await deleteUser(id);
+        setUserList(userList.filter((user) => user.id !== id));
+    }
 
     useEffect(() => {
         handleLoadList();
@@ -51,6 +56,7 @@ function UserListPage() {
                         <th>id</th>
                         <th>조인 id</th>
                         <th>수정</th>
+                        <th>삭제</th>
                         <th>name</th>
                         <th>age</th>
                         <th>birthDate</th>
@@ -60,7 +66,7 @@ function UserListPage() {
                 <tbody>
                     {userList.length === 0 && !loading && !error && (
                         <tr>
-                            <td colSpan="6">조회된 사용자가 없습니다.</td>
+                            <td colSpan="7">조회된 사용자가 없습니다.</td>
                         </tr>
                     )}
                     {userList.map((user) => (
@@ -73,6 +79,9 @@ function UserListPage() {
                             </td>
                             <td>
                                 <Link to={`/update/user/${user.id}`}>수정</Link>
+                            </td>
+                            <td>
+                                <button type="button" onClick={() => handleDelete(user.id)}>삭제</button>
                             </td>
                             <td>{user.name}</td>
                             <td>{user.age}</td>

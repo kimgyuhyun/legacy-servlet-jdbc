@@ -26,3 +26,5 @@ export const createUserWithDetail = (user) => client.post('/user/api/join/create
 export const updateUser = (id, user) => client.put(`/user/api/update/put/${id}`, user);
 
 export const updatePatchUser = (id, user) => client.patch(`/user/api/update/patch/${id}`, user);
+
+export const deleteUser = (id) => client.delete(`/user/api/delete/${id}`);
