@@ -47,8 +47,4 @@ public class UserDetail {
         this.user = user;
     }
 
-    public void updateInfo(String phone, String job) {
-        this.phone = phone;
-        this.job = job;
-    }
 }
