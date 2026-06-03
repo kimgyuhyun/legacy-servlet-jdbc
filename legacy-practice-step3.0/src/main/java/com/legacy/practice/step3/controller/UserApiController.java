@@ -79,4 +79,10 @@ public class UserApiController {
         User user = userService.patchUpdateuser(id, req);
         return ResponseEntity.status(200).body(UserResponse.fromAllArgs(user));
     }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
+        userService.deleteById(id);
+        return ResponseEntity.noContent().build(); // 204 NO Content
+    }
 }
