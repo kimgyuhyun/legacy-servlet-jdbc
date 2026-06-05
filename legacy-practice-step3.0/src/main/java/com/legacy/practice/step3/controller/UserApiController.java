@@ -24,7 +24,7 @@ public class UserApiController {
         List<UserResponse> dtoList = new ArrayList<>();
 
         for (User user : list) {
-            dtoList.add(UserResponse.fromAllArgs(user));
+            dtoList.add(UserResponse.from(user));
         }
         return dtoList;
     }
@@ -43,7 +43,7 @@ public class UserApiController {
 
     @GetMapping("/{id}")
     public UserResponse getUserById(@PathVariable Long id) {
-        return UserResponse.fromAllArgs(userService.loadUserById(id));
+        return UserResponse.from(userService.loadUserById(id));
     }
 
     @GetMapping("/detail/{id}")
@@ -56,7 +56,7 @@ public class UserApiController {
     @PostMapping("/create")
     public ResponseEntity<UserResponse> createUser(@Valid @RequestBody UserRequest req) {
         User user = userService.insertUser(req.toEntity());
-        return ResponseEntity.status(201).body(UserResponse.fromAllArgs(user));
+        return ResponseEntity.status(201).body(UserResponse.from(user));
     }
 
     @PostMapping("/join/create/user/Detail")
@@ -70,19 +70,31 @@ public class UserApiController {
     public ResponseEntity<UserResponse> updateUser(@PathVariable Long id,
                                                    @Valid @RequestBody UserUpdateRequest req) {
         User user = userService.updateUser(id, req);
-        return ResponseEntity.status(200).body(UserResponse.fromAllArgs(user));
+        return ResponseEntity.status(200).body(UserResponse.from(user));
     }
 
     @PatchMapping("/update/patch/{id}")
     public ResponseEntity<UserResponse> updatePatchUser(@PathVariable Long id,
                                                         @RequestBody UserPatchRequest req) {
         User user = userService.patchUpdateuser(id, req);
-        return ResponseEntity.status(200).body(UserResponse.fromAllArgs(user));
+        return ResponseEntity.status(200).body(UserResponse.from(user));
     }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
         userService.deleteById(id);
         return ResponseEntity.noContent().build(); // 204 NO Content
+    }
+
+    @GetMapping("/dsl/list")
+    public List<UserResponse> dslGetuserList() {
+        List<User> userList = userService.DslloadAllUserList();
+        List<UserResponse> dtoList = new ArrayList<>();
+
+        for (User user : userList) {
+            dtoList.add(UserResponse.from(user));
+        }
+
+        return dtoList;
     }
 }

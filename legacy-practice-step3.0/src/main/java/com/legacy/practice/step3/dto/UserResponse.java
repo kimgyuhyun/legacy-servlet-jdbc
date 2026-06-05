@@ -32,7 +32,7 @@ public class UserResponse {
 //        return dto;
 //    }
 
-    public static UserResponse fromAllArgs(User user) {
+    public static UserResponse from(User user) {
         return new UserResponse(
                 user.getId(),
                 user.getName(),
