@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
-import { deleteUser, getUserList } from '../api/userApi';
+import { deleteUser, getUserList, getDslUserList } from '../api/userApi';
 
 function UserListPage() {
     const [userList, setUserList] = useState([]);
@@ -12,7 +12,7 @@ function UserListPage() {
         setError('');
 
         try {
-            const res = await getUserList();
+            const res = await getDslUserList();
             setUserList(res.data);
         } catch (e) {
             const msg =
