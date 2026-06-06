@@ -6,6 +6,7 @@ import UserWithDetailListPage from './pages/UserWithDetailListPage';
 import UserCreatePage from './pages/UserCreatePage';
 import UserJoinCreatePage from './pages/UserJoinCreatePage';
 import UserUpdatePage from './pages/UserUpdatePage';
+import UserSearchPage from './pages/UserSearchPage';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Link to="/create/user" style={{ marginRight: 16 }}>[유저 등록]</Link>
         <Link to="/create/user/join" style={{ marginRight: 16 }}>[유저 조인 등록]</Link>
         <Link to="/update/user/1" style={{ marginRight: 16 }}>[유저 수정]</Link>
+        <Link to="/search/user" style={{ marginRight: 16 }}>[유저 검색]</Link>
       </nav>
 
       <Routes>
@@ -28,6 +30,7 @@ function App() {
         <Route path="/create/user" element={<UserCreatePage/>} />
         <Route path="/create/user/join" element={<UserJoinCreatePage/>} />
         <Route path="/update/user/:id" element={<UserUpdatePage/>} />
+        <Route path="/search/user" element={<UserSearchPage/>} />
       </Routes>  
     </>
   )

@@ -32,3 +32,5 @@ export const updateUser = (id, user) => client.put(`/user/api/update/put/${id}`,
 export const updatePatchUser = (id, user) => client.patch(`/user/api/update/patch/${id}`, user);
 
 export const deleteUser = (id) => client.delete(`/user/api/delete/${id}`);
+
+export const searchUserList = (name, age, address) => client.get(`/user/api/dsl/search`, { params: { name, age, address } });
