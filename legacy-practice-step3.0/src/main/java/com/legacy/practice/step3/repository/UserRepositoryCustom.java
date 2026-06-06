@@ -11,4 +11,6 @@ public interface UserRepositoryCustom {
     Optional<User> findUserWithDetailByIdDSL(Long id);
 
     List<User> findAllUserWithDetailListDSL();
+
+    List<User> searchUserList(String name, Integer age, String address);
 }

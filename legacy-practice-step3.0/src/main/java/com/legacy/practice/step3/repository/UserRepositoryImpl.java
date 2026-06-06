@@ -3,6 +3,7 @@ package com.legacy.practice.step3.repository;
 import com.legacy.practice.step3.entity.QUser;
 import com.legacy.practice.step3.entity.QUserDetail;
 import com.legacy.practice.step3.entity.User;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -51,6 +52,32 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
                 .fetchJoin()
                 .distinct()
                 .fetch();
+    }
+
+    @Override
+    public List<User> searchUserList(String name, Integer age, String address) {
+        QUser user = QUser.user;
+
+        return queryFactory
+                .selectFrom(user)
+                .where(
+                        nameContains(name),
+                        ageEq(age),
+                        addressContains(address)
+                )
+                .fetch();
+    }
+
+    private BooleanExpression nameContains(String name) {
+        return name != null ? QUser.user.name.contains(name) : null;
+    }
+
+    private BooleanExpression ageEq(Integer age) {
+        return age != null ? QUser.user.age.eq(age) : null;
+    }
+
+    private BooleanExpression addressContains(String address) {
+        return address != null ? QUser.user.address.contains(address) : null;
     }
 
 }

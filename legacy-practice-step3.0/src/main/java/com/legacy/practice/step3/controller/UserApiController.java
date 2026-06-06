@@ -117,5 +117,21 @@ public class UserApiController {
                 userService.loadUserWithDetailByIdDSL(id));
     }
 
+    @GetMapping("/dsl/search")
+    public List<UserResponse> getSearchuserList(
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) Integer age,
+            @RequestParam(required = false) String address) {
+
+        List<User> list = userService.searchUserList(name, age, address);
+        List<UserResponse> dtoList = new ArrayList<>();
+
+        for (User user : list) {
+            dtoList.add(UserResponse.from(user));
+        }
+
+        return dtoList;
+    }
+
 
 }

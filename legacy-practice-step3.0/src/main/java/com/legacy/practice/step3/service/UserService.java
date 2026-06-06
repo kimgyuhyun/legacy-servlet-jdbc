@@ -118,6 +118,10 @@ public class UserService {
         return userRepository.findAllUserWithDetailListDSL();
     }
 
+    public List<User> searchUserList(String name, Integer age, String address) {
+        return userRepository.searchUserList(name, age, address);
+    }
+
 
 
 
