@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { getUserWithDetailById } from '../api/userApi';
+import { getUserWithDetailById, getUserWithDetailByIdDSL } from '../api/userApi';
 
 function UserWithDetailPage() {
     const { id: routeId } = useParams();
@@ -22,7 +22,7 @@ function UserWithDetailPage() {
         setUser(null);
 
         try {
-            const res = await getUserWithDetailById(numId);
+            const res = await getUserWithDetailByIdDSL(numId);
             setUser(res.data);
         } catch (e) {
             const msg =

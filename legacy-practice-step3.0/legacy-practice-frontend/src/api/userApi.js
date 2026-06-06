@@ -18,8 +18,10 @@ export const getUserList = () => client.get('/user/api/list');
 export const getDslUserList = () => client.get('/user/api/dsl/list');
 
 export const getUserWithDetailById = (id) => client.get(`/user/api/detail/${id}`);
+export const getUserWithDetailByIdDSL = (id) => client.get(`/user/api/dsl/detail/${id}`);
 
 export const getUserWithDetailList = () => client.get('/user/api/detail/list');
+export const getUserWithDetailListDSL = () => client.get('/user/api/dsl/detail/list');
 
 export const createUser = (user) => client.post('/user/api/create', user);
 
