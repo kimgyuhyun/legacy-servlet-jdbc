@@ -35,7 +35,7 @@ public class UserApiController {
         List<UserWithDetailResponse> dtoList = new ArrayList<>();
 
         for (User user : list) {
-            dtoList.add(UserWithDetailResponse.toUserWithDetail(user));
+            dtoList.add(UserWithDetailResponse.from(user));
         }
 
         return dtoList;
@@ -48,7 +48,7 @@ public class UserApiController {
 
     @GetMapping("/detail/{id}")
     public UserWithDetailResponse getUserWithDetailById(@PathVariable Long id) {
-        return UserWithDetailResponse.toUserWithDetail(
+        return UserWithDetailResponse.from(
                 userService.loadUserWithDetailById(id));
     }
 
@@ -63,7 +63,7 @@ public class UserApiController {
     public ResponseEntity<UserWithDetailResponse> createUserWithDetail(
             @Valid @RequestBody UserCreateWithDetailRequest req) {
         User user = userService.insertUserWithDetail(req);
-        return ResponseEntity.status(201).body(UserWithDetailResponse.toUserWithDetail(user));
+        return ResponseEntity.status(201).body(UserWithDetailResponse.from(user));
     }
 
     @PutMapping("/update/put/{id}")
@@ -97,4 +97,25 @@ public class UserApiController {
 
         return dtoList;
     }
+
+
+    @GetMapping("/dsl/detail/list")
+    public List<UserWithDetailResponse> getUserWithDetailListDSL() {
+        List<User> list = userService.loadAllUserWithDetailListDSL();
+        List<UserWithDetailResponse> dtoList = new ArrayList<>();
+
+        for (User user : list) {
+            dtoList.add(UserWithDetailResponse.from(user));
+        }
+
+        return dtoList;
+    }
+
+    @GetMapping("/dsl/detail/{id}")
+    public UserWithDetailResponse getUserWithDetailByIdDSL(@PathVariable Long id) {
+        return UserWithDetailResponse.from(
+                userService.loadUserWithDetailByIdDSL(id));
+    }
+
+
 }

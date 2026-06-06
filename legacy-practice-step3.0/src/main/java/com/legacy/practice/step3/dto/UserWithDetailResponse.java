@@ -2,8 +2,6 @@ package com.legacy.practice.step3.dto;
 
 import com.legacy.practice.step3.entity.User;
 import com.legacy.practice.step3.entity.UserDetail;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -26,7 +24,7 @@ public class UserWithDetailResponse {
     private LocalDateTime createAt;
     private LocalDateTime updateAt;
 
-    public static UserWithDetailResponse toUserWithDetail(User user) {
+    public static UserWithDetailResponse from(User user) {
         UserWithDetailResponse res = new UserWithDetailResponse();
         res.setId(user.getId());
         res.setName(user.getName());

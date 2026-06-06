@@ -24,7 +24,6 @@ import java.util.List;
 public class UserService {
     private final UserDao userDao;
     private final UserRepository userRepository;
-    private final UserDetailRepository userDetailRepository;
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -103,6 +102,21 @@ public class UserService {
         return userRepository.findAllByQueryDSL();
     }
 
+
+    public User loadUserWithDetailByIdDSL(long id) {
+        User user = userRepository.findUserWithDetailByIdDSL(id)
+                .orElseThrow(() -> new UserNotFoundException(id));
+
+        if (user.getDetail() == null) {
+            throw new UserDetailNotFoundException(id);
+        }
+
+        return user;
+    }
+
+    public List<User> loadAllUserWithDetailListDSL() {
+        return userRepository.findAllUserWithDetailListDSL();
+    }
 
 
 
