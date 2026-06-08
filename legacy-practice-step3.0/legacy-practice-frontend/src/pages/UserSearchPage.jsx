@@ -1,15 +1,25 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { searchUserList } from '../api/userApi';
 
 function UserSearchPage() {
-    const [ name, setName ] = useState('');
-    const [ age, setAge ] = useState('');
-    const [ address, setAddress ] = useState('');
+    const [ searchParams, setSearchParams ] = useSearchParams();
+
+    const [ name, setName ] = useState(searchParams.get('name') ?? '');
+    const [ age, setAge ] = useState(searchParams.get('age') ?? '');
+    const [ address, setAddress ] = useState(searchParams.get('address') ?? '');
+
     const [ userList, setUserList ] = useState([]);
     const [ loading, setLoading ] = useState(false);
     const [ error, setError ] = useState('');
 
     const handleSearch = async () => {
+        const params = {};
+        if (name) params.name = name;
+        if (age) params.age = age;
+        if (address) params.address = address;
+        setSearchParams(params);
+
         setLoading(true);
         setError('');
 
@@ -32,6 +42,12 @@ function UserSearchPage() {
         }
     };
 
+    useEffect(() => {
+        if (searchParams.toString()) {
+            handleSearch();
+        }
+    }, []);
+
     return (
         <div style={{ padding: 16}}>
             <h1>사용자 동적검색</h1>
@@ -43,13 +59,13 @@ function UserSearchPage() {
                     onChange={(e) => setName(e.target.value)}
                 />
                 <input
-                    type="age"
+                    type="number"
                     placeholder="나이"
                     value={age}
                     onChange={(e) => setAge(e.target.value)}
                 />
                 <input
-                    type="address"
+                    type="text"
                     placeholder="주소"
                     value={address}
                     onChange={(e) => setAddress(e.target.value)}
