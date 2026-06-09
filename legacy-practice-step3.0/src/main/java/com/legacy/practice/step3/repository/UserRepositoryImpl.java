@@ -90,6 +90,7 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
                 .select(Projections.constructor(UserResponse.class,
                         user.id,
                         user.name,
+                        user.age,
                         user.birthDate,
                         user.address,
                         user.createAt,
