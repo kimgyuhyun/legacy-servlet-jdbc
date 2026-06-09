@@ -1,10 +1,7 @@
 package com.legacy.practice.step3.service;
 
 import com.legacy.practice.step3.dao.UserDao;
-import com.legacy.practice.step3.dto.UserCreateWithDetailRequest;
-import com.legacy.practice.step3.dto.UserDto;
-import com.legacy.practice.step3.dto.UserPatchRequest;
-import com.legacy.practice.step3.dto.UserUpdateRequest;
+import com.legacy.practice.step3.dto.*;
 import com.legacy.practice.step3.entity.User;
 import com.legacy.practice.step3.entity.UserDetail;
 import com.legacy.practice.step3.exception.UserDetailNotFoundException;
@@ -120,6 +117,10 @@ public class UserService {
 
     public List<User> searchUserList(String name, Integer age, String address) {
         return userRepository.searchUserList(name, age, address);
+    }
+
+    public List<UserResponse> loadAllUserResponseByProjection() {
+        return userRepository.findAllUserResponseByProjection();
     }
 
 

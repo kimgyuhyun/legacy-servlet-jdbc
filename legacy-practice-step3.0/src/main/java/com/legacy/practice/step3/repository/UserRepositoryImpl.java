@@ -1,8 +1,10 @@
 package com.legacy.practice.step3.repository;
 
+import com.legacy.practice.step3.dto.UserResponse;
 import com.legacy.practice.step3.entity.QUser;
 import com.legacy.practice.step3.entity.QUserDetail;
 import com.legacy.practice.step3.entity.User;
+import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -80,4 +82,20 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
         return address != null ? QUser.user.address.contains(address) : null;
     }
 
+    @Override
+    public List<UserResponse> findAllUserResponseByProjection() {
+        QUser user = QUser.user;
+
+        return queryFactory
+                .select(Projections.constructor(UserResponse.class,
+                        user.id,
+                        user.name,
+                        user.birthDate,
+                        user.address,
+                        user.createAt,
+                        user.updateAt
+                ))
+                .from(user)
+                .fetch();
+    }
 }

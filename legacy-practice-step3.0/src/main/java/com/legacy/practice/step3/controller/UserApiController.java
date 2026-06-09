@@ -133,5 +133,10 @@ public class UserApiController {
         return dtoList;
     }
 
+    @GetMapping("/dsl/projection/list")
+    public List<UserResponse> getProjectionUserList() {
+        return userService.loadAllUserResponseByProjection();
+    }
+
 
 }
