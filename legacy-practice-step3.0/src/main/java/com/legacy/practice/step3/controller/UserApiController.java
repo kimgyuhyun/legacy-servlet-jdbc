@@ -139,7 +139,7 @@ public class UserApiController {
     }
 
     @GetMapping("/dsl/projection/detail/list")
-    public List<UserWithDetailResponse> getProjectionUserWIthDetailList() {
+    public List<UserWithDetailResponse> getProjectionUserWithDetailList() {
         return userService.loadAllUserWithDetailByQueryProjection();
     }
 

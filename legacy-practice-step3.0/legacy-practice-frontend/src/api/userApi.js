@@ -36,3 +36,5 @@ export const deleteUser = (id) => client.delete(`/user/api/delete/${id}`);
 export const searchUserList = (name, age, address) => client.get(`/user/api/dsl/search`, { params: { name, age, address } });
 
 export const getProjectionUserList = () => client.get('/user/api/dsl/projection/list');
+
+export const getProjectionUserWithDetailList = () => client.get('/user/api/dsl/projection/detail/list');

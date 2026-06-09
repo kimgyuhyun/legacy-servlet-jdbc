@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
-import { getUserWithDetailList, getUserWithDetailListDSL } from '../api/userApi';
+import { getUserWithDetailList, getUserWithDetailListDSL, getProjectionUserWithDetailList } from '../api/userApi';
 
 function UserListPage() {
     const [userList, setUserList] = useState([]);
@@ -12,7 +12,7 @@ function UserListPage() {
         setError('');
 
         try {
-            const res = await getUserWithDetailListDSL();
+            const res = await getProjectionUserWithDetailList();
             setUserList(res.data);
         } catch (e) {
             const msg =
