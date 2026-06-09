@@ -1,6 +1,8 @@
 package com.legacy.practice.step3.repository;
 
+import com.legacy.practice.step3.dto.QUserWithDetailResponse;
 import com.legacy.practice.step3.dto.UserResponse;
+import com.legacy.practice.step3.dto.UserWithDetailResponse;
 import com.legacy.practice.step3.entity.QUser;
 import com.legacy.practice.step3.entity.QUserDetail;
 import com.legacy.practice.step3.entity.User;
@@ -99,4 +101,29 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
                 .from(user)
                 .fetch();
     }
+
+    @Override
+    public List<UserWithDetailResponse> findAllUserWithDetailByQueryProjection() {
+        QUser user = QUser.user;
+        QUserDetail userDetail = QUserDetail.userDetail;
+
+        return queryFactory
+                .select(new QUserWithDetailResponse(
+                        user.id,
+                        user.name,
+                        user.age,
+                        user.birthDate,
+                        user.address,
+                        userDetail.phone,
+                        userDetail.job,
+                        user.createAt,
+                        user.updateAt
+
+                ))
+                .from(user)
+                .leftJoin(user.detail, userDetail)
+                .fetch();
+    }
+
+
 }

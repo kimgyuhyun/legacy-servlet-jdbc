@@ -2,6 +2,7 @@ package com.legacy.practice.step3.dto;
 
 import com.legacy.practice.step3.entity.User;
 import com.legacy.practice.step3.entity.UserDetail;
+import com.querydsl.core.annotations.QueryProjection;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -24,6 +25,22 @@ public class UserWithDetailResponse {
     private LocalDateTime createAt;
     private LocalDateTime updateAt;
 
+    @QueryProjection
+    public UserWithDetailResponse(Long id, String name, Integer age,
+                                  LocalDate birthDate, String address,
+                                  String phone, String job,
+                                  LocalDateTime createAt, LocalDateTime updateAt) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+        this.birthDate = birthDate;
+        this.address = address;
+        this.phone = phone;
+        this.job = job;
+        this.createAt = createAt;
+        this.updateAt = updateAt;
+    }
+
     public static UserWithDetailResponse from(User user) {
         UserWithDetailResponse res = new UserWithDetailResponse();
         res.setId(user.getId());
@@ -42,6 +59,5 @@ public class UserWithDetailResponse {
 
         return res;
     }
-
 
 }

@@ -123,6 +123,9 @@ public class UserService {
         return userRepository.findAllUserResponseByProjection();
     }
 
+    public List<UserWithDetailResponse> loadAllUserWithDetailByQueryProjection() {
+        return userRepository.findAllUserWithDetailByQueryProjection();
+    }
 
 
 
