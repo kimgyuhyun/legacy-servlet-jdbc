@@ -38,3 +38,11 @@ export const searchUserList = (name, age, address) => client.get(`/user/api/dsl/
 export const getProjectionUserList = () => client.get('/user/api/dsl/projection/list');
 
 export const getProjectionUserWithDetailList = () => client.get('/user/api/dsl/projection/detail/list');
+
+// 페이지네이션 - 유저 목록 (page: 0-based, size: 페이지당 개수)
+export const getPagedUserList = (page, size) =>
+    client.get('/user/api/dsl/paged', { params: { page, size } });
+
+// 페이지네이션 - 유저+디테일 목록
+export const getPagedUserWithDetailList = (page, size) =>
+    client.get('/user/api/dsl/paged/detail', { params: { page, size } });
