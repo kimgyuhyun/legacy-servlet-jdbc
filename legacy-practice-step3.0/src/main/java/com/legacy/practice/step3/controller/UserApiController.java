@@ -5,6 +5,8 @@ import com.legacy.practice.step3.entity.User;
 import com.legacy.practice.step3.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -144,4 +146,9 @@ public class UserApiController {
     }
 
 
+    @GetMapping("/dsl/paged")
+    public ResponseEntity<Page<UserResponse>> getPagedUserList(Pageable pageable) {
+        Page<UserResponse> result = userService.loadPagedUserResponse(pageable);
+        return ResponseEntity.ok(result);
+    }
 }

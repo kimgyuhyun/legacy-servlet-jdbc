@@ -10,6 +10,7 @@ import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -123,6 +124,39 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
                 .from(user)
                 .leftJoin(user.detail, userDetail)
                 .fetch();
+    }
+
+    @Override
+    public List<UserResponse> findPagedUserResponse(Pageable pageable) {
+        QUser user = QUser.user;
+
+        return queryFactory
+                .select(Projections.constructor(UserResponse.class,
+                        user.id,
+                        user.name,
+                        user.age,
+                        user.birthDate,
+                        user.address,
+                        user.createAt,
+                        user.updateAt
+                ))
+                .from(user)
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .orderBy(user.id.asc())
+                .fetch();
+    }
+
+    @Override
+    public long countAllUsers() {
+        QUser user = QUser.user;
+
+        Long result = queryFactory
+                .select(user.count())
+                .from(user)
+                .fetchOne();
+
+        return result != null ? result : 0L;
     }
 
 

@@ -3,6 +3,7 @@ package com.legacy.practice.step3.repository;
 import com.legacy.practice.step3.dto.UserResponse;
 import com.legacy.practice.step3.dto.UserWithDetailResponse;
 import com.legacy.practice.step3.entity.User;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,4 +20,7 @@ public interface UserRepositoryCustom {
     List<UserResponse> findAllUserResponseByProjection();
 
     List<UserWithDetailResponse> findAllUserWithDetailByQueryProjection();
+
+    List<UserResponse> findPagedUserResponse(Pageable pageable);
+    long countAllUsers();
 }
